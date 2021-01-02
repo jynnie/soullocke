@@ -1,12 +1,7 @@
 import Head from "next/head";
-import useSWR from "swr";
 import styles from "styles/Home.module.css";
 
 function Home({ data }) {
-  const { data: DATA, error } = useSWR("/api/hello", fetch);
-  // console.log(data);
-  console.log(DATA);
-
   return (
     <div className={styles.container}>
       <Head>
