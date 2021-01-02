@@ -1,21 +1,20 @@
+import React from "react";
 import Head from "next/head";
-import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 import styles from "styles/Home.module.css";
+
+import { FirebaseContext } from "pages/_app";
 
 function Run() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data } = useSWR(`/api/run/${id}`, fetch);
+  const { db } = React.useContext(FirebaseContext);
 
-  if (!data) return "loading";
-  else if (data.status === 404) return "404";
-
-  data.json().then(console.log);
-  console.log(id);
+  db?.ref(id)
+    .once("value")
+    .then((s) => console.log(s.val()));
 
   return (
     <div className={styles.container}>
