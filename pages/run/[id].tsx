@@ -17,6 +17,10 @@ import RUN from "lib/run";
 import BADGES from "lib/badges";
 const NO_RUN = { notFound: true };
 
+export const RunContext: React.Context<{
+  RUN: RUN;
+}> = React.createContext(null);
+
 /**
  * Functinal Run Page
  */
@@ -27,6 +31,13 @@ function RunPage() {
 
   const { db } = React.useContext(FirebaseContext);
   const runRef = db?.ref(id);
+  // const runRef = React.useMemo(() => db?.ref(id), [!!db, id]);
+  const runDb = React.useMemo(() => new RUN(runRef), []);
+
+  // Update runDb
+  React.useEffect(() => {
+    if (db && id && runRef) runDb.attachRef(runRef);
+  }, [!!db, id]);
 
   //----------------------------------#01F2DF
   //- States & Variables
@@ -52,6 +63,7 @@ function RunPage() {
       runRef.on("value", (snapshot) => {
         const rawValue = snapshot.val() || NO_RUN;
         setRunData(rawValue);
+        runDb.updateRunData(rawValue);
       });
     }
   }, [!!db, id]);
@@ -69,18 +81,16 @@ function RunPage() {
   React.useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=1118")
       .then((res) => res.json())
-      .then((data) => setAllPokemon(data.results));
+      .then((data) => {
+        const basePokemon = data.results.filter(
+          (p) => !/(mega|gmax)/gi.test(p.name),
+        );
+        setAllPokemon(basePokemon);
+      });
   }, []);
 
-  // console.log("id", id);
-  // console.log("runData", runData);
-  // console.log("region", region);
-  // console.log(regionData);
-  console.log("======================");
-
   //----------------------------------#01F2DF
-  //- Handlers
-  const addCaughtPokemon = RUN.addCaughtPokemon(runRef);
+  //- Props
 
   const runProps = {
     id,
@@ -90,6 +100,7 @@ function RunPage() {
     players,
     locations,
     badges,
+    allPokemon,
   };
 
   //----------------------------------#01F2DF
@@ -99,15 +110,17 @@ function RunPage() {
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Soullocke | {id}</title>
-      </Head>
+    <RunContext.Provider value={{ RUN: runDb }}>
+      <div className={styles.container}>
+        <Head>
+          <title>Soullocke | {id}</title>
+        </Head>
 
-      <main className={styles.main}>
-        <RunHome {...runProps} />
-      </main>
-    </div>
+        <main className={styles.main}>
+          <RunHome {...runProps} />
+        </main>
+      </div>
+    </RunContext.Provider>
   );
 }
 
