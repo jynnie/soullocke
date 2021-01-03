@@ -20,7 +20,9 @@ try {
     console.error("Firebase admin initialization error", error.stack);
   }
 }
-export const FirebaseContext = React.createContext(null);
+export const FirebaseContext: React.Context<{
+  db: firebase.database.Database;
+}> = React.createContext(null);
 
 function MyApp({ Component, pageProps }) {
   return (

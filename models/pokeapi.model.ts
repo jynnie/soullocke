@@ -5,8 +5,9 @@
 // location/hoenn-route-123
 
 interface MapLocation {
-  id: number;
+  id?: number;
   name: string;
+  url: string;
 }
 
 interface Region {
@@ -18,4 +19,19 @@ interface Region {
   }[];
 }
 
-export type { MapLocation, Region };
+interface PokemonListApiData {
+  name: string;
+  url: string;
+}
+
+interface PokemonApiData {
+  name: string;
+  id: string;
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+  };
+  types: { type: { name: string } }[];
+}
+
+export type { MapLocation, Region, PokemonListApiData, PokemonApiData };

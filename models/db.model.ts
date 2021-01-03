@@ -16,30 +16,32 @@ enum PokemonEvent {
 type PlaceName = string;
 
 //------- realtime database
-interface Event {
-  where: PlaceName;
-  what: PokemonEvent;
-}
-
 interface Pokemon {
-  id: string;
+  origin: string;
+  name: string;
   nickname: string;
-  // origin: PlaceName;
-  events: Event[];
+  events: {
+    [timelineLocation: string]: PokemonEvent;
+  };
   location: PokemonLocation;
+  shiny?: boolean;
 }
 
 interface Run {
   id: string;
-  password: string;
+  password?: string;
   game: string;
   region: string;
 
   timeline: PlaceName[];
   players: {
     [id: string]: {
+      id: string;
       name: string;
-      [index: number]: Pokemon;
+      // Pokemon to locations is 1 to 1
+      pokemon: {
+        [origin: string]: Pokemon;
+      };
     };
   };
 }
@@ -48,21 +50,5 @@ interface RealtimeDatabase {
   [id: string]: Run;
 }
 
-//------- firestore mockup
-interface PlayerCollection {
-  name: string;
-  pokemon: Pokemon[];
-}
-
-interface RunCollection {
-  id: string;
-  password: string;
-  game: string;
-  region: string;
-
-  timeline: PlaceName[];
-  players: PlayerCollection;
-}
-
-export type { PlaceName, Event, Pokemon, Run };
+export type { PlaceName, Pokemon, Run };
 export { PokemonLocation, PokemonEvent };
