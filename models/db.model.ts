@@ -5,26 +5,43 @@ enum PokemonLocation {
   grave,
 }
 
-enum PokemonEvent {
+enum EventType {
   catch,
   missed,
   boxed,
   defeated,
   soulDeath,
+  evolved,
 }
 
 type PlaceName = string;
 
 //------- realtime database
+
+interface PokemonEvents {
+  [index: string]: PokemonEvent;
+}
+
+interface PokemonEvent {
+  index: string;
+  event: EventType;
+  location: PlaceName;
+  details?: any; // Includes details like what evolved into, etc.
+}
+
 interface Pokemon {
   origin: string;
   name: string;
   nickname: string;
-  events: {
-    [timelineLocation: string]: PokemonEvent;
-  };
+  events: PokemonEvents;
   location: PokemonLocation;
   shiny?: boolean;
+}
+
+interface Timeline {
+  key: string;
+  index: number;
+  name: PlaceName;
 }
 
 interface Run {
@@ -33,7 +50,7 @@ interface Run {
   game: string;
   region: string;
 
-  timeline: PlaceName[];
+  timeline: Timeline[];
   players: {
     [id: string]: {
       id: string;
@@ -50,5 +67,5 @@ interface RealtimeDatabase {
   [id: string]: Run;
 }
 
-export type { PlaceName, Pokemon, Run };
-export { PokemonLocation, PokemonEvent };
+export type { PlaceName, Pokemon, PokemonEvents, PokemonEvent, Run, Timeline };
+export { PokemonLocation, EventType };

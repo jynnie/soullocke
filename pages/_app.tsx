@@ -3,7 +3,8 @@ import Head from "next/head";
 import firebase from "firebase";
 import firebaseConfig from "firebaseConfig";
 
-import "../styles/globals.css";
+import "antd/dist/antd.css";
+import "../styles/globals.scss";
 
 //- Firebase Setup
 let db;
