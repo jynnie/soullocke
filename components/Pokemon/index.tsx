@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "ui-box";
-import { cleanName } from "lib/utils";
+import { alpha, colorize } from "lib/utils";
 import type { UseState, Pokemon, PokemonApiData } from "models";
 
 import Modal from "./Modal";
@@ -30,7 +30,12 @@ function PokemonIcon({ pokemon }: { pokemon: Pokemon }) {
       />
 
       <Tooltip title={pokemon.nickname}>
-        <Avatar size="large" src={src} onClick={handleOpenModal}>
+        <Avatar
+          size="large"
+          src={src}
+          onClick={handleOpenModal}
+          style={{ backgroundColor: colorize(pokemon.name) + alpha(0.5) }}
+        >
           {pokemon.nickname}
         </Avatar>
       </Tooltip>
