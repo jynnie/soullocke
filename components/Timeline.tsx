@@ -47,10 +47,8 @@ function TimelineGrid({
 
       {/* Timeline Grid & Caught Pokemon */}
       {timelineArr.map((t) => (
-        <>
-          <div key={t.key} className="capitalize">
-            {cleanName(t.name)}
-          </div>
+        <React.Fragment key={t.key}>
+          <div className="capitalize">{cleanName(t.name)}</div>
           {playerArr.map((p) => {
             const key = t.key + p.name;
             const playerPokemon = p.pokemon ? p.pokemon[t.name] : null;
@@ -65,7 +63,7 @@ function TimelineGrid({
               />
             );
           })}
-        </>
+        </React.Fragment>
       ))}
 
       {/* Add Button */}
