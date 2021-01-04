@@ -104,6 +104,8 @@ export class Run {
 
   public addEvolution = () => {};
 
+  public removePokemon = () => {};
+
   // Take care that soullink doesn't get
   // desynced
   public removeEvent = () => {};
