@@ -1,26 +1,32 @@
 import React from "react";
 import { RunContext } from "pages/run/[id]";
-import type { UseState, MapLocation, PlaceName } from "models";
+import type {
+  UseState,
+  PokemonListApiData as ListPokemon,
+  PlaceName,
+} from "models";
 
 import { Popover, Button, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
-function AddToTimeline({
-  allLocations,
-  allBadges,
+function AddPokemon({
+  allPokemon,
+  playerId,
+  location,
 }: {
-  allLocations: MapLocation[];
-  allBadges: string[];
+  allPokemon: ListPokemon[];
+  playerId: string;
+  location: PlaceName;
 }) {
   const { RUN } = React.useContext(RunContext);
   const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
 
   const toggleForm = () => setShowForm(!showForm);
 
-  const onFinish = async (location: PlaceName) => {
-    await RUN.addNewLocation(location);
+  const onFinish = async (pokemonName: string, nickname: string) => {
+    await RUN.addCaughtPokemon(pokemonName, nickname, playerId, location);
     toggleForm();
   };
   const onCancel = () => {
@@ -29,16 +35,16 @@ function AddToTimeline({
 
   return (
     <Popover
-      content={<Form {...{ allLocations, allBadges, onFinish, onCancel }} />}
+      content={<Form {...{ allPokemon, onFinish, onCancel }} />}
       trigger="click"
       visible={showForm}
       onVisibleChange={(v) => setShowForm(v)}
     >
-      <Tooltip title="Add Location">
-        <Button shape="circle" icon={<PlusOutlined />} />
+      <Tooltip title="Add Pokemon">
+        <Button type="dashed" shape="circle" icon={<PlusOutlined />} />
       </Tooltip>
     </Popover>
   );
 }
 
-export default AddToTimeline;
+export default AddPokemon;

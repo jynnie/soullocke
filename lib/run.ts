@@ -58,7 +58,7 @@ export class Run {
   };
 
   //----------------------------------#01F2DF
-  //- Pokemon
+  //- Add Pokemon
 
   public addCaughtPokemon = async (
     pokemonName: string,
@@ -69,7 +69,7 @@ export class Run {
     if (!this.runRef) return;
 
     const events: PokemonEvents = {
-      0: { index: "0", event: EventType.catch, location: locationCaught },
+      0: { index: "0", type: EventType.catch, location: locationCaught },
     };
     const newPokemonRef = this.runRef.child(
       `players/${playerId}/pokemon/${locationCaught}`,
@@ -85,6 +85,28 @@ export class Run {
     await newPokemonRef.set(pokemon);
     return pokemon;
   };
+
+  public addMissedPokemon = () => {};
+
+  //----------------------------------#01F2DF
+  //- Soullocked Changes
+
+  public moveToBox = () => {};
+
+  public moveToDaycare = () => {};
+
+  public moveToTeam = () => {};
+
+  public markAsDefeated = () => {};
+
+  //----------------------------------#01F2DF
+  //- Other Pokemon Events
+
+  public addEvolution = () => {};
+
+  // Take care that soullink doesn't get
+  // desynced
+  public removeEvent = () => {};
 }
 
 // FIXME: Make these specific functions instead

@@ -7,10 +7,11 @@ import type {
 } from "models";
 
 import styles from "styles/Run.module.scss";
-import AddToTimeline from "components/AddToTimeline";
+import Timeline from "components/Timeline";
 
 interface Props extends Run {
-  locations: MapLocation[];
+  allBadges: string[];
+  allLocations: MapLocation[];
   allPokemon: ListPokemon[];
 }
 
@@ -20,11 +21,11 @@ function RunHome({
   region,
   timeline,
   players,
-  locations,
+  allBadges,
+  allLocations,
   allPokemon,
 }: Props) {
   const playerArr = oVal(players || []);
-  const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
 
   return (
     <div className={styles.container}>
@@ -32,15 +33,10 @@ function RunHome({
       <h3>{playerArr.map((p) => p.name).join(" | ")}</h3>
       <div>codename: {id}</div>
 
-      <div>
-        <h4>timeline</h4>
-        <div>
-          {timelineArr.map((t) => (
-            <div key={t.key}>{t.name}</div>
-          ))}
-        </div>
-        <AddToTimeline {...{ allLocations: locations }} />
-      </div>
+      <h4>timeline</h4>
+      <Timeline
+        {...{ timeline, players, allLocations, allBadges, allPokemon }}
+      />
     </div>
   );
 }

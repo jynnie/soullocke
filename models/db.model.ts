@@ -1,14 +1,15 @@
 //------- enums
 enum PokemonLocation {
-  team,
-  box,
-  grave,
+  team = "team",
+  box = "box",
+  grave = "grave",
+  daycare = "daycare",
 }
 
 enum EventType {
   catch,
   missed,
-  boxed,
+  moved,
   defeated,
   soulDeath,
   evolved,
@@ -24,9 +25,12 @@ interface PokemonEvents {
 
 interface PokemonEvent {
   index: string;
-  event: EventType;
+  type: EventType;
   location: PlaceName;
-  details?: any; // Includes details like what evolved into, etc.
+  details?: {
+    location?: PokemonLocation;
+    evolution: string;
+  }; // Includes details like what evolved into, etc.
 }
 
 interface Pokemon {
