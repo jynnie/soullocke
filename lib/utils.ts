@@ -1,5 +1,7 @@
-const oVal = Object.values;
+export const oVal = Object.values;
 
-const oKey = Object.keys;
+export const oKey = Object.keys;
 
-export { oVal, oKey };
+export const cleanName = (name: string = "") => name.replace(/(_|-)/g, " ");
+
+export default { oVal, oKey, cleanName };

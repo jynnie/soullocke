@@ -1,0 +1,16 @@
+.option {
+  text-transform: capitalize;
+}
+
+.select {
+  width: 200px;
+}
+
+.item {
+  margin-bottom: 8px;
+
+  &Buttons {
+    @extend .item;
+    text-align: right;
+  }
+}

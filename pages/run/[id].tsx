@@ -53,8 +53,8 @@ function RunPage() {
 
   // Variables
   const { region, game, players, timeline } = runData || {};
-  const badges: string[] = (region && BADGES[region]) || [];
-  const locations = (regionData && regionData.locations) || [];
+  const allBadges: string[] = (region && BADGES[region]) || [];
+  const allLocations = (regionData && regionData.locations) || [];
 
   //----------------------------------#01F2DF
   //- Subscribe to run data
@@ -98,8 +98,8 @@ function RunPage() {
     region,
     timeline,
     players,
-    locations,
-    badges,
+    allBadges,
+    allLocations,
     allPokemon,
   };
 
