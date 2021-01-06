@@ -6,7 +6,7 @@ import type { UseState, Pokemon, PokemonApiData } from "models";
 import Modal from "./Modal";
 import { Avatar, Tooltip } from "antd";
 
-function PokemonIcon({ pokemon }: { pokemon: Pokemon }) {
+const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
   const [src, setSrc]: UseState<string> = React.useState(null);
   const [showModal, setShowModal]: UseState<boolean> = React.useState(null);
 
@@ -41,6 +41,6 @@ function PokemonIcon({ pokemon }: { pokemon: Pokemon }) {
       </Tooltip>
     </>
   );
-}
+};
 
 export default PokemonIcon;

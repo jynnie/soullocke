@@ -15,7 +15,7 @@ interface Props extends Run {
   allPokemon: ListPokemon[];
 }
 
-function RunHome({
+const RunHome = ({
   id,
   game,
   region,
@@ -24,7 +24,7 @@ function RunHome({
   allBadges,
   allLocations,
   allPokemon,
-}: Props) {
+}: Props) => {
   const playerArr = oVal(players || []);
 
   return (
@@ -39,6 +39,6 @@ function RunHome({
       />
     </div>
   );
-}
+};
 
 export default RunHome;

@@ -24,7 +24,7 @@ export const RunContext: React.Context<{
 /**
  * Functinal Run Page
  */
-function RunPage() {
+const RunPage = () => {
   const router = useRouter();
   const { id: rawId, view } = router.query;
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
@@ -122,6 +122,6 @@ function RunPage() {
       </div>
     </RunContext.Provider>
   );
-}
+};
 
 export default RunPage;

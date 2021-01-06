@@ -7,13 +7,13 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
-function AddToTimeline({
+const AddToTimeline = ({
   allLocations,
   allBadges,
 }: {
   allLocations: MapLocation[];
   allBadges: string[];
-}) {
+}) => {
   const { RUN } = React.useContext(RunContext);
   const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
 
@@ -39,6 +39,6 @@ function AddToTimeline({
       </Tooltip>
     </Popover>
   );
-}
+};
 
 export default AddToTimeline;

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "styles/Home.module.css";
 
-function Home({ data }) {
+const Home = ({ data }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -16,7 +16,7 @@ function Home({ data }) {
       <footer className={styles.footer}>Made with {"<3"} by jynnie</footer>
     </div>
   );
-}
+};
 
 export const getStaticProps = async () => {
   const res = await fetch("https://pokeapi.co/api/v2/region/hoenn");

@@ -11,7 +11,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
-function AddPokemon({
+const AddPokemon = ({
   allPokemon,
   playerId,
   location,
@@ -19,7 +19,7 @@ function AddPokemon({
   allPokemon: ListPokemon[];
   playerId: string;
   location: PlaceName;
-}) {
+}) => {
   const { RUN } = React.useContext(RunContext);
   const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
 
@@ -45,6 +45,6 @@ function AddPokemon({
       </Tooltip>
     </Popover>
   );
-}
+};
 
 export default AddPokemon;
