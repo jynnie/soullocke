@@ -7,6 +7,8 @@ import AddEvent from "components/AddEvent";
 import { Modal, Timeline } from "antd";
 
 // TODO: Back fill pokemon
+// TODO: Delete pokemon (doesn't delete events)
+// TODO: Delete event
 // TODO: Buttons for move to team (does it require a trade?)
 
 const PokemonModal = ({

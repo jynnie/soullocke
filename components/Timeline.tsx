@@ -1,16 +1,16 @@
 import React from "react";
 import Box from "ui-box";
 import { oVal, cleanName } from "lib/utils";
-import type {
-  Run,
-  MapLocation,
-  PokemonListApiData as ListPokemon,
-} from "models";
+import type { Run, MapLocation } from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
+
+// TODO: Search and filter
+// TODO: Delete location
+// TODO: Scrolling?
 
 /**
  * Timeline Grid
