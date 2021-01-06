@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Error from "next/error";
+import Error from "pages/_error";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import {
@@ -17,13 +17,15 @@ import RUN from "lib/run";
 import BADGES from "lib/badges";
 const NO_RUN = { notFound: true };
 
+//----------------------------------#01F2DF
+//- Run Context
 export const RunContext: React.Context<{
   RUN: RUN;
   allPokemon: ListPokemon[];
 }> = React.createContext(null);
 
 /**
- * Functinal Run Page
+ * Functional Run Page
  */
 const RunPage = () => {
   const router = useRouter();
