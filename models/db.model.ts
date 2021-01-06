@@ -34,6 +34,7 @@ interface PokemonEvent {
 }
 
 interface Pokemon {
+  playerId: string;
   origin: string;
   name: string;
   nickname: string;

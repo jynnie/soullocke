@@ -102,6 +102,7 @@ export class Run {
       `players/${playerId}/pokemon/${locationCaught}`,
     );
     const pokemon: Pokemon = {
+      playerId,
       origin: locationCaught,
       name: pokemonName,
       nickname,
@@ -119,6 +120,8 @@ export class Run {
     playerId: string,
     locationCaught: PlaceName,
   ) => {
+    this.soulDeath(playerId, locationCaught, locationCaught);
+
     const events: PokemonEvents = {
       0: { index: "0", type: EventType.missed, location: locationCaught },
     };
@@ -126,6 +129,7 @@ export class Run {
       `players/${playerId}/pokemon/${locationCaught}`,
     );
     const pokemon: Pokemon = {
+      playerId,
       origin: locationCaught,
       name: pokemonName,
       nickname,
@@ -149,23 +153,13 @@ export class Run {
   ) => {
     if (!this.runRef) return;
 
-    const pokemonRef = this.runRef.child(
-      `players/${playerId}/pokemon/${pokemonOrigin}`,
-    );
-    const pokemonEventRef = pokemonRef.child(`events`);
-
     let event;
-    if (type === EventType.moved) {
-      if (details?.location === PokemonLocation.box) {
-        event = this.moveToBox(pokemonEventRef, location);
-      } else if (details?.location === PokemonLocation.daycare) {
-        event = this.moveToDaycare(pokemonEventRef, location);
-      } else if (details?.location === PokemonLocation.team) {
-        event = this.moveToTeam(pokemonEventRef, location);
-      }
+    if (type === EventType.moved && !!details?.location) {
+      event = this.movePokemon(pokemonOrigin, location, details.location);
     } else if (type === EventType.defeated) {
       event = this.markAsDefeated(playerId, pokemonOrigin, location);
     } else if (type === EventType.evolved) {
+      // event = this.addEvolution()
     }
     return event;
   };
@@ -180,45 +174,32 @@ export class Run {
     if (!this.runRef) return;
   };
 
-  private moveToBox = (ref: Ref, location: PlaceName) => {
-    const eventRef = ref.push();
-    const event: PokemonEvent = {
-      index: eventRef.key,
-      type: EventType.moved,
-      location,
-      details: {
-        location: PokemonLocation.box,
-      },
-    };
-    eventRef.set(event);
-    return event;
-  };
+  private movePokemon = (
+    pokemonOrigin: PlaceName,
+    location: PlaceName,
+    pokemonLocation: PokemonLocation,
+  ) => {
+    const playerArr = oVal(this.runData.players);
+    let event;
 
-  private moveToDaycare = (ref: Ref, location: PlaceName) => {
-    const eventRef = ref.push();
-    const event: PokemonEvent = {
-      index: eventRef.key,
-      type: EventType.moved,
-      location,
-      details: {
-        location: PokemonLocation.daycare,
-      },
-    };
-    eventRef.set(event);
-    return event;
-  };
+    playerArr.forEach((player) => {
+      const pokemonRef = this.runRef.child(
+        `players/${player.id}/pokemon/${pokemonOrigin}`,
+      );
 
-  private moveToTeam = (ref: Ref, location: PlaceName) => {
-    const eventRef = ref.push();
-    const event: PokemonEvent = {
-      index: eventRef.key,
-      type: EventType.moved,
-      location,
-      details: {
-        location: PokemonLocation.team,
-      },
-    };
-    eventRef.set(event);
+      pokemonRef.child("location").set(pokemonLocation);
+      const eventRef = pokemonRef.child("events").push();
+      event = {
+        index: eventRef.key,
+        type: EventType.moved,
+        location,
+        details: {
+          location: pokemonLocation,
+        },
+      };
+      eventRef.set(event);
+    });
+
     return event;
   };
 
@@ -229,11 +210,44 @@ export class Run {
   ) => {
     if (!this.runRef || !this.runData) return;
 
+    this.soulDeath(playerWhoDefeated, pokemonOrigin, location);
+
+    const pokemonRef = this.runRef.child(
+      `players/${playerWhoDefeated}/pokemon/${pokemonOrigin}`,
+    );
+    const eventRef = pokemonRef.child("events").push();
+    const event = {
+      index: eventRef.key,
+      type: EventType.defeated,
+      location,
+      details: {
+        location: PokemonLocation.grave,
+      },
+    };
+
+    eventRef.set(event);
+    pokemonRef.child("location").set(PokemonLocation.grave);
+
+    return event;
+  };
+
+  private addEvolution = (ref: Ref, location: PlaceName) => {};
+
+  //----------------------------------#01F2DF
+  //- Other Pokemon Events
+
+  public removePokemon = () => {};
+
+  private soulDeath = (
+    playerResponsible: string,
+    pokemonOrigin: PlaceName,
+    location: PlaceName,
+  ) => {
     const playerArr = oVal(this.runData.players);
     let event;
 
     playerArr.forEach((player) => {
-      const isPlayerResponsible = player.id === playerWhoDefeated;
+      const isPlayerResponsible = player.id === playerResponsible;
       const pokemonRef = this.runRef.child(
         `players/${player.id}/pokemon/${pokemonOrigin}`,
       );
@@ -253,13 +267,6 @@ export class Run {
 
     return event;
   };
-
-  private addEvolution = (ref: Ref, location: PlaceName) => {};
-
-  //----------------------------------#01F2DF
-  //- Other Pokemon Events
-
-  public removePokemon = () => {};
 }
 
 // FIXME: Make these specific functions instead

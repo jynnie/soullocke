@@ -1,10 +1,13 @@
 import React from "react";
-import Box from "ui-box";
-import { oVal, cleanName } from "lib/utils";
-import type { Pokemon } from "models";
+import { oVal } from "lib/utils";
+import { Pokemon, PokemonLocation } from "models";
 
 import Event from "./Event";
+import AddEvent from "components/AddEvent";
 import { Modal, Timeline } from "antd";
+
+// TODO: Back fill pokemon
+// TODO: Buttons for move to team (does it require a trade?)
 
 const PokemonModal = ({
   pokemon,
@@ -18,6 +21,8 @@ const PokemonModal = ({
   // FIXME: Sort array by timeline
   const eventsArr = oVal(pokemon?.events || {});
 
+  const pokemonIsAlive = pokemon.location !== PokemonLocation.grave;
+
   return (
     <Modal
       title={`${pokemon.nickname} (${pokemon.name})`}
@@ -29,6 +34,7 @@ const PokemonModal = ({
         {eventsArr?.map((event, i) => (
           <Event key={i} {...{ event }} />
         ))}
+        {pokemonIsAlive && <AddEvent {...{ pokemon }} />}
       </Timeline>
     </Modal>
   );

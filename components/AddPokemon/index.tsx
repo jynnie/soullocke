@@ -12,11 +12,9 @@ import { PlusOutlined } from "@ant-design/icons";
 import Form from "./Form";
 
 const AddPokemon = ({
-  allPokemon,
   playerId,
   location,
 }: {
-  allPokemon: ListPokemon[];
   playerId: string;
   location: PlaceName;
 }) => {
@@ -39,7 +37,7 @@ const AddPokemon = ({
 
   return (
     <Popover
-      content={<Form {...{ allPokemon, onFinish, onCancel }} />}
+      content={<Form {...{ onFinish, onCancel }} />}
       trigger="click"
       visible={showForm}
       onVisibleChange={(v) => setShowForm(v)}

@@ -21,13 +21,11 @@ const TimelineGrid = ({
   timeline,
   players,
   allLocations,
-  allPokemon,
   allBadges,
 }: {
   timeline: Run["timeline"];
   players: Run["players"];
   allLocations: MapLocation[];
-  allPokemon: ListPokemon[];
   allBadges: string[];
 }) => {
   const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
@@ -58,9 +56,7 @@ const TimelineGrid = ({
             if (playerPokemon)
               return <Pokemon {...{ key, pokemon: playerPokemon }} />;
             return (
-              <AddPokemon
-                {...{ key, allPokemon, playerId: p.id, location: t.name }}
-              />
+              <AddPokemon {...{ key, playerId: p.id, location: t.name }} />
             );
           })}
         </React.Fragment>
