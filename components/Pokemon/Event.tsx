@@ -7,7 +7,7 @@ import Pokeball from "lib/icons/Pokeball";
 import { Timeline } from "antd";
 import { InboxOutlined, FrownOutlined, StarOutlined } from "@ant-design/icons";
 
-function PokemonTimelineEvent({ event }: { event: PokemonEvent }) {
+const PokemonTimelineEvent = ({ event }: { event: PokemonEvent }) => {
   const place = cleanName(event.location);
 
   if (event.type === EventType.catch)
@@ -46,6 +46,6 @@ function PokemonTimelineEvent({ event }: { event: PokemonEvent }) {
         Evolved into {event.details?.evolution || "?"} at {place}
       </Timeline.Item>
     );
-}
+};
 
 export default PokemonTimelineEvent;

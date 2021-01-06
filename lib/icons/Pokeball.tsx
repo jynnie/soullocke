@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Icon Attribution: https://icons8.com/icons/set/pokeball
  */
-function Pokeball({ width, height, size = 30 }: any) {
+const Pokeball = ({ width, height, size = 30 }: any) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,6 @@ function Pokeball({ width, height, size = 30 }: any) {
       </g>
     </svg>
   );
-}
+};
 
 export default Pokeball;

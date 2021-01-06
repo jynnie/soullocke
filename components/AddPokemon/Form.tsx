@@ -5,7 +5,7 @@ import styles from "styles/Form.module.scss";
 import { Form, Select, Input, Button } from "antd";
 const { Option } = Select;
 
-function AddPokemonForm({
+const AddPokemonForm = ({
   allPokemon,
   onFinish,
   onCancel,
@@ -13,7 +13,7 @@ function AddPokemonForm({
   allPokemon: ListPokemon[];
   onFinish?: (pokemonName: string, nickname: string) => void;
   onCancel?: () => void;
-}) {
+}) => {
   const [pokemon, setPokemon]: UseState<string> = React.useState(null);
   const [nickname, setNickname]: UseState<string> = React.useState(null);
 
@@ -88,6 +88,6 @@ function AddPokemonForm({
       </Form.Item>
     </Form>
   );
-}
+};
 
 export default AddPokemonForm;

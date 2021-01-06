@@ -6,7 +6,7 @@ import type { Pokemon } from "models";
 import Event from "./Event";
 import { Modal, Timeline } from "antd";
 
-function PokemonModal({
+const PokemonModal = ({
   pokemon,
   showModal,
   onCancel,
@@ -14,7 +14,7 @@ function PokemonModal({
   pokemon: Pokemon;
   showModal: boolean;
   onCancel: () => void;
-}) {
+}) => {
   // FIXME: Sort array by timeline
   const eventsArr = oVal(pokemon?.events || {});
 
@@ -32,6 +32,6 @@ function PokemonModal({
       </Timeline>
     </Modal>
   );
-}
+};
 
 export default PokemonModal;

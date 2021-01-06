@@ -7,7 +7,7 @@ import { Select, Button, Tooltip } from "antd";
 import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
-function AddToTimelineForm({
+const AddToTimelineForm = ({
   allLocations,
   allBadges,
   onFinish,
@@ -17,7 +17,7 @@ function AddToTimelineForm({
   allBadges: string[];
   onFinish?: (location: string) => void;
   onCancel?: () => void;
-}) {
+}) => {
   const [location, setLocation]: UseState<string> = React.useState(null);
 
   const handleFinish = () => {
@@ -72,6 +72,6 @@ function AddToTimelineForm({
       </Tooltip>
     </div>
   );
-}
+};
 
 export default AddToTimelineForm;

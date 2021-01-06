@@ -17,19 +17,19 @@ import AddPokemon from "components/AddPokemon";
  * View focused on what pokemon were caught when
  * Will be modified into true timeline view later
  */
-function TimelineGrid({
+const TimelineGrid = ({
   timeline,
   players,
   allLocations,
-  allBadges,
   allPokemon,
+  allBadges,
 }: {
   timeline: Run["timeline"];
   players: Run["players"];
   allLocations: MapLocation[];
-  allBadges: string[];
   allPokemon: ListPokemon[];
-}) {
+  allBadges: string[];
+}) => {
   const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
   const playerArr = oVal(players || []);
   const numTrainers = playerArr.length;
@@ -70,6 +70,6 @@ function TimelineGrid({
       <AddToTimeline {...{ allLocations, allBadges }} />
     </Box>
   );
-}
+};
 
 export default TimelineGrid;
