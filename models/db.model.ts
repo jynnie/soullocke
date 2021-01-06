@@ -29,7 +29,7 @@ interface PokemonEvent {
   location: PlaceName;
   details?: {
     location?: PokemonLocation;
-    evolution: string;
+    evolution?: string;
   }; // Includes details like what evolved into, etc.
 }
 
