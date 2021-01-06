@@ -25,8 +25,12 @@ const AddPokemon = ({
 
   const toggleForm = () => setShowForm(!showForm);
 
-  const onFinish = async (pokemonName: string, nickname: string) => {
-    await RUN.addCaughtPokemon(pokemonName, nickname, playerId, location);
+  const onFinish = async (
+    pokemonName: string,
+    nickname: string,
+    caught: boolean,
+  ) => {
+    await RUN.addPokemon(pokemonName, nickname, playerId, location, caught);
     toggleForm();
   };
   const onCancel = () => {

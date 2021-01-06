@@ -2,7 +2,7 @@ import React from "react";
 import type { UseState, PokemonListApiData as ListPokemon } from "models";
 
 import styles from "styles/Form.module.scss";
-import { Form, Select, Input, Button } from "antd";
+import { Checkbox, Form, Select, Input, Button } from "antd";
 const { Option } = Select;
 
 const AddPokemonForm = ({
@@ -11,19 +11,21 @@ const AddPokemonForm = ({
   onCancel,
 }: {
   allPokemon: ListPokemon[];
-  onFinish?: (pokemonName: string, nickname: string) => void;
+  onFinish?: (pokemonName: string, nickname: string, caught: boolean) => void;
   onCancel?: () => void;
 }) => {
   const [pokemon, setPokemon]: UseState<string> = React.useState(null);
   const [nickname, setNickname]: UseState<string> = React.useState(null);
+  const [caught, setCaught] = React.useState(true);
 
   const [form] = Form.useForm();
 
   const handleFinish = () => {
-    if (onFinish) onFinish(pokemon, nickname);
     form.resetFields();
     setPokemon(null);
     setNickname(null);
+    setCaught(true);
+    if (onFinish) onFinish(pokemon, nickname, caught);
   };
 
   const handlePokemonChange = (value) => {
@@ -34,11 +36,16 @@ const AddPokemonForm = ({
     setNickname(evt.target.value);
   };
 
+  const handleCaughtChange = (evt) => {
+    setCaught(evt.target.checked);
+  };
+
   const handleCancel = () => {
-    if (onCancel) onCancel();
     form.resetFields();
     setPokemon(null);
     setNickname(null);
+    setCaught(true);
+    if (onCancel) onCancel();
   };
 
   return (
@@ -77,6 +84,12 @@ const AddPokemonForm = ({
           value={nickname}
           placeholder="Nickname"
         />
+      </Form.Item>
+
+      <Form.Item className={styles.item} name="caught" initialValue={true}>
+        <Checkbox onChange={handleCaughtChange} checked={caught}>
+          Caught
+        </Checkbox>
       </Form.Item>
 
       <Form.Item className={styles.itemButtons}>

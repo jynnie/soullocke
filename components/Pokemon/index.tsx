@@ -12,6 +12,7 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const avatarStyle = { backgroundColor: colorize(pokemon.name) + alpha(0.5) };
 
   React.useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
@@ -34,7 +35,7 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
           size="large"
           src={src}
           onClick={handleOpenModal}
-          style={{ backgroundColor: colorize(pokemon.name) + alpha(0.5) }}
+          style={avatarStyle}
         >
           {pokemon.nickname}
         </Avatar>

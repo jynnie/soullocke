@@ -1,5 +1,5 @@
 import type firebase from "firebase";
-import { EventType, Pokemon, PokemonLocation } from "models";
+import { EventType, Pokemon, PokemonEvent, PokemonLocation } from "models";
 import type {
   PokemonEvents,
   PlaceName,
@@ -60,14 +60,41 @@ export class Run {
   //----------------------------------#01F2DF
   //- Add Pokemon
 
-  public addCaughtPokemon = async (
+  public addPokemon = async (
+    pokemonName: string,
+    nickname: string,
+    playerId: string,
+    locationCaught: PlaceName,
+    caught: boolean = true,
+  ) => {
+    if (!this.runRef) return;
+
+    let pokemon;
+    if (caught) {
+      pokemon = await this.addCaughtPokemon(
+        pokemonName,
+        nickname,
+        playerId,
+        locationCaught,
+      );
+    } else {
+      pokemon = await this.addMissedPokemon(
+        pokemonName,
+        nickname,
+        playerId,
+        locationCaught,
+      );
+    }
+
+    return pokemon;
+  };
+
+  private addCaughtPokemon = async (
     pokemonName: string,
     nickname: string,
     playerId: string,
     locationCaught: PlaceName,
   ) => {
-    if (!this.runRef) return;
-
     const events: PokemonEvents = {
       0: { index: "0", type: EventType.catch, location: locationCaught },
     };
@@ -86,29 +113,153 @@ export class Run {
     return pokemon;
   };
 
-  public addMissedPokemon = () => {};
+  private addMissedPokemon = async (
+    pokemonName: string,
+    nickname: string,
+    playerId: string,
+    locationCaught: PlaceName,
+  ) => {
+    const events: PokemonEvents = {
+      0: { index: "0", type: EventType.missed, location: locationCaught },
+    };
+    const newPokemonRef = this.runRef.child(
+      `players/${playerId}/pokemon/${locationCaught}`,
+    );
+    const pokemon: Pokemon = {
+      origin: locationCaught,
+      name: pokemonName,
+      nickname,
+      events,
+      location: PokemonLocation.grave, // FIXME
+      shiny: false, // FIXME
+    };
+    await newPokemonRef.set(pokemon);
+    return pokemon;
+  };
 
   //----------------------------------#01F2DF
-  //- Soullocked Changes
+  //- Pokemon Events
 
-  public moveToBox = () => {};
+  public addEvent = async (
+    playerId: string,
+    pokemonOrigin: string,
+    type: EventType,
+    location: PlaceName,
+    details?: PokemonEvent["details"],
+  ) => {
+    if (!this.runRef) return;
 
-  public moveToDaycare = () => {};
+    const pokemonRef = this.runRef.child(
+      `players/${playerId}/pokemon/${pokemonOrigin}`,
+    );
+    const pokemonEventRef = pokemonRef.child(`events`);
 
-  public moveToTeam = () => {};
+    let event;
+    if (type === EventType.moved) {
+      if (details?.location === PokemonLocation.box) {
+        event = this.moveToBox(pokemonEventRef, location);
+      } else if (details?.location === PokemonLocation.daycare) {
+        event = this.moveToDaycare(pokemonEventRef, location);
+      } else if (details?.location === PokemonLocation.team) {
+        event = this.moveToTeam(pokemonEventRef, location);
+      }
+    } else if (type === EventType.defeated) {
+      event = this.markAsDefeated(playerId, pokemonOrigin, location);
+    } else if (type === EventType.evolved) {
+    }
+    return event;
+  };
 
-  public markAsDefeated = () => {};
+  // Take care that soullink doesn't get
+  // desynced
+  public removeEvent = (
+    playerId: string,
+    pokemonOrigin: string,
+    index: string,
+  ) => {
+    if (!this.runRef) return;
+  };
+
+  private moveToBox = (ref: Ref, location: PlaceName) => {
+    const eventRef = ref.push();
+    const event: PokemonEvent = {
+      index: eventRef.key,
+      type: EventType.moved,
+      location,
+      details: {
+        location: PokemonLocation.box,
+      },
+    };
+    eventRef.set(event);
+    return event;
+  };
+
+  private moveToDaycare = (ref: Ref, location: PlaceName) => {
+    const eventRef = ref.push();
+    const event: PokemonEvent = {
+      index: eventRef.key,
+      type: EventType.moved,
+      location,
+      details: {
+        location: PokemonLocation.daycare,
+      },
+    };
+    eventRef.set(event);
+    return event;
+  };
+
+  private moveToTeam = (ref: Ref, location: PlaceName) => {
+    const eventRef = ref.push();
+    const event: PokemonEvent = {
+      index: eventRef.key,
+      type: EventType.moved,
+      location,
+      details: {
+        location: PokemonLocation.team,
+      },
+    };
+    eventRef.set(event);
+    return event;
+  };
+
+  private markAsDefeated = (
+    playerWhoDefeated: string,
+    pokemonOrigin: PlaceName,
+    location: PlaceName,
+  ) => {
+    if (!this.runRef || !this.runData) return;
+
+    const playerArr = oVal(this.runData.players);
+    let event;
+
+    playerArr.forEach((player) => {
+      const isPlayerResponsible = player.id === playerWhoDefeated;
+      const pokemonRef = this.runRef.child(
+        `players/${player.id}/pokemon/${pokemonOrigin}`,
+      );
+
+      pokemonRef.child("location").set(PokemonLocation.grave);
+      const eventRef = pokemonRef.child("events").push();
+      event = {
+        index: eventRef.key,
+        type: isPlayerResponsible ? EventType.defeated : EventType.soulDeath,
+        location,
+        details: {
+          location: PokemonLocation.grave,
+        },
+      };
+      eventRef.set(event);
+    });
+
+    return event;
+  };
+
+  private addEvolution = (ref: Ref, location: PlaceName) => {};
 
   //----------------------------------#01F2DF
   //- Other Pokemon Events
 
-  public addEvolution = () => {};
-
   public removePokemon = () => {};
-
-  // Take care that soullink doesn't get
-  // desynced
-  public removeEvent = () => {};
 }
 
 // FIXME: Make these specific functions instead
