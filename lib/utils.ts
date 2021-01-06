@@ -8,7 +8,9 @@ export const cleanName = (name: string = "") => name.replace(/(_|-)/g, " ");
  * hashString & colorize credits go to
  * https://stackoverflow.com/questions/11120840/hash-string-into-rgb-color
  */
-export const hashString = (str: string) => {
+export const hashString = (str: string): number => {
+  if (!str) return 0;
+
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash += Math.pow(str.charCodeAt(i) * 31, str.length - i);

@@ -1,10 +1,18 @@
 import React from "react";
 import Box from "ui-box";
 import { alpha, colorize } from "lib/utils";
-import type { UseState, Pokemon, PokemonApiData } from "models";
+import { UseState, Pokemon, PokemonApiData, PokemonLocation } from "models";
 
 import Modal from "./Modal";
-import { Avatar, Tooltip } from "antd";
+import styles from "styles/Pokemon.module.scss";
+import { Avatar, Tooltip, Badge } from "antd";
+
+const BADGE_COLOR = {
+  team: "processing",
+  box: "success",
+  grave: "default",
+  daycare: "warning",
+};
 
 const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
   const [src, setSrc]: UseState<string> = React.useState(null);
@@ -15,11 +23,13 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
   const avatarStyle = { backgroundColor: colorize(pokemon.name) + alpha(0.5) };
 
   React.useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-      .then((res) => res.json())
-      .then((data: PokemonApiData) => {
-        setSrc(data?.sprites?.front_default);
-      });
+    if (pokemon.name) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+        .then((res) => res.json())
+        .then((data: PokemonApiData) => {
+          setSrc(data?.sprites?.front_default);
+        });
+    }
   }, [pokemon.name]);
 
   return (
@@ -31,14 +41,21 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
       />
 
       <Tooltip title={pokemon.nickname}>
-        <Avatar
-          size="large"
-          src={src}
-          onClick={handleOpenModal}
-          style={avatarStyle}
-        >
-          {pokemon.nickname}
-        </Avatar>
+        <Box position="relative">
+          <Badge
+            className={styles.badge}
+            status={BADGE_COLOR[pokemon.location || "grave"]}
+          >
+            <Avatar
+              size="large"
+              src={src}
+              onClick={handleOpenModal}
+              style={avatarStyle}
+            >
+              {pokemon.nickname || "?"}
+            </Avatar>
+          </Badge>
+        </Box>
       </Tooltip>
     </>
   );

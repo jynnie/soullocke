@@ -12,7 +12,6 @@ import Timeline from "components/Timeline";
 interface Props extends Run {
   allBadges: string[];
   allLocations: MapLocation[];
-  allPokemon: ListPokemon[];
 }
 
 const RunHome = ({
@@ -23,7 +22,6 @@ const RunHome = ({
   players,
   allBadges,
   allLocations,
-  allPokemon,
 }: Props) => {
   const playerArr = oVal(players || []);
 
@@ -34,9 +32,7 @@ const RunHome = ({
       <div>codename: {id}</div>
 
       <h4>timeline</h4>
-      <Timeline
-        {...{ timeline, players, allLocations, allBadges, allPokemon }}
-      />
+      <Timeline {...{ timeline, players, allLocations, allBadges }} />
     </div>
   );
 };

@@ -29,3 +29,12 @@ h6 {
 .capitalize {
   text-transform: capitalize;
 }
+
+.ant-timeline .ant-timeline-item:last-child .ant-timeline-item-tail {
+  display: none;
+}
+
+.ant-badge-status-processing {
+  position: absolute;
+  overflow: visible;
+}

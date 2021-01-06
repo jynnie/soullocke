@@ -19,6 +19,7 @@ const NO_RUN = { notFound: true };
 
 export const RunContext: React.Context<{
   RUN: RUN;
+  allPokemon: ListPokemon[];
 }> = React.createContext(null);
 
 /**
@@ -100,7 +101,6 @@ const RunPage = () => {
     players,
     allBadges,
     allLocations,
-    allPokemon,
   };
 
   //----------------------------------#01F2DF
@@ -110,7 +110,7 @@ const RunPage = () => {
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
   return (
-    <RunContext.Provider value={{ RUN: runDb }}>
+    <RunContext.Provider value={{ RUN: runDb, allPokemon }}>
       <div className={styles.container}>
         <Head>
           <title>Soullocke | {id}</title>

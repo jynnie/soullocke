@@ -1,4 +1,5 @@
 import React from "react";
+import { RunContext } from "pages/run/[id]";
 import type { UseState, PokemonListApiData as ListPokemon } from "models";
 
 import styles from "styles/Form.module.scss";
@@ -6,14 +7,13 @@ import { Checkbox, Form, Select, Input, Button } from "antd";
 const { Option } = Select;
 
 const AddPokemonForm = ({
-  allPokemon,
   onFinish,
   onCancel,
 }: {
-  allPokemon: ListPokemon[];
   onFinish?: (pokemonName: string, nickname: string, caught: boolean) => void;
   onCancel?: () => void;
 }) => {
+  const { allPokemon } = React.useContext(RunContext);
   const [pokemon, setPokemon]: UseState<string> = React.useState(null);
   const [nickname, setNickname]: UseState<string> = React.useState(null);
   const [caught, setCaught] = React.useState(true);
