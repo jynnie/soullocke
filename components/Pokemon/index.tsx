@@ -6,8 +6,11 @@ import { UseState, Pokemon, PokemonApiData, PokemonLocation } from "models";
 import Modal from "./Modal";
 import styles from "styles/Pokemon.module.scss";
 import { Avatar, Tooltip, Badge } from "antd";
+import { BadgeProps } from "antd/lib/badge";
 
-const BADGE_COLOR = {
+const BADGE_COLOR: {
+  [key: string]: BadgeProps["status"];
+} = {
   team: "processing",
   box: "success",
   grave: "default",
@@ -41,17 +44,12 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
       />
 
       <Tooltip title={pokemon.nickname}>
-        <Box position="relative">
+        <Box position="relative" onClick={handleOpenModal}>
           <Badge
             className={styles.badge}
             status={BADGE_COLOR[pokemon.location || "grave"]}
           >
-            <Avatar
-              size="large"
-              src={src}
-              onClick={handleOpenModal}
-              style={avatarStyle}
-            >
+            <Avatar size="large" src={src} style={avatarStyle}>
               {pokemon.nickname || "?"}
             </Avatar>
           </Badge>
