@@ -30,7 +30,7 @@ export class Run {
   //- Timeline
 
   public addNewLocation = async (location: PlaceName) => {
-    if (!this.runData || !this.runRef) return;
+    if (!this.runData || !this.runRef || !location) return;
 
     let index: number = 0;
     if (this.runData.timeline) {
@@ -40,13 +40,11 @@ export class Run {
       index = prevLargest.index + 1;
     }
 
-    const newLocationRef = await this.runRef.child(`timeline`).push();
-    const newTimeline: Timeline = {
-      key: newLocationRef.key,
+    await this.runRef.child(`timeline/${location}`).set({
+      key: location,
       index,
       name: location,
-    };
-    await newLocationRef.set(newTimeline);
+    });
     return location;
   };
 
