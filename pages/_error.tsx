@@ -7,7 +7,7 @@ const statusCodes = {
   500: "Internal Server Error",
 };
 
-const Error = ({ statusCode, title }) => {
+function Error({ statusCode, title }) {
   const errorDetails =
     title || statusCodes[statusCode] || "An error has occurred";
 
@@ -19,7 +19,7 @@ const Error = ({ statusCode, title }) => {
       </div>
     </div>
   );
-};
+}
 
 Error.getInitialProps = ({ res, err }) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;

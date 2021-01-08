@@ -12,7 +12,7 @@ import { Modal, Timeline } from "antd";
 // TODO: Delete event (also deletes pokemon)
 // TODO: Buttons for move to team (does it require a trade?)
 
-const PokemonModal = ({
+function PokemonModal({
   pokemon,
   playerId,
   location,
@@ -24,7 +24,7 @@ const PokemonModal = ({
   location: string;
   showModal: boolean;
   onCancel: () => void;
-}) => {
+}) {
   const { RUN } = React.useContext(RunContext);
 
   // FIXME: Sort array by timeline
@@ -54,6 +54,6 @@ const PokemonModal = ({
       </Timeline>
     </Modal>
   );
-};
+}
 
 export default PokemonModal;

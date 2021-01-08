@@ -6,7 +6,7 @@ import styles from "styles/Form.module.scss";
 import { Checkbox, Form, Select, Input, Button } from "antd";
 const { Option } = Select;
 
-const AddPokemonForm = ({
+function AddPokemonForm({
   onFinish,
   onCancel,
   showCaughtCheckbox = true,
@@ -14,7 +14,7 @@ const AddPokemonForm = ({
   onFinish?: (pokemonName: string, nickname: string, caught: boolean) => void;
   onCancel?: () => void;
   showCaughtCheckbox?: boolean;
-}) => {
+}) {
   const { allPokemon } = React.useContext(RunContext);
   const [pokemon, setPokemon]: UseState<string> = React.useState(null);
   const [nickname, setNickname]: UseState<string> = React.useState(null);
@@ -111,6 +111,6 @@ const AddPokemonForm = ({
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default AddPokemonForm;

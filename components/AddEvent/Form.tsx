@@ -14,7 +14,7 @@ import { Form, Select, Button } from "antd";
 import { cleanName, oVal } from "lib/utils";
 const { Option } = Select;
 
-const AddEventForm = ({
+function AddEventForm({
   pokemon,
   onFinish,
   onCancel,
@@ -26,7 +26,7 @@ const AddEventForm = ({
     eventDetails: PokemonEvent["details"],
   ) => void;
   onCancel?: () => void;
-}) => {
+}) {
   const { RUN, allPokemon } = React.useContext(RunContext);
 
   //----------------------------------#01F2DF
@@ -189,6 +189,6 @@ const AddEventForm = ({
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default AddEventForm;
