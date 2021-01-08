@@ -54,7 +54,10 @@ const AddPokemonForm = ({
         className={styles.item}
         name="pokemon"
         rules={[
-          { required: true, message: "Please choose what Pokémon was caught" },
+          {
+            required: caught,
+            message: "Please choose what Pokémon was caught",
+          },
         ]}
       >
         <Select
@@ -76,7 +79,10 @@ const AddPokemonForm = ({
         className={styles.item}
         name="nickname"
         rules={[
-          { required: true, message: "Please input your Pokémon's nickname" },
+          {
+            required: caught,
+            message: "Please input your Pokémon's nickname",
+          },
         ]}
       >
         <Input
