@@ -54,7 +54,16 @@ const TimelineGrid = ({
 
             if (isBadge) return <div {...{ key }} />;
             if (playerPokemon)
-              return <Pokemon {...{ key, pokemon: playerPokemon }} />;
+              return (
+                <Pokemon
+                  {...{
+                    key,
+                    playerId: p.id,
+                    location: t.name,
+                    pokemon: playerPokemon,
+                  }}
+                />
+              );
             return (
               <AddPokemon {...{ key, playerId: p.id, location: t.name }} />
             );

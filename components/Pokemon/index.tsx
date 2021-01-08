@@ -17,7 +17,15 @@ const BADGE_COLOR: {
   daycare: "warning",
 };
 
-const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
+const PokemonIcon = ({
+  pokemon,
+  playerId,
+  location,
+}: {
+  pokemon: Pokemon;
+  playerId: string;
+  location: string;
+}) => {
   const [src, setSrc]: UseState<string> = React.useState(null);
   const [showModal, setShowModal]: UseState<boolean> = React.useState(null);
 
@@ -38,9 +46,13 @@ const PokemonIcon = ({ pokemon }: { pokemon: Pokemon }) => {
   return (
     <>
       <Modal
-        pokemon={pokemon}
-        showModal={showModal}
-        onCancel={handleCloseModal}
+        {...{
+          pokemon,
+          location,
+          playerId,
+          showModal,
+          onCancel: handleCloseModal,
+        }}
       />
 
       <Tooltip title={pokemon.nickname}>

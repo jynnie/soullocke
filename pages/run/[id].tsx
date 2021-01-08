@@ -32,7 +32,7 @@ const RunPage = () => {
   const { id: rawId, view } = router.query;
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  const { db } = React.useContext(FirebaseContext);
+  const db = React.useContext(FirebaseContext)?.db;
   const runRef = db?.ref(id);
   // const runRef = React.useMemo(() => db?.ref(id), [!!db, id]);
   const runDb = React.useMemo(() => new RUN(runRef), []);
