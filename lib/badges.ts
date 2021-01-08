@@ -89,5 +89,5 @@ const galar: string[] = [
   "Dragon_Badge",
 ];
 
-export { indigo, johto, hoenn, kalos, galar };
-export default { indigo, johto, hoenn, kalos, galar };
+export { indigo, johto, hoenn, sinnoh, unova, kalos, galar };
+export default { indigo, johto, hoenn, sinnoh, unova, kalos, galar };
