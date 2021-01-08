@@ -26,7 +26,7 @@ export const FirebaseContext: React.Context<{
   db: firebase.database.Database;
 }> = React.createContext(null);
 
-const MyApp = ({ Component, pageProps }) => {
+function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
@@ -38,6 +38,6 @@ const MyApp = ({ Component, pageProps }) => {
       </FirebaseContext.Provider>
     </>
   );
-};
+}
 
 export default MyApp;
