@@ -9,7 +9,7 @@ import PokemonForm from "components/AddPokemon/Form";
 import { Modal, Timeline } from "antd";
 
 // TODO: Delete pokemon (doesn't delete events)
-// TODO: Delete event
+// TODO: Delete event (also deletes pokemon)
 // TODO: Buttons for move to team (does it require a trade?)
 
 const PokemonModal = ({
