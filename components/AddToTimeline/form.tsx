@@ -42,6 +42,9 @@ const AddToTimelineForm = ({
         onChange={handleChange}
         placeholder="Select Location"
       >
+        <Option value="starter" className={styles.option}>
+          Starter
+        </Option>
         {allLocations?.map((l) => (
           <Option key={l.name} value={l.name} className={styles.option}>
             {cleanName(l.name)}
