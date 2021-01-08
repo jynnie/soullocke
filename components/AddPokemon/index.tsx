@@ -11,6 +11,8 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
+// TODO: Prompt asking if goes to box or team
+
 const AddPokemon = ({
   playerId,
   location,

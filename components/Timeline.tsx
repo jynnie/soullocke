@@ -10,6 +10,7 @@ import AddPokemon from "components/AddPokemon";
 
 // TODO: Search and filter
 // TODO: Delete location
+// TODO: Roam research style help legend
 // TODO: Scrolling?
 
 /**
