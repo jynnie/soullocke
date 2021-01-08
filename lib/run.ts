@@ -141,6 +141,41 @@ export class Run {
     return pokemon;
   };
 
+  public backfillPokemon = async (
+    pokemonName: string,
+    nickname: string,
+    playerId: string,
+    origin: string,
+  ) => {
+    if (!this.runRef) return;
+
+    const newPokemonRef = this.runRef.child(
+      `players/${playerId}/pokemon/${origin}`,
+    );
+    const pokemon = {
+      playerId,
+      origin,
+      name: pokemonName,
+      nickname,
+      shiny: false, // FIXME
+    };
+    await newPokemonRef.update(pokemon);
+
+    const alive =
+      this.runData?.players[playerId]?.pokemon[origin]?.location !==
+      PokemonLocation.grave;
+    if (alive) {
+      const catchEvent: PokemonEvent = {
+        index: "0",
+        type: EventType.catch,
+        location: origin,
+      };
+      await newPokemonRef.child("events/0").set(catchEvent);
+    }
+
+    return pokemon;
+  };
+
   //----------------------------------#01F2DF
   //- Pokemon Events
 

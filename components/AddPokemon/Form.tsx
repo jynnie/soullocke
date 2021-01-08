@@ -9,9 +9,11 @@ const { Option } = Select;
 const AddPokemonForm = ({
   onFinish,
   onCancel,
+  showCaughtCheckbox = true,
 }: {
   onFinish?: (pokemonName: string, nickname: string, caught: boolean) => void;
   onCancel?: () => void;
+  showCaughtCheckbox?: boolean;
 }) => {
   const { allPokemon } = React.useContext(RunContext);
   const [pokemon, setPokemon]: UseState<string> = React.useState(null);
@@ -92,14 +94,16 @@ const AddPokemonForm = ({
         />
       </Form.Item>
 
-      <Form.Item className={styles.item} name="caught" initialValue={true}>
-        <Checkbox onChange={handleCaughtChange} checked={caught}>
-          Caught
-        </Checkbox>
-      </Form.Item>
+      {showCaughtCheckbox && (
+        <Form.Item className={styles.item} name="caught" initialValue={true}>
+          <Checkbox onChange={handleCaughtChange} checked={caught}>
+            Caught
+          </Checkbox>
+        </Form.Item>
+      )}
 
       <Form.Item className={styles.itemButtons}>
-        <Button onClick={handleCancel}>Cancel</Button>
+        {onCancel && <Button onClick={handleCancel}>Cancel</Button>}
 
         <Button type="primary" htmlType="submit">
           Add
