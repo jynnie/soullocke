@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "ui-box";
 import cn from "classnames";
-import { alpha, colorize } from "lib/utils";
-import { UseState, Pokemon, PokemonApiData } from "models";
+import { alpha, colorize, oVal } from "lib/utils";
+import { UseState, Pokemon, PokemonApiData, EventType } from "models";
 
 import styles from "styles/Pokemon.module.scss";
 import { Avatar, Tooltip, Badge } from "antd";
@@ -20,6 +20,10 @@ export function PokemonIcon({
   const pokemonName = pokemon?.name || "?";
   const pokemonNickname = pokemon?.nickname || "?";
   const pokemonLocation = pokemon?.location || "grave";
+  const pokemonEventsArr = oVal(pokemon?.events || []);
+  const evolutionEvents = pokemonEventsArr.filter(
+    (e) => e.type === EventType.evolved,
+  );
 
   const [src, setSrc]: UseState<string> = React.useState(null);
   const avatarStyle = {
@@ -28,13 +32,15 @@ export function PokemonIcon({
 
   React.useEffect(() => {
     if (pokemonName) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+      const latestEvolution = evolutionEvents.slice(-1)?.[0];
+      const searchPokemon = latestEvolution?.details?.evolution ?? pokemonName;
+      fetch(`https://pokeapi.co/api/v2/pokemon/${searchPokemon}`)
         .then((res) => res.json())
         .then((data: PokemonApiData) => {
           setSrc(data?.sprites?.front_default);
         });
     }
-  }, [pokemon?.name]);
+  }, [pokemon?.name, evolutionEvents.length]);
 
   return (
     <Tooltip title={pokemonNickname}>
