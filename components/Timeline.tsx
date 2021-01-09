@@ -7,11 +7,7 @@ import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
-
-// TODO: Search and filter
-// TODO: Delete location
-// TODO: Roam research style help legend
-// TODO: Scrolling?
+import MovePokemonToTeam from "components/MovePokemonToTeam";
 
 /**
  * Timeline Grid
