@@ -258,8 +258,13 @@ export class Run {
       event = this.movePokemon(pokemonOrigin, location, details.location);
     } else if (type === EventType.defeated) {
       event = this.markAsDefeated(playerId, pokemonOrigin, location);
-    } else if (type === EventType.evolved) {
-      // event = this.addEvolution()
+    } else if (type === EventType.evolved && !!details?.evolution) {
+      event = this.addEvolution(
+        playerId,
+        pokemonOrigin,
+        location,
+        details.evolution,
+      );
     }
     return event;
   };
@@ -354,7 +359,30 @@ export class Run {
     return event;
   };
 
-  private addEvolution = (ref: Ref, location: PlaceName) => {};
+  private addEvolution = (
+    playerId: string,
+    pokemonOrigin: PlaceName,
+    location: PlaceName,
+    evolution: string,
+  ) => {
+    const pokemonRef = this.runRef.child(
+      `players/${playerId}/pokemon/${pokemonOrigin}`,
+    );
+
+    pokemonRef.child("origin").set(pokemonOrigin);
+    const eventRef = pokemonRef.child("events").push();
+    const event = {
+      index: eventRef.key,
+      type: EventType.evolved,
+      location,
+      details: {
+        evolution,
+      },
+    };
+    eventRef.set(event);
+
+    return event;
+  };
 
   //----------------------------------#01F2DF
   //- Other Pokemon Events

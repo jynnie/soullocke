@@ -1,5 +1,5 @@
 🐛 Bugs
-- [ ] Add evolution event not working
+- [X] Add evolution event
 
 🌶🌶🌶 Would prominently improve experience & usability
 - [X] UX: Move Pokemon to team prompt right after adding Pokemon
@@ -7,16 +7,16 @@
 - [ ] Timeline: Delete location
 
 🌶🌶 Would improve experience in certain scenarios
-- [ ] PokemonIcon: Show evolved Pokemon
+- [X] PokemonIcon: Show evolved Pokemon
 - [ ] Timeline: Display pokemon names (possibly events) to the right
 - [ ] Pokemon: Edit pokemon name and nickname -- helps when mistakes are made
 
 🌶 Should have, but low value add rn
-- [ ] Roam Research style Legend for icons
+- [ ] Roam Research style Legend for icons, or make indicators more obvious
 - [ ] Timeline: Add search and filter
 - [ ] Pokemon: Delete
 - [ ] Pokemon: Delete event
 
 🧊 Unseasoned thoughts
-- [ ] Scrolling?
+- [-] Scrolling? -- already handled
 - [ ] Pokemon: Event Buttons instead of filling out form?
