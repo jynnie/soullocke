@@ -4,6 +4,11 @@ export const oKey = Object.keys;
 
 export const cleanName = (name: string = "") => name.replace(/(_|-)/g, " ");
 
+export const isNullish = (v: any) => {
+  const random = Math.random();
+  return (v ?? random) === random;
+};
+
 /**
  * hashString & colorize credits go to
  * https://stackoverflow.com/questions/11120840/hash-string-into-rgb-color
@@ -36,4 +41,12 @@ export const alpha = (number: number) => {
   return ("0" + Math.round(number * 255).toString(16)).substr(-2);
 };
 
-export default { oVal, oKey, cleanName, hashString, colorize, alpha };
+export default {
+  oVal,
+  oKey,
+  cleanName,
+  isNullish,
+  hashString,
+  colorize,
+  alpha,
+};

@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "ui-box";
+import cn from "classnames";
 import { alpha, colorize } from "lib/utils";
 import { UseState, Pokemon, PokemonApiData } from "models";
 
@@ -10,9 +11,11 @@ import { BADGE_COLOR } from "./index";
 export function PokemonIcon({
   pokemon,
   onClick = null,
+  hideBadge = false,
 }: {
   pokemon: Pokemon;
   onClick?: () => void;
+  hideBadge?: boolean;
 }) {
   const pokemonName = pokemon?.name || "?";
   const pokemonNickname = pokemon?.nickname || "?";
@@ -37,7 +40,7 @@ export function PokemonIcon({
     <Tooltip title={pokemonNickname}>
       <Box position="relative" onClick={onClick}>
         <Badge
-          className={styles.badge}
+          className={cn(styles.badge, { [styles.badgeHide]: hideBadge })}
           status={BADGE_COLOR[pokemonLocation]}
           title={pokemonLocation}
         >

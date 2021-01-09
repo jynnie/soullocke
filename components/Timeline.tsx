@@ -1,7 +1,8 @@
 import React from "react";
 import Box from "ui-box";
+import { RunContext } from "pages/run/[id]";
 import { oVal, cleanName } from "lib/utils";
-import type { Run, MapLocation } from "models";
+import type { Run, MapLocation, UseState, PlaceName } from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
@@ -25,9 +26,19 @@ function TimelineGrid({
   allLocations: MapLocation[];
   allBadges: string[];
 }) {
+  const { RUN } = React.useContext(RunContext);
+  const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
+
   const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
   const playerArr = oVal(players || []);
   const numTrainers = playerArr.length;
+
+  const handleFinishAdd = (location: PlaceName) => {
+    return (caught: boolean) => {
+      const allPokemonSet = RUN.haveAllPlayersGotPokemonAt(location);
+      if (caught && allPokemonSet) setATTO(location);
+    };
+  };
 
   return (
     <Box
@@ -60,13 +71,27 @@ function TimelineGrid({
                 />
               );
             return (
-              <AddPokemon {...{ key, playerId: p.id, location: t.name }} />
+              <AddPokemon
+                {...{
+                  key,
+                  playerId: p.id,
+                  location: t.name,
+                  onFinish: handleFinishAdd(t.name),
+                }}
+              />
             );
           })}
         </React.Fragment>
       ))}
 
       <AddToTimeline {...{ allLocations, allBadges }} />
+
+      <MovePokemonToTeam
+        pokemonOrigin={addToTeamOrigin}
+        currentLocation={addToTeamOrigin}
+        visible={!!addToTeamOrigin}
+        onCancel={() => setATTO(null)}
+      />
     </Box>
   );
 }

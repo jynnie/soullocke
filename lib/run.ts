@@ -27,6 +27,73 @@ export class Run {
   };
 
   //----------------------------------#01F2DF
+  //- Getters
+
+  public getPlayersArray = () => {
+    if (!this.runData) return;
+    const playersArr = oVal(this.runData.players);
+    return playersArr;
+  };
+
+  public getPokemonOnTeam = (): { [playerId: string]: Pokemon[] } => {
+    if (!this.runData || !this.runData.players) return {};
+
+    const result = {};
+    const playersArr = oVal(this.runData.players);
+    playersArr.forEach((player) => {
+      const pokemonOnTeam = oVal(player.pokemon || []).filter(
+        (p) => p.location === PokemonLocation.team,
+      );
+      result[player.id] = pokemonOnTeam;
+    });
+    return result;
+  };
+
+  public getPokemonOnPlayerTeam = (playerId: string) => {
+    if (!this.runData || !this.runData.players || !playerId) return;
+
+    return oVal(this.runData.players[playerId]?.pokemon || []).filter(
+      (p) => p.location === PokemonLocation.team,
+    );
+  };
+
+  public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
+    if (!this.runData) return;
+
+    const playersArr = this.getPlayersArray();
+    const matchingPokemon = playersArr.map(
+      (player) => player.pokemon?.[origin],
+    );
+
+    return matchingPokemon;
+  };
+
+  public getPlayerPokemonByOrigin = (origin: string, playerId: string) => {};
+
+  public haveAllPlayersGotPokemonAt = (origin: string) => {
+    if (!this.runData) return;
+
+    const existingPokemon = this.getPokemonByOrigin(origin).filter((p) => !!p);
+    const playersArr = this.getPlayersArray();
+    return existingPokemon.length === playersArr.length;
+  };
+
+  //----------------------------------#01F2DF
+  //- Organizational Helpers
+
+  public groupByOrigin = (
+    allPokemon: Pokemon[],
+  ): { [origin: string]: Pokemon[] } => {
+    const result = {};
+    for (let pokemon of allPokemon) {
+      const origin = pokemon.origin;
+      if (origin in result) continue;
+      result[origin] = allPokemon.filter((p) => p.origin === origin);
+    }
+    return result;
+  };
+
+  //----------------------------------#01F2DF
   //- Timeline
 
   public addNewLocation = async (location: PlaceName) => {
@@ -207,6 +274,28 @@ export class Run {
     if (!this.runRef) return;
   };
 
+  public swapPokemonOnTeam = async (
+    originToTeam: PlaceName | PlaceName[],
+    originFromTeam: PlaceName | PlaceName[],
+    location: PlaceName,
+  ) => {
+    const joiningTeam = Array.isArray(originToTeam)
+      ? originToTeam
+      : [originToTeam];
+    const leavingTeam = Array.isArray(originFromTeam)
+      ? originFromTeam
+      : [originFromTeam];
+
+    const joiningPromises = joiningTeam.map((o) =>
+      this.movePokemon(o, location, PokemonLocation.team),
+    );
+    const leavingPromises = leavingTeam.map((o) =>
+      this.movePokemon(o, location, PokemonLocation.box),
+    );
+    await Promise.all([...joiningPromises, ...leavingPromises]);
+    return true;
+  };
+
   private movePokemon = (
     pokemonOrigin: PlaceName,
     location: PlaceName,
@@ -220,6 +309,7 @@ export class Run {
         `players/${player.id}/pokemon/${pokemonOrigin}`,
       );
 
+      pokemonRef.child("origin").set(pokemonOrigin);
       pokemonRef.child("location").set(pokemonLocation);
       const eventRef = pokemonRef.child("events").push();
       event = {
@@ -285,6 +375,7 @@ export class Run {
         `players/${player.id}/pokemon/${pokemonOrigin}`,
       );
 
+      pokemonRef.child("origin").set(pokemonOrigin);
       pokemonRef.child("location").set(PokemonLocation.grave);
       const eventRef = pokemonRef.child("events").push();
       event = {

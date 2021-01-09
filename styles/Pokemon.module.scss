@@ -1,4 +1,9 @@
 .badge {
+  &Hide {
+    sup[class^="ant-"] {
+      display: none;
+    }
+  }
 }
 
 .group {
@@ -7,4 +12,24 @@
   & > *:not(:first-child) {
     margin-left: -6px;
   }
+
+  &Actionable {
+    transition: filter 0.2s;
+    &:hover {
+      filter: drop-shadow(0 0 4px #969696);
+    }
+  }
+
+  &Selected {
+    filter: drop-shadow(0 0 4px #fff);
+    &:hover {
+      filter: drop-shadow(0 0 4px #fff);
+    }
+  }
+}
+
+.party {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 24px;
 }
