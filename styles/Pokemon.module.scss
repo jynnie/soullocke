@@ -1,2 +1,10 @@
 .badge {
 }
+
+.group {
+  display: inline-flex;
+
+  & > *:not(:first-child) {
+    margin-left: -6px;
+  }
+}

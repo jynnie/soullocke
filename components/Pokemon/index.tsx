@@ -1,14 +1,3 @@
-import { BadgeProps } from "antd/lib/badge";
+import { TimelinePokemon } from "./Pokemon";
 
-import { PokemonIcon } from "./PokemonIcon";
-
-export const BADGE_COLOR: {
-  [key: string]: BadgeProps["status"];
-} = {
-  team: "processing",
-  box: "success",
-  grave: "default",
-  daycare: "warning",
-};
-
-export default PokemonIcon;
+export default TimelinePokemon;
