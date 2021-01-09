@@ -1,6 +1,6 @@
 # Soullocke
 
-**Soullocke** (link tbd) is a tracker built specifically for tracking [soul-linked Nuzlocke](https://pastebin.com/Fg6hfDma) runs. Unlike other Nuzlocke trackers, Soullocke tracks the pokemon across two trainers with quality of life features to help track which Pokémon are soul-linked.
+**Soullocke** ([soullocke.vercel.app](https://soullocke.vercel.app)) is a tracker built specifically for tracking [soul-linked Nuzlocke](https://pastebin.com/Fg6hfDma) runs. Unlike other Nuzlocke trackers, Soullocke tracks the pokemon across two trainers with quality of life features to help track which Pokémon are soul-linked.
 
 ## ✨ Features
 
