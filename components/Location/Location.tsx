@@ -16,7 +16,7 @@ export function LocationListing({
 
   if (!name) return null;
   const pokemonArr = RUN.getPokemonByOrigin(name).filter((p) => !!p);
-  const pokemonLocation = pokemonArr?.[0].location || PokemonLocation.grave;
+  const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
 
   return (
     <div className={styles.location}>
