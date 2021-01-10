@@ -58,7 +58,7 @@ export class Run {
   };
 
   public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
-    if (!this.runData) return;
+    if (!this.runData) return [];
 
     const playersArr = this.getPlayersArray();
     const matchingPokemon = playersArr.map(
