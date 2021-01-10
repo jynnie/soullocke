@@ -1,11 +1,12 @@
 import React from "react";
 import Box from "ui-box";
 import { RunContext } from "pages/run/[id]";
-import { oVal, cleanName } from "lib/utils";
+import { cleanName, oVal } from "lib/utils";
 import type { Run, MapLocation, UseState, PlaceName } from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
+import Location from "components/Location";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
@@ -41,58 +42,62 @@ function TimelineGrid({
   };
 
   return (
-    <Box
-      className={styles.container}
-      gridTemplateColumns={`1fr repeat(${numTrainers}, 60px)`}
-    >
-      <div>Location</div>
-      {playerArr.map((p) => (
-        <div key={p.id}>{p.name}</div>
-      ))}
+    <>
+      <Box is="table" className={styles.table}>
+        <colgroup>
+          <col />
+          <col span={numTrainers} />
+          <col />
+        </colgroup>
 
-      {timelineArr.map((t) => (
-        <React.Fragment key={t.key}>
-          <div className="capitalize">{cleanName(t.name)}</div>
-          {playerArr.map((p) => {
-            const key = t.key + p.name;
-            const playerPokemon = p.pokemon ? p.pokemon[t.name] : null;
-            const isBadge = /badge/gi.test(t.name);
+        <thead>
+          <tr>
+            <th>Location</th>
+            {playerArr.map((p) => (
+              <th key={p.id}>{p.name}</th>
+            ))}
+            <th>Summary</th>
+          </tr>
+        </thead>
 
-            if (isBadge) return <div {...{ key }} />;
-            if (playerPokemon)
-              return (
-                <Pokemon
-                  {...{
-                    key,
-                    playerId: p.id,
-                    location: t.name,
-                    pokemon: playerPokemon,
-                  }}
-                />
-              );
-            return (
-              <AddPokemon
-                {...{
+        <tbody>
+          {timelineArr.map((t) => (
+            <tr key={t.key} data-row-key={t.key}>
+              <td key={t.name}>{cleanName(t.name)}</td>
+
+              {playerArr.map((p) => {
+                const key = t.key + p.name;
+                const playerPokemon = p.pokemon ? p.pokemon[t.name] : null;
+                const isBadge = /badge/gi.test(t.name);
+                const props = {
                   key,
                   playerId: p.id,
                   location: t.name,
                   onFinish: handleFinishAdd(t.name),
-                }}
-              />
-            );
-          })}
-        </React.Fragment>
-      ))}
+                  pokemon: playerPokemon,
+                };
 
+                if (isBadge) return <td>-</td>;
+                let display = <AddPokemon {...props} />;
+                if (playerPokemon) display = <Pokemon {...props} />;
+                return <td>{display}</td>;
+              })}
+
+              <td>
+                <Location name={t.name} index={t.index} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Box>
       <AddToTimeline {...{ allLocations, allBadges }} />
-
       <MovePokemonToTeam
         pokemonOrigin={addToTeamOrigin}
         currentLocation={addToTeamOrigin}
         visible={!!addToTeamOrigin}
         onCancel={() => setATTO(null)}
       />
-    </Box>
+    </>
   );
 }
 

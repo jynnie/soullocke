@@ -1,4 +1,39 @@
-.container {
-  display: grid;
-  grid-gap: 16px;
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  thead tr {
+    th {
+      padding: 8px 12px;
+
+      border-top: 1px solid var(--secondary);
+      border-bottom: 1px solid var(--secondary);
+      background: lighten(#18181b, 3%);
+
+      font-weight: 400;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    th:first-of-type {
+      border-radius: 4px 0 0 4px;
+      border-left: 1px solid var(--secondary);
+    }
+
+    th:last-of-type {
+      border-radius: 0 4px 4px 0;
+      border-right: 1px solid var(--secondary);
+    }
+  }
+
+  tbody {
+    tr td {
+      padding: 8px 12px;
+
+      border-bottom: 1px solid var(--tertiary);
+
+      text-transform: capitalize;
+    }
+  }
 }

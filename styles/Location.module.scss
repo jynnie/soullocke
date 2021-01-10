@@ -1,0 +1,59 @@
+.location {
+  display: flex;
+  align-items: center;
+
+  text-transform: capitalize;
+  font-weight: 400;
+  color: var(--text-tertiary);
+
+  [class*="badge"] sup {
+    right: -10px;
+  }
+}
+
+.badge {
+  text-transform: uppercase;
+
+  &.team sup {
+    color: #fce7f3;
+    background-color: #ec4899;
+  }
+  &.box sup {
+    color: #38bdf8;
+    background-color: #075985;
+  }
+  &.grave sup {
+    color: #a1a1aa;
+    background-color: #52525b;
+  }
+  &.daycare sup {
+    color: #fbbf24;
+    background-color: #b45309;
+  }
+}
+
+.tag {
+  text-transform: uppercase;
+
+  &.team {
+    font-weight: 500;
+    color: #f9a8d4;
+    border-color: #ec4899;
+    background-color: darken(#ec4899, 30%);
+  }
+  &.box {
+    color: #38bdf8;
+    border-color: #075985;
+    background-color: darken(#075985, 10%);
+  }
+  &.grave {
+    color: #a1a1aa;
+    border-color: #52525b;
+    background-color: darken(#52525b, 10%);
+  }
+  &.daycare {
+    color: #fbbf24;
+    border-color: #b45309;
+    background-color: darken(#b45309, 10%);
+  }
+}

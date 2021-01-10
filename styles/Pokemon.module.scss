@@ -1,24 +1,3 @@
-.badge {
-  text-transform: uppercase;
-
-  &.team sup {
-    color: #fce7f3;
-    background-color: #ec4899;
-  }
-  &.box sup {
-    color: #38bdf8;
-    background-color: #075985;
-  }
-  &.grave sup {
-    color: #a1a1aa;
-    background-color: #52525b;
-  }
-  &.daycare sup {
-    color: #fbbf24;
-    background-color: #b45309;
-  }
-}
-
 .group {
   display: inline-flex;
 

@@ -49,6 +49,15 @@ interface Timeline {
   name: PlaceName;
 }
 
+interface Player {
+  id: string;
+  name: string;
+  // Pokemon to locations is 1 to 1
+  pokemon: {
+    [origin: string]: Pokemon;
+  };
+}
+
 interface Run {
   id: string;
   password?: string;
@@ -57,14 +66,7 @@ interface Run {
 
   timeline: Timeline[];
   players: {
-    [id: string]: {
-      id: string;
-      name: string;
-      // Pokemon to locations is 1 to 1
-      pokemon: {
-        [origin: string]: Pokemon;
-      };
-    };
+    [id: string]: Player;
   };
 }
 
@@ -72,5 +74,13 @@ interface RealtimeDatabase {
   [id: string]: Run;
 }
 
-export type { PlaceName, Pokemon, PokemonEvents, PokemonEvent, Run, Timeline };
+export type {
+  PlaceName,
+  Pokemon,
+  PokemonEvents,
+  PokemonEvent,
+  Run,
+  Timeline,
+  Player,
+};
 export { PokemonLocation, EventType };
