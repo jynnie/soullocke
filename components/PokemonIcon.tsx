@@ -15,11 +15,11 @@ import { Avatar, Tooltip } from "antd";
 export function PokemonIcon({
   pokemon,
   onClick = null,
-  hideBadge = false,
+  showBadge = false,
 }: {
   pokemon: Pokemon;
   onClick?: () => void;
-  hideBadge?: boolean;
+  showBadge?: boolean;
 }) {
   const pokemonName = pokemon?.name || "?";
   const pokemonNickname = pokemon?.nickname || "?";
@@ -49,7 +49,7 @@ export function PokemonIcon({
   return (
     <Tooltip title={`${pokemonNickname}`} placement="right">
       <Box position="relative" onClick={onClick} width="max-content">
-        <LocationBadge {...{ pokemonLocation, hide: hideBadge }}>
+        <LocationBadge {...{ pokemonLocation, hide: !showBadge }}>
           <Avatar size="large" src={src} style={avatarStyle}>
             {pokemonNickname}
           </Avatar>

@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import { PokemonLocation } from "models";
 
-import styles from "styles/Pokemon.module.scss";
+import styles from "styles/Location.module.scss";
 import { Badge } from "antd";
 
 export function LocationBadge({
@@ -11,7 +11,7 @@ export function LocationBadge({
   hide = false,
 }: {
   pokemonLocation: PokemonLocation;
-  children?: JSX.Element[] | JSX.Element;
+  children?: Element | any;
   hide?: boolean;
 }) {
   return (
