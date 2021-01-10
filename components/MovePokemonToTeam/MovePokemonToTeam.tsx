@@ -103,7 +103,7 @@ export function MovePokemonToTeam({
                 selected={swapOut.includes(o)}
               >
                 {teamGroupedByOrigin[o].map((p, j) => (
-                  <PokemonIcon hideBadge key={j} pokemon={p} />
+                  <PokemonIcon key={j} pokemon={p} />
                 ))}
               </PokemonGroup>
             ))}
