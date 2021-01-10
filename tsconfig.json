@@ -5,8 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
-    // Done so that Vercel can build
-    "forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
