@@ -1,12 +1,16 @@
 import React from "react";
 import Box from "ui-box";
-import cn from "classnames";
 import { alpha, colorize, oVal } from "lib/utils";
-import { UseState, Pokemon, PokemonApiData, EventType } from "models";
+import {
+  UseState,
+  Pokemon,
+  PokemonApiData,
+  EventType,
+  PokemonLocation,
+} from "models";
 
-import styles from "styles/Pokemon.module.scss";
-import { Avatar, Tooltip, Badge } from "antd";
-import { BADGE_COLOR } from "./index";
+import LocationBadge from "components/LocationBadge";
+import { Avatar, Tooltip } from "antd";
 
 export function PokemonIcon({
   pokemon,
@@ -19,7 +23,7 @@ export function PokemonIcon({
 }) {
   const pokemonName = pokemon?.name || "?";
   const pokemonNickname = pokemon?.nickname || "?";
-  const pokemonLocation = pokemon?.location || "grave";
+  const pokemonLocation = pokemon?.location || PokemonLocation.grave;
   const pokemonEventsArr = oVal(pokemon?.events || []);
   const evolutionEvents = pokemonEventsArr.filter(
     (e) => e.type === EventType.evolved,
@@ -27,7 +31,7 @@ export function PokemonIcon({
 
   const [src, setSrc]: UseState<string> = React.useState(null);
   const avatarStyle = {
-    backgroundColor: colorize(pokemonName) + alpha(0.5),
+    backgroundColor: colorize(pokemonName) + alpha(0.3),
   };
 
   React.useEffect(() => {
@@ -43,18 +47,16 @@ export function PokemonIcon({
   }, [pokemon?.name, evolutionEvents.length]);
 
   return (
-    <Tooltip title={pokemonNickname}>
-      <Box position="relative" onClick={onClick}>
-        <Badge
-          className={cn(styles.badge, { [styles.badgeHide]: hideBadge })}
-          status={BADGE_COLOR[pokemonLocation]}
-          title={pokemonLocation}
-        >
+    <Tooltip title={`${pokemonNickname}`} placement="right">
+      <Box position="relative" onClick={onClick} width="max-content">
+        <LocationBadge {...{ pokemonLocation, hide: hideBadge }}>
           <Avatar size="large" src={src} style={avatarStyle}>
             {pokemonNickname}
           </Avatar>
-        </Badge>
+        </LocationBadge>
       </Box>
     </Tooltip>
   );
 }
+
+export default PokemonIcon;
