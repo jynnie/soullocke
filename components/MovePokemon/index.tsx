@@ -28,10 +28,8 @@ export function MovePokemon({
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const timelineLocations = oVal(RUN.runData?.timeline || [])
-    .sort((a, b) => a.index - b.index)
-    .map((l) => l.name);
-  const latestLocation = timelineLocations.slice(-1)[0];
+  const timelineLocations = RUN.getTimelineLocationNames();
+  const latestLocation = RUN.getLatestLocation();
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemonMoving[0]?.location,
   );

@@ -61,7 +61,7 @@ function TimelineGrid({
 
   //----------------------------------#01F2DF
   // Data
-  const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
+  const timelineArr = RUN.getTimelineLocations();
   const playerArr = oVal(players || []);
   const numTrainers = playerArr.length;
 
