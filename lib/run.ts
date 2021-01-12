@@ -119,6 +119,12 @@ export class Run {
     if (!this.runRef) return;
 
     await this.runRef.child(`timeline/${key}`).set(null);
+
+    const playerArr = oVal(this.runData.players);
+    for (let player of playerArr) {
+      await this.runRef.child(`players/${player.id}/pokemon/${key}`).set(null);
+    }
+
     return key;
   };
 
@@ -301,7 +307,7 @@ export class Run {
     return true;
   };
 
-  private movePokemon = (
+  private movePokemon = async (
     pokemonOrigin: PlaceName,
     location: PlaceName,
     pokemonLocation: PokemonLocation,
@@ -309,14 +315,14 @@ export class Run {
     const playerArr = oVal(this.runData.players);
     let event;
 
-    playerArr.forEach((player) => {
+    for (let player of playerArr) {
       const pokemonRef = this.runRef.child(
         `players/${player.id}/pokemon/${pokemonOrigin}`,
       );
 
       pokemonRef.child("origin").set(pokemonOrigin);
       pokemonRef.child("location").set(pokemonLocation);
-      const eventRef = pokemonRef.child("events").push();
+      const eventRef = await pokemonRef.child("events").push();
       event = {
         index: eventRef.key,
         type: EventType.moved,
@@ -326,7 +332,7 @@ export class Run {
         },
       };
       eventRef.set(event);
-    });
+    }
 
     return event;
   };

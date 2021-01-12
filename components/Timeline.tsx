@@ -6,10 +6,12 @@ import type { Run, MapLocation, UseState, PlaceName } from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
-import Location from "components/Location";
+import LocationListing from "./LocationListing";
+import LocationSummary from "components/LocationSummary";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
+import LocationActions from "./LocationActions";
 
 /**
  * Timeline Grid
@@ -57,13 +59,14 @@ function TimelineGrid({
               <th key={p.id}>{p.name}</th>
             ))}
             <th>Summary</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {timelineArr.map((t) => (
             <tr key={t.key} data-row-key={t.key}>
-              <td key={t.name}>{cleanName(t.name)}</td>
+              <LocationListing key={t.name} location={t.name} />
 
               {playerArr.map((p) => {
                 const key = t.key + p.name;
@@ -84,8 +87,10 @@ function TimelineGrid({
               })}
 
               <td>
-                <Location name={t.name} index={t.index} />
+                <LocationSummary name={t.name} index={t.index} />
               </td>
+
+              <LocationActions location={t.name} />
             </tr>
           ))}
         </tbody>
