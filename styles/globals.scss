@@ -2,6 +2,7 @@
   --text-primary: #fafafa;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
+  --text-caption: #71717a;
 
   --secondary: #52525b;
   --tertiary: #3f3f46;
@@ -76,4 +77,8 @@ h2 {
   &.wrap {
     flex-wrap: wrap;
   }
+}
+
+p.caption {
+  color: var(--text-caption);
 }

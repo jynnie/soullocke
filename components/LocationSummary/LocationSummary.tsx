@@ -1,11 +1,12 @@
 import React from "react";
+import { useToUpdate } from "lib/hooks";
 import { RunContext } from "pages/run/[id]";
 import { PlaceName, PokemonLocation } from "models";
 
 import styles from "styles/Location.module.scss";
-import Tag from "components/Location/PLTag";
+import Tag from "./PLTag";
 
-export function LocationListing({
+export function LocationSummary({
   index,
   name,
 }: {
@@ -18,9 +19,11 @@ export function LocationListing({
   const pokemonArr = RUN.getPokemonByOrigin(name).filter((p) => !!p);
   const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
 
+  useToUpdate(pokemonArr && pokemonArr.length);
+
   return (
     <div className={styles.location}>
-      <Tag {...{ pokemonLocation }}></Tag>
+      {pokemonArr.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
       {pokemonArr.map((p) => p.nickname).join(" & ")}
     </div>
   );
