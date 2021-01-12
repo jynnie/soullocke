@@ -68,6 +68,16 @@
       color: #ef4444;
     }
   }
+
+  &MoveButton {
+    color: var(--text-caption);
+    border-color: transparent;
+    background: transparent;
+
+    &:hover {
+      color: #60a5fa;
+    }
+  }
 }
 
 .deleteConfirm {
