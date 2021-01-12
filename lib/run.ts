@@ -413,22 +413,24 @@ export class Run {
 
     playerArr.forEach((player) => {
       const isPlayerResponsible = player.id === playerResponsible;
-      const pokemonRef = this.runRef.child(
-        `players/${player.id}/pokemon/${pokemonOrigin}`,
-      );
+      if (!isPlayerResponsible) {
+        const pokemonRef = this.runRef.child(
+          `players/${player.id}/pokemon/${pokemonOrigin}`,
+        );
 
-      pokemonRef.child("origin").set(pokemonOrigin);
-      pokemonRef.child("location").set(PokemonLocation.grave);
-      const eventRef = pokemonRef.child("events").push();
-      event = {
-        index: eventRef.key,
-        type: isPlayerResponsible ? EventType.defeated : EventType.soulDeath,
-        location,
-        details: {
-          location: PokemonLocation.grave,
-        },
-      };
-      eventRef.set(event);
+        pokemonRef.child("origin").set(pokemonOrigin);
+        pokemonRef.child("location").set(PokemonLocation.grave);
+        const eventRef = pokemonRef.child("events").push();
+        event = {
+          index: eventRef.key,
+          type: EventType.soulDeath,
+          location,
+          details: {
+            location: PokemonLocation.grave,
+          },
+        };
+        eventRef.set(event);
+      }
     });
 
     return event;
