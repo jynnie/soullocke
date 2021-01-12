@@ -19,6 +19,7 @@ import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
 import LocationActions from "./LocationActions";
+import { message } from "antd";
 
 // Reordering helper function
 const reorder = (list: TL[], startIndex, endIndex) => {
@@ -56,19 +57,36 @@ function TimelineGrid({
 }) {
   const { RUN } = React.useContext(RunContext);
   const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
+  const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
 
+  //----------------------------------#01F2DF
+  // Data
   const timelineArr = oVal(timeline || []).sort((a, b) => a.index - b.index);
   const playerArr = oVal(players || []);
   const numTrainers = playerArr.length;
 
+  //----------------------------------#01F2DF
+  // Handlers
+  const moveToTeam = (origin: string, location: string) => {
+    setATTO(origin);
+    setATTL(location);
+  };
+
+  const clearMove = () => {
+    setATTO(null);
+    setATTL(null);
+  };
+
   const handleFinishAdd = (location: PlaceName) => {
     return (caught: boolean) => {
       const allPokemonSet = RUN.haveAllPlayersGotPokemonAt(location);
-      if (caught && allPokemonSet) setATTO(location);
+      if (caught && allPokemonSet) {
+        moveToTeam(location, location);
+      }
     };
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = async (result) => {
     // dropped outside the list
     if (!result.destination) return;
 
@@ -78,9 +96,12 @@ function TimelineGrid({
       result.destination.index,
     );
 
-    return RUN?.setTimelineOrder(items);
+    const data = await RUN?.setTimelineOrder(items);
+    message.success("Timeline order change saved");
+    return data;
   };
 
+  //----------------------------------#01F2DF
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -98,7 +119,7 @@ function TimelineGrid({
                 <th key={p.id}>{p.name}</th>
               ))}
               <th>Summary</th>
-              <th>Summary</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -145,7 +166,10 @@ function TimelineGrid({
                           <LocationSummary name={t.name} index={t.index} />
                         </td>
 
-                        <LocationActions location={t.name} />
+                        <LocationActions
+                          location={t.name}
+                          {...{ moveToTeam }}
+                        />
                       </tr>
                     )}
                   </Draggable>
@@ -159,9 +183,9 @@ function TimelineGrid({
       <AddToTimeline {...{ allLocations, allBadges }} />
       <MovePokemonToTeam
         pokemonOrigin={addToTeamOrigin}
-        currentLocation={addToTeamOrigin}
+        currentLocation={addToTeamLocation}
         visible={!!addToTeamOrigin}
-        onCancel={() => setATTO(null)}
+        onCancel={clearMove}
       />
     </>
   );

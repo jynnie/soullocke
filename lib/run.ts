@@ -315,7 +315,7 @@ export class Run {
     return true;
   };
 
-  private movePokemon = async (
+  public movePokemon = async (
     pokemonOrigin: PlaceName,
     location: PlaceName,
     pokemonLocation: PokemonLocation,

@@ -39,6 +39,7 @@ function AddToTimelineForm({
       <Select
         className={styles.select}
         showSearch
+        value={location}
         onChange={handleChange}
         placeholder="Select Location"
       >
