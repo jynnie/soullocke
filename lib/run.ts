@@ -78,6 +78,23 @@ export class Run {
     return existingPokemon.length === playersArr.length;
   };
 
+  public getTimelineLocations = (): Timeline[] => {
+    const timelineLocations = oVal(this.runData?.timeline || []).sort(
+      (a, b) => a.index - b.index,
+    );
+    return timelineLocations;
+  };
+
+  public getTimelineLocationNames = (): PlaceName[] => {
+    const timelineLocations = this.getTimelineLocations().map((l) => l.name);
+    return timelineLocations;
+  };
+
+  public getLatestLocation = (): PlaceName => {
+    const latestLocation = this.getTimelineLocationNames()?.slice(-1)?.[0];
+    return latestLocation;
+  };
+
   //----------------------------------#01F2DF
   //- Organizational Helpers
 

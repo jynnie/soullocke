@@ -23,8 +23,10 @@ function PokemonModal({
 }) {
   const { RUN } = React.useContext(RunContext);
 
-  // FIXME: Sort array by timeline
-  const eventsArr = oVal(pokemon?.events || {});
+  const timelineArr = RUN.getTimelineLocationNames();
+  const eventsArr = oVal(pokemon?.events || {}).sort(
+    (a, b) => timelineArr.indexOf(a.location) - timelineArr.indexOf(b.location),
+  );
   const pokemonIsAlive = pokemon.location !== PokemonLocation.grave;
 
   const handleFinish = (pokemonName: string, nickname: string): void => {
