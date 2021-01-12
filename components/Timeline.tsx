@@ -1,8 +1,15 @@
 import React from "react";
 import Box from "ui-box";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
-import { cleanName, oVal } from "lib/utils";
-import type { Run, MapLocation, UseState, PlaceName } from "models";
+import { oVal } from "lib/utils";
+import type {
+  Run,
+  MapLocation,
+  UseState,
+  PlaceName,
+  Timeline as TL,
+} from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
@@ -12,6 +19,24 @@ import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
 import LocationActions from "./LocationActions";
+
+// Reordering helper function
+const reorder = (list: TL[], startIndex, endIndex) => {
+  let result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  result = result.map((l, i) => ({ ...l, index: i }));
+
+  return result;
+};
+
+// Styling draggable things
+const getItemStyle = (isDragging, draggableStyle) => ({
+  userSelect: "none",
+  background: isDragging ? "#27272A" : "transparent",
+  ...draggableStyle,
+});
 
 /**
  * Timeline Grid
@@ -43,58 +68,94 @@ function TimelineGrid({
     };
   };
 
+  const onDragEnd = (result) => {
+    // dropped outside the list
+    if (!result.destination) return;
+
+    const items = reorder(
+      timelineArr,
+      result.source.index,
+      result.destination.index,
+    );
+
+    return RUN?.setTimelineOrder(items);
+  };
+
   return (
     <>
-      <Box is="table" className={styles.table}>
-        <colgroup>
-          <col />
-          <col span={numTrainers} />
-          <col />
-        </colgroup>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Box is="table" className={styles.table}>
+          <colgroup>
+            <col />
+            <col span={numTrainers} />
+            <col />
+          </colgroup>
 
-        <thead>
-          <tr>
-            <th>Location</th>
-            {playerArr.map((p) => (
-              <th key={p.id}>{p.name}</th>
-            ))}
-            <th>Summary</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {timelineArr.map((t) => (
-            <tr key={t.key} data-row-key={t.key}>
-              <LocationListing key={t.name} location={t.name} />
-
-              {playerArr.map((p) => {
-                const key = t.key + p.name;
-                const playerPokemon = p.pokemon ? p.pokemon[t.name] : null;
-                const isBadge = /badge/gi.test(t.name);
-                const props = {
-                  key,
-                  playerId: p.id,
-                  location: t.name,
-                  onFinish: handleFinishAdd(t.name),
-                  pokemon: playerPokemon,
-                };
-
-                if (isBadge) return <td>-</td>;
-                let display = <AddPokemon {...props} />;
-                if (playerPokemon) display = <Pokemon {...props} />;
-                return <td>{display}</td>;
-              })}
-
-              <td>
-                <LocationSummary name={t.name} index={t.index} />
-              </td>
-
-              <LocationActions location={t.name} />
+          <thead>
+            <tr>
+              <th>Location</th>
+              {playerArr.map((p) => (
+                <th key={p.id}>{p.name}</th>
+              ))}
+              <th>Summary</th>
+              <th>Summary</th>
             </tr>
-          ))}
-        </tbody>
-      </Box>
+          </thead>
+
+          <Droppable droppableId="droppable">
+            {(p, i) => (
+              <tbody {...p.droppableProps} ref={p.innerRef} key={i}>
+                {timelineArr.map((t, i) => (
+                  <Draggable key={t.key} draggableId={t.key} index={i}>
+                    {(p, snapshot) => (
+                      <tr
+                        key={t.key}
+                        data-row-key={t.key}
+                        ref={p.innerRef}
+                        {...p.draggableProps}
+                        {...p.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          p.draggableProps.style,
+                        )}
+                      >
+                        <LocationListing key={t.name} location={t.name} />
+
+                        {playerArr.map((p) => {
+                          const key = t.key + p.name;
+                          const playerPokemon = p.pokemon
+                            ? p.pokemon[t.name]
+                            : null;
+                          const isBadge = /badge/gi.test(t.name);
+                          const props = {
+                            key,
+                            playerId: p.id,
+                            location: t.name,
+                            onFinish: handleFinishAdd(t.name),
+                            pokemon: playerPokemon,
+                          };
+
+                          if (isBadge) return <td>-</td>;
+                          let display = <AddPokemon {...props} />;
+                          if (playerPokemon) display = <Pokemon {...props} />;
+                          return <td>{display}</td>;
+                        })}
+
+                        <td>
+                          <LocationSummary name={t.name} index={t.index} />
+                        </td>
+
+                        <LocationActions location={t.name} />
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+              </tbody>
+            )}
+          </Droppable>
+        </Box>
+      </DragDropContext>
+
       <AddToTimeline {...{ allLocations, allBadges }} />
       <MovePokemonToTeam
         pokemonOrigin={addToTeamOrigin}
