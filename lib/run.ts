@@ -128,6 +128,14 @@ export class Run {
     return key;
   };
 
+  public setTimelineOrder = async (newOrder: Timeline[]) => {
+    if (!this.runRef) return;
+
+    const result = newOrder.reduce((acc, t) => ({ ...acc, [t.name]: t }), {});
+
+    return this.runRef.child("timeline").set(result);
+  };
+
   //----------------------------------#01F2DF
   //- Add Pokemon
 
