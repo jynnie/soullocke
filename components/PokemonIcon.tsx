@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "ui-box";
+import { usePalette } from "react-palette";
 import { alpha, colorize, oVal } from "lib/utils";
 import {
   UseState,
@@ -9,6 +10,7 @@ import {
   PokemonLocation,
 } from "models";
 
+import styles from "styles/Pokemon.module.scss";
 import LocationBadge from "components/LocationBadge";
 import { Avatar, Tooltip } from "antd";
 
@@ -30,8 +32,9 @@ export function PokemonIcon({
   );
 
   const [src, setSrc]: UseState<string> = React.useState(null);
+  const { data } = usePalette(src);
   const avatarStyle = {
-    backgroundColor: colorize(pokemonName) + alpha(0.3),
+    backgroundColor: data?.vibrant || "var(--tertiary)",
   };
 
   React.useEffect(() => {
@@ -50,9 +53,9 @@ export function PokemonIcon({
     <Tooltip title={`${pokemonNickname}`} placement="right">
       <Box position="relative" onClick={onClick} width="max-content">
         <LocationBadge {...{ pokemonLocation, hide: !showBadge }}>
-          <Avatar size="large" src={src} style={avatarStyle}>
-            {pokemonNickname}
-          </Avatar>
+          <Box className={styles.iconAvatar} {...avatarStyle}>
+            <Box is="img" alt={pokemonName} src={src} />
+          </Box>
         </LocationBadge>
       </Box>
     </Tooltip>
