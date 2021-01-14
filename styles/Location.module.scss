@@ -36,25 +36,25 @@
   text-transform: uppercase;
 
   &.team {
-    font-weight: 700;
-    color: #f9a8d4;
-    border-color: #ec4899;
-    background-color: darken(#ec4899, 30%);
+    font-weight: 500;
+    color: var(--pink-text);
+    border-color: var(--pink-border);
+    background-color: var(--pink-background);
   }
   &.box {
-    color: #38bdf8;
-    border-color: #075985;
-    background-color: darken(#075985, 10%);
+    color: var(--blue-text);
+    border-color: var(--blue-border);
+    background-color: var(--blue-background);
   }
   &.grave {
-    color: #a1a1aa;
-    border-color: #52525b;
-    background-color: darken(#52525b, 10%);
+    color: var(--grey-text);
+    border-color: var(--grey-border);
+    background-color: var(--grey-background);
   }
   &.daycare {
-    color: #fbbf24;
-    border-color: #b45309;
-    background-color: darken(#b45309, 10%);
+    color: var(--orange-text);
+    border-color: var(--orange-border);
+    background-color: var(--orange-background);
   }
 }
 

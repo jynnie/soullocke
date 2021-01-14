@@ -1,13 +1,57 @@
 :root {
-  --text-primary: #fafafa;
-  --text-secondary: #d4d4d8;
-  --text-tertiary: #a1a1aa;
-  --text-caption: #71717a;
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #cbd5e1;
+  --text-caption: #94a3b8;
 
-  --secondary: #52525b;
-  --tertiary: #3f3f46;
+  --secondary: #64748b;
+  --tertiary: #334155;
+  --tertiary50: #33415585;
+  --background: #1e293b;
 
-  --background: #18181b;
+  --pink-text: #f9a8d4;
+  --pink-border: #ec4899;
+  --pink-background: #ec489994;
+
+  --blue-text: #38bdf8;
+  --blue-border: #075985;
+  --blue-background: #07598594;
+
+  --grey-text: #a1a1aa;
+  --grey-border: #52525b;
+  --grey-background: #52525b94;
+
+  --orange-text: #fbbf24;
+  --orange-border: #b45309;
+  --orange-background: #b4530994;
+}
+
+body.light {
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+  --text-caption: #94a3b8;
+
+  --secondary: #cbd5e1;
+  --tertiary: #e2e8f0;
+
+  --background: #fafafa;
+
+  --pink-text: #ec4899;
+  --pink-border: #f9a8d4;
+  --pink-background: #fbcfe8;
+
+  --blue-text: #3b82f6;
+  --blue-border: #93c5fd;
+  --blue-background: #bfdbfe;
+
+  --grey-text: #64748b;
+  --grey-border: #94a3b8;
+  --grey-background: #e2e8f0;
+
+  --orange-text: #f59e0b;
+  --orange-border: #fbbf24;
+  --orange-background: #fde68a;
 }
 
 html,
@@ -49,17 +93,10 @@ h2 {
   box-sizing: border-box;
 }
 
+//----------------------------------#01F2DF
+
 .capitalize {
   text-transform: capitalize;
-}
-
-.ant-timeline .ant-timeline-item:last-child .ant-timeline-item-tail {
-  display: none;
-}
-
-.ant-badge-status-processing {
-  position: absolute;
-  overflow: visible;
 }
 
 .flex {
@@ -81,4 +118,52 @@ h2 {
 
 p.caption {
   color: var(--text-caption);
+}
+
+//----------------------------------#01F2DF
+
+.ant-modal-content {
+  background-color: var(--background);
+
+  .ant-modal-header {
+    background-color: var(--background);
+    border-bottom-color: var(--tertiary);
+  }
+}
+
+.ant-tooltip-inner,
+.ant-popover-inner,
+.ant-message-notice-content,
+.ant-select-dropdown {
+  background-color: var(--tertiary);
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--tertiary);
+}
+
+.ant-modal .ant-picker-clear,
+.ant-modal .ant-slider-handle,
+.ant-modal .ant-anchor-wrapper,
+.ant-modal .ant-collapse-content,
+.ant-modal .ant-timeline-item-head,
+.ant-modal .ant-card {
+  background-color: var(--background);
+}
+
+.ant-timeline-item-tail {
+  border-left-color: var(--tertiary);
+}
+
+.ant-timeline .ant-timeline-item:last-child .ant-timeline-item-tail {
+  display: none;
+}
+
+.ant-badge-status-processing {
+  position: absolute;
+  overflow: visible;
+}
+
+.ant-btn {
+  border-color: var(--tertiary);
 }
