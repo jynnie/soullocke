@@ -138,7 +138,8 @@ p.caption {
   background-color: var(--tertiary);
 }
 
-.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-input {
   border-color: var(--tertiary);
 }
 
