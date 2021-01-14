@@ -35,7 +35,7 @@ const reorder = (list: TL[], startIndex, endIndex) => {
 // Styling draggable things
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
-  background: isDragging ? "#27272A" : "transparent",
+  background: isDragging ? "var(--tertiary)" : "transparent",
   ...draggableStyle,
 });
 
