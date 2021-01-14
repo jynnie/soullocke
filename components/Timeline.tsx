@@ -110,6 +110,7 @@ function TimelineGrid({
             <col />
             <col span={numTrainers} />
             <col />
+            <col />
           </colgroup>
 
           <thead>
