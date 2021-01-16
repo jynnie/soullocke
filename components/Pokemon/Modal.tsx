@@ -1,11 +1,14 @@
 import React from "react";
-import { oVal } from "lib/utils";
+import { cleanName, oVal } from "lib/utils";
 import { RunContext } from "pages/run/[id]";
 import { Pokemon, PokemonLocation } from "models";
 
 import Event from "./Event";
 import AddEvent from "components/AddEvent";
+import PokemonImage from "components/PokemonImage";
 import PokemonForm from "components/AddPokemon/Form";
+import PLTag from "components/LocationSummary/PLTag";
+import styles from "styles/Pokemon.module.scss";
 import { Modal, Timeline } from "antd";
 
 function PokemonModal({
@@ -34,12 +37,19 @@ function PokemonModal({
   };
 
   return (
-    <Modal
-      title={`${pokemon.nickname} (${pokemon.name})`}
-      visible={!!showModal}
-      onCancel={onCancel}
-      footer={null}
-    >
+    <Modal visible={!!showModal} onCancel={onCancel} footer={null}>
+      <div className={styles.modalHeader}>
+        <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
+        <h3>{cleanName(pokemon?.nickname)}</h3>
+        <div className="flex center">
+          <PLTag
+            className={styles.modalHeaderTag}
+            pokemonLocation={pokemon?.location}
+          />
+          <h4>{cleanName(pokemon?.name)}</h4>
+        </div>
+      </div>
+
       {!pokemon.name && (
         <PokemonForm showCaughtCheckbox={false} onFinish={handleFinish} />
       )}

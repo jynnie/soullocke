@@ -13,12 +13,14 @@ const BADGE_TEXT = {
 };
 
 export function LocationTag({
+  className,
   pokemonLocation,
 }: {
+  className?: string;
   pokemonLocation: PokemonLocation;
 }) {
   return (
-    <Tag className={cn(styles.tag, styles[pokemonLocation])}>
+    <Tag className={cn(className, styles.tag, styles[pokemonLocation])}>
       {BADGE_TEXT[pokemonLocation]}
     </Tag>
   );
