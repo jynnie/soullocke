@@ -23,7 +23,7 @@ function Home() {
       </main>
 
       <footer className={styles.footer}>
-        Made with {"<3"} by
+        Made with {"<3"} by{" "}
         <a href="https://github.com/jynnie/soullocke">jynnie</a>
       </footer>
     </div>
