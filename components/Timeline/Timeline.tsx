@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "ui-box";
+import cn from "classnames";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
 import { oKey, oVal } from "lib/utils";
@@ -58,8 +59,9 @@ const getClassNames = (data: Data): string => {
 export interface Data {
   location: TL;
   players: Player[];
-  pokemonLocation: PokemonLocation;
   pokemon: PokemonData[];
+  pokemonNames: string;
+  pokemonLocation: PokemonLocation;
   notes: string;
 }
 
@@ -76,6 +78,9 @@ function TimelineGrid({
   const { RUN } = React.useContext(RunContext);
   const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
   const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
+  const [filteredData, setFilteredData]: UseState<Data[]> = React.useState(
+    null,
+  );
   const [
     filterClassNames,
     setFilterClassNames,
@@ -85,13 +90,22 @@ function TimelineGrid({
   // Data
   const timelineArr = RUN.getTimelineLocations();
   const playerArr = RUN.getPlayersArray();
-  const dataArr: Data[] = timelineArr.map((l) => ({
-    location: l,
-    players: playerArr,
-    pokemonLocation: RUN.getPokemonLocationByOrigin(l.name),
-    pokemon: RUN.getPokemonByOrigin(l.name),
-    notes: RUN.getLocationNotes(l.name),
-  }));
+  const allDataArr: Data[] = timelineArr.map((l) => {
+    const pokemon = RUN.getPokemonByOrigin(l.name);
+    const pokemonNames = pokemon.reduce(
+      (acc, p) => (!!p ? `${acc} ${p.name} ${p.nickname}` : acc),
+      "",
+    );
+
+    return {
+      location: l,
+      players: playerArr,
+      pokemon,
+      pokemonNames,
+      pokemonLocation: RUN.getPokemonLocationByOrigin(l.name),
+      notes: RUN.getLocationNotes(l.name),
+    };
+  });
 
   //----------------------------------#01F2DF
   // Handlers
@@ -132,8 +146,16 @@ function TimelineGrid({
   const handleFilterChange = (filters: Filter) => {
     const classnames = [];
     oKey(filters).forEach((f) => {
-      if (filters[f]) classnames.push(styles[f]);
+      if (filters[f] && f.includes("hide")) classnames.push(styles[f]);
     });
+    if (!!filters.searchTerm) {
+      const newFiltered = allDataArr.filter((d) =>
+        d.pokemonNames
+          ?.toLowerCase()
+          .includes(filters.searchTerm?.toLowerCase()),
+      );
+      setFilteredData(newFiltered);
+    } else setFilteredData(null);
     setFilterClassNames(classnames.join(" "));
   };
 
@@ -163,7 +185,7 @@ function TimelineGrid({
                 key={i}
                 className={filterClassNames}
               >
-                {dataArr.map((data, i) => (
+                {allDataArr.map((data, i) => (
                   <Draggable
                     key={data.location.key}
                     draggableId={data.location.key}
@@ -180,7 +202,13 @@ function TimelineGrid({
                           snapshot.isDragging,
                           p.draggableProps.style,
                         )}
-                        className={getClassNames(data)}
+                        className={cn(getClassNames(data), {
+                          [styles.hide]:
+                            !!filteredData &&
+                            !filteredData.find(
+                              (d) => d.location.key === data.location.key,
+                            ),
+                        })}
                       >
                         <Row {...{ data, handleFinishAdd, moveToTeam }} />
                       </tr>
