@@ -114,6 +114,10 @@ h2 {
   &.wrap {
     flex-wrap: wrap;
   }
+
+  &.spaceBetween {
+    justify-content: space-between;
+  }
 }
 
 p.caption {
@@ -144,7 +148,8 @@ p.caption {
 }
 
 .ant-select:not(.ant-select-customize-input) .ant-select-selector,
-.ant-input {
+.ant-input,
+.ant-checkbox-inner {
   border-color: var(--secondary);
 }
 

@@ -15,10 +15,13 @@ export function LocationSummary({
 }) {
   useToUpdate(pokemon && pokemon.length);
 
+  const pokemonArr = pokemon.filter((p) => !!p);
+  if (pokemonArr.length === 0) return null;
+
   return (
     <div className={styles.location}>
-      {pokemon.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
-      {pokemon.map((p) => p?.nickname).join(" & ")}
+      {pokemonArr.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
+      {pokemonArr.map((p) => p?.nickname).join(" & ")}
     </div>
   );
 }

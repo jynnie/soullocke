@@ -38,6 +38,38 @@
   }
 }
 
+.hide {
+  &Badge {
+    .badge {
+      display: none;
+    }
+  }
+
+  &Team {
+    .team {
+      display: none;
+    }
+  }
+
+  &Box {
+    .box {
+      display: none;
+    }
+  }
+
+  &Daycare {
+    .daycare {
+      display: none;
+    }
+  }
+
+  &Grave {
+    .grave {
+      display: none;
+    }
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .table tr td:last-of-type,
   .table tr th:last-of-type {
