@@ -2,6 +2,7 @@ import React from "react";
 import Box from "ui-box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
+import { oKey, oVal } from "lib/utils";
 import type {
   Player,
   MapLocation,
@@ -10,19 +11,20 @@ import type {
   Timeline as TL,
   PokemonLocation,
   Pokemon as PokemonData,
+  Timeline,
 } from "models";
 
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
-import LocationListing from "./LocationListing";
+import LocationListing from "components/LocationListing";
 import LocationSummary from "components/LocationSummary";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
 import LocationActions from "components/LocationActions";
-import Filters, { Filter } from "components/TimelineFilters";
+import Row from "./Row";
+import Filters, { Filter } from "./Filters";
 import { message } from "antd";
-import { oKey } from "lib/utils";
 
 // Reordering helper function
 const reorder = (list: TL[], startIndex, endIndex) => {
@@ -53,7 +55,7 @@ const getClassNames = (data: Data): string => {
   return classnames.join(" ");
 };
 
-interface Data {
+export interface Data {
   location: TL;
   players: Player[];
   pokemonLocation: PokemonLocation;
@@ -63,13 +65,16 @@ interface Data {
 
 /**
  * Timeline Grid
- * View focused on what pokemon were caught when
- * Will be modified into true timeline view later
+ *
+ * @prop timeline is used to make sure we are
+ * using the most updated version
  */
 function TimelineGrid({
+  timeline,
   allLocations,
   allBadges,
 }: {
+  timeline: Timeline[];
   allLocations: MapLocation[];
   allBadges: string[];
 }) {
@@ -83,7 +88,7 @@ function TimelineGrid({
 
   //----------------------------------#01F2DF
   // Data
-  const timelineArr = RUN.getTimelineLocations();
+  const timelineArr = oVal(timeline).sort((a, b) => a.index - b.index);
   const playerArr = RUN.getPlayersArray();
   const dataArr: Data[] = timelineArr.map((l) => ({
     location: l,
@@ -182,37 +187,7 @@ function TimelineGrid({
                         )}
                         className={getClassNames(data)}
                       >
-                        <LocationListing location={data.location.name} />
-
-                        {data.players.map((p) => {
-                          const key = data.location.key + p.name;
-                          const playerPokemon = p.pokemon?.[data.location.name];
-                          const isBadge = /badge/gi.test(data.location.name);
-                          const props = {
-                            key,
-                            playerId: p.id,
-                            location: data.location.name,
-                            onFinish: handleFinishAdd(data.location.name),
-                            pokemon: playerPokemon,
-                          };
-
-                          let display: any = <AddPokemon {...props} />;
-                          if (isBadge) display = "-";
-                          if (playerPokemon) display = <Pokemon {...props} />;
-                          return <td>{display}</td>;
-                        })}
-
-                        <td>
-                          <LocationSummary
-                            pokemon={data.pokemon}
-                            pokemonLocation={data.pokemonLocation}
-                          />
-                        </td>
-
-                        <LocationActions
-                          location={data.location.name}
-                          {...{ moveToTeam }}
-                        />
+                        <Row {...{ data, handleFinishAdd, moveToTeam }} />
                       </tr>
                     )}
                   </Draggable>
