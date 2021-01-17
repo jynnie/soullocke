@@ -39,6 +39,8 @@
 }
 
 .hide {
+  display: none;
+
   &Badge {
     .badge {
       display: none;

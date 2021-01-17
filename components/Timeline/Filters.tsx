@@ -10,6 +10,7 @@ export interface Filter {
   hideBox: boolean;
   hideDaycare: boolean;
   hideGrave: boolean;
+  searchTerm: string;
 }
 
 function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
@@ -18,6 +19,12 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
   const [hideBox, setHideBox]: UseState<boolean> = React.useState(null);
   const [hideDaycare, setHideDaycare]: UseState<boolean> = React.useState(null);
   const [hideGrave, setHideGrave]: UseState<boolean> = React.useState(null);
+  const [inputVal, setInputVal]: UseState<string> = React.useState(null);
+
+  const handleSearch = (e) => {
+    setInputVal(e.target.value);
+    handleChange({ searchTerm: e.target.value });
+  };
 
   const handleChange = (override?: any) => {
     if (onChange)
@@ -27,6 +34,7 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
         hideBox,
         hideDaycare,
         hideGrave,
+        searchTerm: inputVal,
         ...(override || {}),
       });
   };
@@ -55,7 +63,7 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
   return (
     <Box className="flex spaceBetween" width="100%" marginBottom={8}>
       <div>
-        <Input placeholder="Search" />
+        <Input placeholder="Search" value={inputVal} onChange={handleSearch} />
       </div>
 
       <div className="flex">
