@@ -22,7 +22,10 @@ function Home() {
         </div>
       </main>
 
-      <footer className={styles.footer}>Made with {"<3"} by jynnie</footer>
+      <footer className={styles.footer}>
+        Made with {"<3"} by
+        <a href="https://github.com/jynnie/soullocke">jynnie</a>
+      </footer>
     </div>
   );
 }
