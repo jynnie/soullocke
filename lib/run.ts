@@ -68,7 +68,13 @@ export class Run {
     return matchingPokemon;
   };
 
-  public getPlayerPokemonByOrigin = (origin: string, playerId: string) => {};
+  // public getPlayerPokemonByOrigin = (origin: string, playerId: string) => {};
+
+  public getPokemonLocationByOrigin = (origin: string): PokemonLocation => {
+    const pokemonArr = this.getPokemonByOrigin(origin).filter((p) => !!p);
+    const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
+    return pokemonLocation;
+  };
 
   public haveAllPlayersGotPokemonAt = (origin: string) => {
     if (!this.runData) return;
