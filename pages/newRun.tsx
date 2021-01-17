@@ -88,8 +88,8 @@ function NewRunPage() {
             rules={[
               {
                 validator: async (_, players) => {
-                  if (!players || players.length < 2) {
-                    return Promise.reject(new Error("Add at least 2 players"));
+                  if (!players || players.length < 1) {
+                    return Promise.reject(new Error("Add at least 1 player"));
                   }
                 },
               },
