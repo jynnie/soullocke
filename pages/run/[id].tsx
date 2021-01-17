@@ -65,8 +65,8 @@ function RunPage() {
     if (runRef && id) {
       runRef.on("value", (snapshot) => {
         const rawValue = snapshot.val() || NO_RUN;
-        setRunData(rawValue);
         runDb.updateRunData(rawValue);
+        setRunData(rawValue);
       });
     }
   }, [!!db, id]);
