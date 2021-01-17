@@ -1,30 +1,24 @@
 import React from "react";
 import { useToUpdate } from "lib/hooks";
 import { RunContext } from "pages/run/[id]";
-import { PlaceName, PokemonLocation } from "models";
+import { PlaceName, Pokemon, PokemonLocation } from "models";
 
 import styles from "styles/Location.module.scss";
 import Tag from "./PLTag";
 
 export function LocationSummary({
-  index,
-  name,
+  pokemon,
+  pokemonLocation,
 }: {
-  index: number;
-  name: PlaceName;
+  pokemon: Pokemon[];
+  pokemonLocation: PokemonLocation;
 }) {
-  const { RUN } = React.useContext(RunContext);
-
-  if (!name) return null;
-  const pokemonArr = RUN.getPokemonByOrigin(name).filter((p) => !!p);
-  const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
-
-  useToUpdate(pokemonArr && pokemonArr.length);
+  useToUpdate(pokemon && pokemon.length);
 
   return (
     <div className={styles.location}>
-      {pokemonArr.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
-      {pokemonArr.map((p) => p.nickname).join(" & ")}
+      {pokemon.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
+      {pokemon.map((p) => p?.nickname).join(" & ")}
     </div>
   );
 }

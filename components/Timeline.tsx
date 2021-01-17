@@ -4,11 +4,13 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
 import { oVal } from "lib/utils";
 import type {
-  Run,
+  Player,
   MapLocation,
   UseState,
   PlaceName,
   Timeline as TL,
+  PokemonLocation,
+  Pokemon as PokemonData,
 } from "models";
 
 import styles from "styles/Timeline.module.scss";
@@ -39,19 +41,23 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
+interface Data {
+  location: TL;
+  players: Player[];
+  pokemonLocation: PokemonLocation;
+  pokemon: PokemonData[];
+  notes: string;
+}
+
 /**
  * Timeline Grid
  * View focused on what pokemon were caught when
  * Will be modified into true timeline view later
  */
 function TimelineGrid({
-  timeline,
-  players,
   allLocations,
   allBadges,
 }: {
-  timeline: Run["timeline"];
-  players: Run["players"];
   allLocations: MapLocation[];
   allBadges: string[];
 }) {
@@ -62,8 +68,14 @@ function TimelineGrid({
   //----------------------------------#01F2DF
   // Data
   const timelineArr = RUN.getTimelineLocations();
-  const playerArr = oVal(players || []);
-  const numTrainers = playerArr.length;
+  const playerArr = RUN.getPlayersArray();
+  const dataArr: Data[] = timelineArr.map((l) => ({
+    location: l,
+    players: playerArr,
+    pokemonLocation: RUN.getPokemonLocationByOrigin(l.name),
+    pokemon: RUN.getPokemonByOrigin(l.name),
+    notes: RUN.getLocationNotes(l.name),
+  }));
 
   //----------------------------------#01F2DF
   // Handlers
@@ -106,17 +118,10 @@ function TimelineGrid({
     <>
       <DragDropContext onDragEnd={onDragEnd}>
         <Box is="table" className={styles.table}>
-          <colgroup>
-            <col />
-            <col span={numTrainers} />
-            <col />
-            <col />
-          </colgroup>
-
           <thead>
             <tr>
               <th>Location</th>
-              {playerArr.map((p) => (
+              {playerArr?.map((p) => (
                 <th key={p.id}>{p.name}</th>
               ))}
               <th>Summary</th>
@@ -127,12 +132,16 @@ function TimelineGrid({
           <Droppable droppableId="droppable">
             {(p, i) => (
               <tbody {...p.droppableProps} ref={p.innerRef} key={i}>
-                {timelineArr.map((t, i) => (
-                  <Draggable key={t.key} draggableId={t.key} index={i}>
+                {dataArr.map((data, i) => (
+                  <Draggable
+                    key={data.location.key}
+                    draggableId={data.location.key}
+                    index={i}
+                  >
                     {(p, snapshot) => (
                       <tr
-                        key={t.key}
-                        data-row-key={t.key}
+                        key={data.location.key}
+                        data-row-key={data.location.key}
                         ref={p.innerRef}
                         {...p.draggableProps}
                         {...p.dragHandleProps}
@@ -140,35 +149,37 @@ function TimelineGrid({
                           snapshot.isDragging,
                           p.draggableProps.style,
                         )}
+                        className={``}
                       >
-                        <LocationListing key={t.name} location={t.name} />
+                        <LocationListing location={data.location.name} />
 
-                        {playerArr.map((p) => {
-                          const key = t.key + p.name;
-                          const playerPokemon = p.pokemon
-                            ? p.pokemon[t.name]
-                            : null;
-                          const isBadge = /badge/gi.test(t.name);
+                        {data.players.map((p) => {
+                          const key = data.location.key + p.name;
+                          const playerPokemon = p.pokemon?.[data.location.name];
+                          const isBadge = /badge/gi.test(data.location.name);
                           const props = {
                             key,
                             playerId: p.id,
-                            location: t.name,
-                            onFinish: handleFinishAdd(t.name),
+                            location: data.location.name,
+                            onFinish: handleFinishAdd(data.location.name),
                             pokemon: playerPokemon,
                           };
 
-                          if (isBadge) return <td>-</td>;
-                          let display = <AddPokemon {...props} />;
+                          let display: any = <AddPokemon {...props} />;
+                          if (isBadge) display = "-";
                           if (playerPokemon) display = <Pokemon {...props} />;
                           return <td>{display}</td>;
                         })}
 
                         <td>
-                          <LocationSummary name={t.name} index={t.index} />
+                          <LocationSummary
+                            pokemon={data.pokemon}
+                            pokemonLocation={data.pokemonLocation}
+                          />
                         </td>
 
                         <LocationActions
-                          location={t.name}
+                          location={data.location.name}
                           {...{ moveToTeam }}
                         />
                       </tr>
