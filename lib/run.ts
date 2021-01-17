@@ -13,6 +13,7 @@ type Ref = firebase.database.Reference;
 export class Run {
   runRef: Ref;
   runData: RunData;
+  patchNum: number = 0;
 
   constructor(runRef: Ref) {
     this.runRef = runRef;
@@ -24,6 +25,7 @@ export class Run {
 
   public updateRunData = (runData: RunData) => {
     this.runData = runData;
+    this.patchNum += 1;
   };
 
   //----------------------------------#01F2DF

@@ -14,7 +14,14 @@ interface Props extends Run {
   allLocations: MapLocation[];
 }
 
-function RunHome({ id, game, players, allBadges, allLocations }: Props) {
+function RunHome({
+  id,
+  game,
+  players,
+  allBadges,
+  allLocations,
+  timeline,
+}: Props) {
   const playerArr = oVal(players || []);
 
   return (
@@ -24,7 +31,7 @@ function RunHome({ id, game, players, allBadges, allLocations }: Props) {
       <div>codename: {id}</div>
 
       <h4>timeline</h4>
-      <Timeline {...{ allLocations, allBadges }} />
+      <Timeline {...{ timeline, allLocations, allBadges }} />
     </div>
   );
 }
