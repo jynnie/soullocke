@@ -47,6 +47,7 @@ interface Timeline {
   key: string;
   index: number;
   name: PlaceName;
+  notes?: string;
 }
 
 interface Player {

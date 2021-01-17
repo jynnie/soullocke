@@ -3,6 +3,7 @@ import { PlaceName } from "models";
 
 import Move from "./Move";
 import Delete from "./Delete";
+import Notes from "components/Notes";
 
 export function LocationActions({
   location,
@@ -17,6 +18,7 @@ export function LocationActions({
 
   return (
     <td>
+      <Notes {...{ location }} />
       <Move {...{ location, handleMoveToTeam }} />
       <Delete {...{ location }} />
     </td>
