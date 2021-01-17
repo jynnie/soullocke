@@ -65,16 +65,11 @@ export interface Data {
 
 /**
  * Timeline Grid
- *
- * @prop timeline is used to make sure we are
- * using the most updated version
  */
 function TimelineGrid({
-  timeline,
   allLocations,
   allBadges,
 }: {
-  timeline: Timeline[];
   allLocations: MapLocation[];
   allBadges: string[];
 }) {
@@ -88,7 +83,7 @@ function TimelineGrid({
 
   //----------------------------------#01F2DF
   // Data
-  const timelineArr = oVal(timeline).sort((a, b) => a.index - b.index);
+  const timelineArr = RUN.getTimelineLocations();
   const playerArr = RUN.getPlayersArray();
   const dataArr: Data[] = timelineArr.map((l) => ({
     location: l,
