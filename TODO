@@ -11,7 +11,7 @@
 - [X] PokemonIcon: Show evolved Pokemon
 - [X] Timeline: Display pokemon names (possibly events) to the right
 - [ ] Each Pokemon: Notes section
-- [ ] Pokemon: Edit pokemon name and nickname -- helps when mistakes are made
+- [X] Pokemon: Edit pokemon name and nickname -- helps when mistakes are made
 - [X] Pokemon: Move action
 
 🌶 Should have, but low value add rn

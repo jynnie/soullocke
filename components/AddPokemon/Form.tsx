@@ -7,10 +7,14 @@ import { Checkbox, Form, Select, Input, Button } from "antd";
 const { Option } = Select;
 
 function AddPokemonForm({
+  defaultValues,
+  finishText = "Add",
   onFinish,
   onCancel,
   showCaughtCheckbox = true,
 }: {
+  defaultValues?: { pokemon: string; nickname: string };
+  finishText?: string;
   onFinish?: (pokemonName: string, nickname: string, caught: boolean) => void;
   onCancel?: () => void;
   showCaughtCheckbox?: boolean;
@@ -21,6 +25,12 @@ function AddPokemonForm({
   const [caught, setCaught] = React.useState(true);
 
   const [form] = Form.useForm();
+
+  // Set default values
+  React.useEffect(() => {
+    if (defaultValues?.pokemon) setPokemon(defaultValues.pokemon);
+    if (defaultValues?.nickname) setNickname(defaultValues.nickname);
+  }, []);
 
   const handleFinish = () => {
     form.resetFields();
@@ -55,6 +65,7 @@ function AddPokemonForm({
       <Form.Item
         className={styles.item}
         name="pokemon"
+        initialValue={defaultValues?.pokemon}
         rules={[
           {
             required: caught,
@@ -80,6 +91,7 @@ function AddPokemonForm({
       <Form.Item
         className={styles.item}
         name="nickname"
+        initialValue={defaultValues?.nickname}
         rules={[
           {
             required: caught,
@@ -106,7 +118,7 @@ function AddPokemonForm({
         {onCancel && <Button onClick={handleCancel}>Cancel</Button>}
 
         <Button type="primary" htmlType="submit">
-          Add
+          {finishText}
         </Button>
       </Form.Item>
     </Form>

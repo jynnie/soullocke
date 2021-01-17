@@ -44,6 +44,7 @@
 
 .modal {
   &Header {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,6 +69,16 @@
     &Tag {
       font-size: 0.6rem;
       line-height: 1rem;
+    }
+
+    &Edit {
+      position: absolute;
+      display: none;
+      top: 24px;
+    }
+
+    &:hover &Edit {
+      display: block;
     }
   }
 }
