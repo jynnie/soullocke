@@ -78,6 +78,16 @@
       color: #60a5fa;
     }
   }
+
+  &NotesButton {
+    color: var(--text-caption);
+    border-color: transparent;
+    background: transparent;
+
+    &:hover {
+      color: #94a3b8;
+    }
+  }
 }
 
 .deleteConfirm {

@@ -95,6 +95,12 @@ export class Run {
     return latestLocation;
   };
 
+  public getLocationNotes = (place: PlaceName): string => {
+    if (!this.runData) return;
+
+    return this.runData.timeline?.[place]?.notes;
+  };
+
   //----------------------------------#01F2DF
   //- Organizational Helpers
 
@@ -151,6 +157,12 @@ export class Run {
     const result = newOrder.reduce((acc, t) => ({ ...acc, [t.name]: t }), {});
 
     return this.runRef.child("timeline").set(result);
+  };
+
+  public saveLocationNotes = (place: PlaceName, notes: string) => {
+    if (!this.runData) return;
+
+    return this.runRef.child(`timeline/${place}/notes`).set(notes);
   };
 
   //----------------------------------#01F2DF

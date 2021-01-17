@@ -129,6 +129,11 @@ p.caption {
     background-color: var(--background);
     border-bottom-color: var(--tertiary);
   }
+
+  .ant-modal-footer {
+    background-color: var(--background);
+    border-top-color: var(--tertiary);
+  }
 }
 
 .ant-tooltip-inner,
