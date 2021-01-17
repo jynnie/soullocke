@@ -6,9 +6,11 @@
 
 Overview of main features. Currently used as a checklist while the project is in development.
 
-- [ ] Easily track where Pokémon are caught and when they are boxed, swapped into your team, defeated, etc.
-- [ ] Timeline view of soul-linked trainers' teams and catches.
-- [ ] Box view to browse soul-linked trainers' Pokémon.
+- Easily track where Pokémon are caught and when they are boxed, swapped into your team, defeated, etc.
+- Timeline view of soul-linked trainers' teams and catches.
+- Filter and search tracked Pokémon.
+
+Future features include password locking edit mode. Please leave feature requests as an [issue](https://github.com/jynnie/soullocke/issues).
 
 ### Open Questions
 
