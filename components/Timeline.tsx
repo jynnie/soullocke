@@ -2,7 +2,6 @@ import React from "react";
 import Box from "ui-box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
-import { oVal } from "lib/utils";
 import type {
   Player,
   MapLocation,
@@ -20,8 +19,10 @@ import LocationSummary from "components/LocationSummary";
 import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
-import LocationActions from "./LocationActions";
+import LocationActions from "components/LocationActions";
+import Filters, { Filter } from "components/TimelineFilters";
 import { message } from "antd";
+import { oKey } from "lib/utils";
 
 // Reordering helper function
 const reorder = (list: TL[], startIndex, endIndex) => {
@@ -40,6 +41,17 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   background: isDragging ? "var(--tertiary)" : "transparent",
   ...draggableStyle,
 });
+
+// Create <tr /> classnames for filtering
+const getClassNames = (data: Data): string => {
+  const classnames = [];
+
+  if (data.location.name.includes("Badge")) classnames.push(styles.badge);
+  else classnames.push(styles.location);
+  if (data.pokemonLocation) classnames.push(styles[data.pokemonLocation]);
+
+  return classnames.join(" ");
+};
 
 interface Data {
   location: TL;
@@ -64,6 +76,10 @@ function TimelineGrid({
   const { RUN } = React.useContext(RunContext);
   const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
   const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
+  const [
+    filterClassNames,
+    setFilterClassNames,
+  ]: UseState<string> = React.useState(null);
 
   //----------------------------------#01F2DF
   // Data
@@ -113,9 +129,19 @@ function TimelineGrid({
     return data;
   };
 
+  const handleFilterChange = (filters: Filter) => {
+    const classnames = [];
+    oKey(filters).forEach((f) => {
+      if (filters[f]) classnames.push(styles[f]);
+    });
+    setFilterClassNames(classnames.join(" "));
+  };
+
   //----------------------------------#01F2DF
   return (
     <>
+      <Filters onChange={handleFilterChange} />
+
       <DragDropContext onDragEnd={onDragEnd}>
         <Box is="table" className={styles.table}>
           <thead>
@@ -131,7 +157,12 @@ function TimelineGrid({
 
           <Droppable droppableId="droppable">
             {(p, i) => (
-              <tbody {...p.droppableProps} ref={p.innerRef} key={i}>
+              <tbody
+                {...p.droppableProps}
+                ref={p.innerRef}
+                key={i}
+                className={filterClassNames}
+              >
                 {dataArr.map((data, i) => (
                   <Draggable
                     key={data.location.key}
@@ -149,7 +180,7 @@ function TimelineGrid({
                           snapshot.isDragging,
                           p.draggableProps.style,
                         )}
-                        className={``}
+                        className={getClassNames(data)}
                       >
                         <LocationListing location={data.location.name} />
 
