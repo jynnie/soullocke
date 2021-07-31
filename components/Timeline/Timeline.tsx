@@ -55,25 +55,18 @@ function matchesPokemonName(d: Data, filters: Filter): boolean {
   return d.pokemonNames?.toLowerCase().includes(searchTerm);
 }
 
-function matchesEvolutionPokemon(d: Data, filters: Filter): boolean {
-  if (!d?.pokemon) return false;
+function makePokemonNameString(acc: string, p: PokemonData): string {
+  if (!p) return acc;
+  let newNameString = `${acc} ${p.name} ${p.nickname}`;
 
-  const searchTerm = filters.searchTerm?.toLowerCase();
-  const allPokemonNames = [];
-  for (const p of d.pokemon) {
-    if (!p) continue;
-
-    const events = Object.values(p.events || {});
-    for (const e of events) {
-      if (e?.type === EventType.evolved) {
-        const evolution = e.details?.evolution;
-        if (evolution) allPokemonNames.push(evolution);
-      }
+  const events = Object.values(p.events || {});
+  for (const e of events) {
+    if (e?.type === EventType.evolved) {
+      const evolution = e.details?.evolution;
+      if (evolution) newNameString += ` ${evolution}`;
     }
   }
-  return allPokemonNames.some((name) =>
-    name?.toLowerCase().includes(searchTerm),
-  );
+  return newNameString;
 }
 
 export interface Data {
@@ -109,10 +102,7 @@ function TimelineGrid({
   const playerArr = RUN.getPlayersArray();
   const allDataArr: Data[] = timelineArr.map((l) => {
     const pokemon = RUN.getPokemonByOrigin(l.name);
-    const pokemonNames = pokemon.reduce(
-      (acc, p) => (!!p ? `${acc} ${p.name} ${p.nickname}` : acc),
-      "",
-    );
+    const pokemonNames = pokemon.reduce(makePokemonNameString, "");
 
     return {
       location: l,
@@ -166,9 +156,8 @@ function TimelineGrid({
       if (filters[f] && f.includes("hide")) classnames.push(styles[f]);
     });
     if (!!filters.searchTerm) {
-      const newFiltered = allDataArr.filter(
-        (d) =>
-          matchesPokemonName(d, filters) || matchesEvolutionPokemon(d, filters),
+      const newFiltered = allDataArr.filter((d) =>
+        matchesPokemonName(d, filters),
       );
       setFilteredData(newFiltered);
     } else setFilteredData(null);
