@@ -26,3 +26,28 @@
     }
   }
 }
+
+.team {
+  & {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &sContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  img {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+}
+
+.faceRight {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
