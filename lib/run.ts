@@ -98,6 +98,12 @@ export class Run {
     return timelineLocations;
   };
 
+  public getEarnedBadges = (): PlaceName[] => {
+    const allLocations = this.getTimelineLocationNames();
+    const allBadges = allLocations.filter((name) => /badge/gi.test(name));
+    return allBadges;
+  };
+
   public getLatestLocation = (): PlaceName => {
     const latestLocation = this.getTimelineLocationNames()?.slice(-1)?.[0];
     return latestLocation;

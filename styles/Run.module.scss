@@ -3,9 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: calc(100vw - 2rem);
+  max-width: 720px;
 
   h2,
   h3 {
     margin: 0.1rem 0 0.2rem;
   }
+}
+
+.tabs {
+  width: 100%;
 }

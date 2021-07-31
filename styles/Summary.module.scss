@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.badgeBox {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: 100%;
+
+  padding: 0.5rem 1rem;
+  background-color: var(--secondary);
+  border-radius: 0.2rem;
+
+  img {
+    width: 32px;
+    height: 32px;
+
+    &:not(.earned) {
+      filter: grayscale(1);
+      opacity: 0.4;
+    }
+  }
+}

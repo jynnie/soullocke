@@ -8,6 +8,10 @@ import type {
 
 import styles from "styles/Run.module.scss";
 import Timeline from "components/Timeline";
+import Summary from "components/Summary";
+import { Tabs } from "antd";
+
+const { TabPane } = Tabs;
 
 interface Props extends Run {
   allBadges: string[];
@@ -23,8 +27,14 @@ function RunHome({ id, game, players, allBadges, allLocations }: Props) {
       <h3>{playerArr.map((p) => p.name).join(" | ")}</h3>
       <div>codename: {id}</div>
 
-      <h4>timeline</h4>
-      <Timeline {...{ allLocations, allBadges }} />
+      <Tabs className={styles.tabs} defaultActiveKey="1" centered>
+        <TabPane tab="Timeline" key="1">
+          <Timeline {...{ allLocations, allBadges }} />
+        </TabPane>
+        <TabPane tab="Summary" key="2">
+          <Summary {...{ allBadges }} />
+        </TabPane>
+      </Tabs>
     </div>
   );
 }

@@ -178,3 +178,20 @@ p.caption {
 .ant-btn {
   border-color: var(--tertiary);
 }
+
+.ant-tabs-top > .ant-tabs-nav::before {
+  border-color: var(--tertiary);
+}
+
+.ant-tabs-tab {
+  &.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--orange-text);
+  }
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.ant-tabs-ink-bar {
+  background-color: var(--orange-text);
+}
