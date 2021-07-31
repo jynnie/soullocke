@@ -1,26 +1,21 @@
 🐛 Bugs
-- [X] Add evolution event
-- [X] Defeat events proc twice
 
 🌶🌶🌶 Would prominently improve experience & usability
-- [X] UX: Move Pokemon to team prompt right after adding Pokemon
-- [X] Timeline: Rearrange locations
-- [X] Timeline: Delete location
+- [X] Search should return evolved forms
 
 🌶🌶 Would improve experience in certain scenarios
-- [X] PokemonIcon: Show evolved Pokemon
-- [X] Timeline: Display pokemon names (possibly events) to the right
-- [X] Each Pokemon: Notes section
-- [X] Pokemon: Edit pokemon name and nickname -- helps when mistakes are made
-- [X] Pokemon: Move action
+- [X] Summary: Badge progress
+- [ ] Summary: Team
+- [ ] Summary: Death/miss count
+- [ ] Summary: Graveyard
+- [ ] Summary: Box
+- [ ] Summary: Daycare
+- [ ] Summary: Drag and drop between categories to move
 
 🌶 Should have, but low value add rn
-- [X] Make new run
-- [X] Timeline: Add search and filter
 - [ ] Pokemon: Delete
 - [ ] Pokemon: Delete event
 
 🧊 Unseasoned thoughts
-- [-] Scrolling? -- already handled
 - [ ] Roam Research style Legend for icons, or make indicators more obvious
 - [ ] Pokemon: Event Buttons instead of filling out form?

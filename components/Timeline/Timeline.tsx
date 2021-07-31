@@ -1,20 +1,13 @@
 import React from "react";
 import Box from "ui-box";
 import cn from "classnames";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
 import { oKey, oVal } from "lib/utils";
-import type {
-  Player,
-  MapLocation,
-  UseState,
-  PlaceName,
-  Timeline as TL,
-  PokemonLocation,
-  Pokemon as PokemonData,
-  Timeline,
+import {
+    EventType, MapLocation, PlaceName, Player, Pokemon as PokemonData, PokemonLocation,
+    Timeline as TL, UseState
 } from "models";
-
 import styles from "styles/Timeline.module.scss";
 import Pokemon from "components/Pokemon";
 import LocationListing from "components/LocationListing";
@@ -23,9 +16,10 @@ import AddToTimeline from "components/AddToTimeline";
 import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
 import LocationActions from "components/LocationActions";
+import { message } from "antd";
+
 import Row from "./Row";
 import Filters, { Filter } from "./Filters";
-import { message } from "antd";
 
 // Reordering helper function
 const reorder = (list: TL[], startIndex, endIndex) => {
@@ -56,6 +50,32 @@ const getClassNames = (data: Data): string => {
   return classnames.join(" ");
 };
 
+function matchesPokemonName(d: Data, filters: Filter): boolean {
+  const searchTerm = filters.searchTerm?.toLowerCase();
+  return d.pokemonNames?.toLowerCase().includes(searchTerm);
+}
+
+function matchesEvolutionPokemon(d: Data, filters: Filter): boolean {
+  if (!d?.pokemon) return false;
+
+  const searchTerm = filters.searchTerm?.toLowerCase();
+  const allPokemonNames = [];
+  for (const p of d.pokemon) {
+    if (!p) continue;
+
+    const events = Object.values(p.events || {});
+    for (const e of events) {
+      if (e?.type === EventType.evolved) {
+        const evolution = e.details?.evolution;
+        if (evolution) allPokemonNames.push(evolution);
+      }
+    }
+  }
+  return allPokemonNames.some((name) =>
+    name?.toLowerCase().includes(searchTerm),
+  );
+}
+
 export interface Data {
   location: TL;
   players: Player[];
@@ -78,13 +98,10 @@ function TimelineGrid({
   const { RUN } = React.useContext(RunContext);
   const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
   const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
-  const [filteredData, setFilteredData]: UseState<Data[]> = React.useState(
-    null,
-  );
-  const [
-    filterClassNames,
-    setFilterClassNames,
-  ]: UseState<string> = React.useState(null);
+  const [filteredData, setFilteredData]: UseState<Data[]> =
+    React.useState(null);
+  const [filterClassNames, setFilterClassNames]: UseState<string> =
+    React.useState(null);
 
   //----------------------------------#01F2DF
   // Data
@@ -149,10 +166,9 @@ function TimelineGrid({
       if (filters[f] && f.includes("hide")) classnames.push(styles[f]);
     });
     if (!!filters.searchTerm) {
-      const newFiltered = allDataArr.filter((d) =>
-        d.pokemonNames
-          ?.toLowerCase()
-          .includes(filters.searchTerm?.toLowerCase()),
+      const newFiltered = allDataArr.filter(
+        (d) =>
+          matchesPokemonName(d, filters) || matchesEvolutionPokemon(d, filters),
       );
       setFilteredData(newFiltered);
     } else setFilteredData(null);
