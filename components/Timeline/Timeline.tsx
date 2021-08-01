@@ -59,7 +59,7 @@ function makePokemonNameString(acc: string, p: PokemonData): string {
   if (!p) return acc;
   let newNameString = `${acc} ${p.name} ${p.nickname}`;
 
-  const events = Object.values(p.events || {});
+  const events = oVal(p.events || {});
   for (const e of events) {
     if (e?.type === EventType.evolved) {
       const evolution = e.details?.evolution;

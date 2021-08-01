@@ -1,13 +1,14 @@
 import type firebase from "firebase";
 import { EventType, Pokemon, PokemonEvent, PokemonLocation } from "models";
+
+import { oVal } from "./utils";
+
 import type {
   PokemonEvents,
   PlaceName,
   Timeline,
   Run as RunData,
 } from "models";
-import { oVal } from "./utils";
-
 type Ref = firebase.database.Reference;
 
 export class Run {
@@ -35,6 +36,10 @@ export class Run {
     if (!this.runData) return;
     const playersArr = oVal(this.runData.players);
     return playersArr;
+  };
+
+  public getPlayer = (id: string) => {
+    return this.runData?.players?.[id];
   };
 
   public getPokemonOnTeam = (): { [playerId: string]: Pokemon[] } => {
@@ -481,20 +486,24 @@ export class Run {
 }
 
 // FIXME: Make these specific functions instead
-export const updatePokemonLocation = (runRef: Ref) => async (
-  playerId: string,
-  pokemonIndex: string,
-  pokemonLocation: PokemonLocation,
-  timelineLocation: PlaceName,
-) => {
-  const pokemonRef = runRef.child(
-    `players/${playerId}/pokemon/${pokemonIndex}`,
-  );
-  await pokemonRef.update({
-    location: pokemonLocation,
-  });
-  await pokemonRef.child(`events/${timelineLocation}`).update(pokemonLocation);
-  return pokemonIndex;
-};
+export const updatePokemonLocation =
+  (runRef: Ref) =>
+  async (
+    playerId: string,
+    pokemonIndex: string,
+    pokemonLocation: PokemonLocation,
+    timelineLocation: PlaceName,
+  ) => {
+    const pokemonRef = runRef.child(
+      `players/${playerId}/pokemon/${pokemonIndex}`,
+    );
+    await pokemonRef.update({
+      location: pokemonLocation,
+    });
+    await pokemonRef
+      .child(`events/${timelineLocation}`)
+      .update(pokemonLocation);
+    return pokemonIndex;
+  };
 
 export default Run;

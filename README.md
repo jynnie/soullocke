@@ -21,7 +21,7 @@ Future features include password locking edit mode and a current summary page. P
 
 ## 🔨 Development
 
-Soullocke is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app); and data powered by [pokeapi.co](https://pokeapi.co/).
+Soullocke is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app); and data powered by [pokeapi.co](https://pokeapi.co/). Additional thanks to [PokéSprite](https://github.com/msikma/pokesprite) and [Nuzlocke Generator](nuzlocke-generator.herokuapp.com).
 
 ```
 $ yarn install

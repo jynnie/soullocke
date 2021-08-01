@@ -4,6 +4,7 @@ import cn from "classnames";
 import { RunContext } from "pages/run/[id]";
 import styles from "styles/Summary.module.scss";
 import { PokemonLocation } from "models";
+import { oKey, oVal } from "lib/utils";
 
 import BadgeBox from "./BadgeBox";
 import Team from "./Team";
@@ -33,7 +34,7 @@ function Summary({ allBadges }: { allBadges: string[] }) {
     // Initialize arrays
     teamPokemon[player.id] = [];
 
-    const pokemon = Object.values(player.pokemon || {});
+    const pokemon = oVal(player.pokemon || {});
     for (const p of pokemon) {
       if (!p) continue;
 
@@ -49,8 +50,8 @@ function Summary({ allBadges }: { allBadges: string[] }) {
     <div className={styles.container}>
       <BadgeBox {...{ allBadges }} />
       <div className={styles.teamsContainer}>
-        {Object.values(teamPokemon).map((team, j) => (
-          <Team {...{ team, j }} />
+        {oKey(teamPokemon).map((player, j) => (
+          <Team key={j} {...{ player, j }} />
         ))}
       </div>
     </div>

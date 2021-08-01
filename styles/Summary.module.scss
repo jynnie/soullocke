@@ -21,7 +21,7 @@
     height: 32px;
 
     &:not(.earned) {
-      filter: grayscale(1);
+      filter: brightness(0);
       opacity: 0.4;
     }
   }
@@ -32,22 +32,65 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    flex: 1 0;
+    position: relative;
+    min-width: 240px;
   }
 
   &sContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
     gap: 2rem;
+    width: 100%;
   }
 
   img {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    width: 162%;
+    margin-left: -32%;
+  }
+}
+
+.pokemon {
+  width: 16%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.onRight {
+  align-items: flex-end;
+
+  img {
+    margin-right: -32%;
   }
 }
 
 .faceRight {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+}
+
+.playerName {
+  position: absolute;
+  top: -10%;
+  color: var(--tertiary);
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .table tr td:last-of-type,
+  .table tr th:last-of-type {
+    display: none;
+  }
+
+  .table thead tr th:nth-last-child(2) {
+    border-radius: 0 4px 4px 0;
+    border-right: 1px solid var(--secondary);
+  }
 }
