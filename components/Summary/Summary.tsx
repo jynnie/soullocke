@@ -51,11 +51,11 @@ function Summary({ allBadges }: { allBadges: string[] }) {
   return (
     <div className={styles.container}>
       <BadgeBox {...{ allBadges }} />
-      <div className={styles.dualContainer}>
+      <Box className={styles.dualContainer} minHeight={97}>
         {oKey(teamPokemon).map((player, j) => (
           <Team key={j} {...{ player, j }} />
         ))}
-      </div>
+      </Box>
 
       <div className={styles.sectionHeader}>
         <div className={styles.sectionDivider} />
