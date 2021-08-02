@@ -55,10 +55,12 @@ function Summary({ allBadges }: { allBadges: string[] }) {
           <Team key={j} {...{ player, j }} />
         ))}
       </div>
-      <div>Grave</div>
+      <div className={styles.graveHeader}>
+        <div>Grave</div>
+      </div>
       <div className={styles.gravesContainer}>
         {playerArr.map((player, j) => (
-          <Grave key={j} {...{ player: player.id }} />
+          <Grave key={j} {...{ player: player.id, j }} />
         ))}
       </div>
     </div>

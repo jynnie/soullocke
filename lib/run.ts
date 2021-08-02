@@ -91,6 +91,37 @@ export class Run {
     return pokemonInGrave.filter(this.filterForPokemonNotMissed);
   };
 
+  private filterForPokemonDefeated = (p: Pokemon): boolean => {
+    return (
+      !!p.name &&
+      oVal(p.events || {}).some((e) => e.type === EventType.defeated)
+    );
+  };
+
+  public getPlayerDefeatCount = (playerId: string) => {
+    if (!this.runData || !this.runData.players || !playerId) return;
+
+    const pokemonDefeated = this.getPlayerPokemonArr(playerId).filter(
+      this.filterForPokemonDefeated,
+    );
+    return pokemonDefeated.length;
+  };
+
+  private filterForPokemonMissed = (p: Pokemon): boolean => {
+    return (
+      !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
+    );
+  };
+
+  public getPlayerMissedCount = (playerId: string) => {
+    if (!this.runData || !this.runData.players || !playerId) return;
+
+    const pokemonMissed = this.getPlayerPokemonArr(playerId).filter(
+      this.filterForPokemonMissed,
+    );
+    return pokemonMissed.length;
+  };
+
   public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
     if (!this.runData) return [];
 

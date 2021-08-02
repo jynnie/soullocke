@@ -84,13 +84,9 @@
 }
 
 .grave {
-  & {
+  &Header {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    flex: 1 0;
-    position: relative;
-    min-width: 240px;
   }
 
   &sContainer {
@@ -99,5 +95,28 @@
     flex-wrap: wrap;
     gap: 2rem;
     width: 100%;
+  }
+
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex: 1 0;
+    position: relative;
+    min-width: 240px;
+
+    &.onRight {
+      align-items: flex-end;
+      .gravePokemon {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  &Pokemon {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
