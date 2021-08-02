@@ -55,10 +55,10 @@ function Summary({ allBadges }: { allBadges: string[] }) {
           <Team key={j} {...{ player, j }} />
         ))}
       </div>
-      <div className={styles.graveHeader}>
-        <div className={styles.graveDivider} />
+      <div className={styles.sectionHeader}>
+        <div className={styles.sectionDivider} />
         <span aria-details="Graveyard">🪦</span>
-        <div className={styles.graveDivider} />
+        <div className={styles.sectionDivider} />
       </div>
       <div className={styles.gravesContainer}>
         {playerArr.map((player, j) => (

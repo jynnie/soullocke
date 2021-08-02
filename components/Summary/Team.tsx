@@ -56,7 +56,7 @@ function Team({ player: pid, j }: { player: string; j: number }) {
             })}
             {...{ pokemon }}
           />
-          <div>{pokemon.nickname}</div>
+          <div className={styles.nickname}>{pokemon.nickname}</div>
         </div>
       ))}
     </div>
