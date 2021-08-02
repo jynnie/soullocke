@@ -38,14 +38,6 @@
     margin-top: 1.8rem;
   }
 
-  &sContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 2rem;
-    width: 100%;
-  }
-
   .pokemon {
     position: relative;
     width: 16%;
@@ -111,17 +103,15 @@
   }
 }
 
+.dualContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}
+
 .grave {
-  &sContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 2rem;
-    width: 100%;
-
-    margin-top: -1rem;
-  }
-
   & {
     display: flex;
     flex-direction: column;

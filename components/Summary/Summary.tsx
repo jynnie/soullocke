@@ -9,6 +9,7 @@ import { oKey, oVal } from "lib/utils";
 import BadgeBox from "./BadgeBox";
 import Team from "./Team";
 import Grave from "./Grave";
+import Boxed from "./Box";
 
 import type { Player, Timeline as TL, Pokemon as PokemonData } from "models";
 export interface Data {
@@ -50,19 +51,31 @@ function Summary({ allBadges }: { allBadges: string[] }) {
   return (
     <div className={styles.container}>
       <BadgeBox {...{ allBadges }} />
-      <div className={styles.teamsContainer}>
+      <div className={styles.dualContainer}>
         {oKey(teamPokemon).map((player, j) => (
           <Team key={j} {...{ player, j }} />
         ))}
       </div>
+
       <div className={styles.sectionHeader}>
         <div className={styles.sectionDivider} />
         <span aria-details="Graveyard">🪦</span>
         <div className={styles.sectionDivider} />
       </div>
-      <div className={styles.gravesContainer}>
+      <Box className={styles.dualContainer} marginTop="-1rem">
         {playerArr.map((player, j) => (
           <Grave key={j} {...{ player: player.id, j }} />
+        ))}
+      </Box>
+
+      <div className={styles.sectionHeader}>
+        <div className={styles.sectionDivider} />
+        <span aria-details="Boxed">🖥</span>
+        <div className={styles.sectionDivider} />
+      </div>
+      <div className={styles.dualContainer}>
+        {playerArr.map((player, j) => (
+          <Boxed key={j} {...{ player: player.id, j }} />
         ))}
       </div>
     </div>

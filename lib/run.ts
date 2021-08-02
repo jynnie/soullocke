@@ -30,6 +30,31 @@ export class Run {
   };
 
   //----------------------------------#01F2DF
+  //- Helper Filters
+
+  private filterForPokemonNotMissed = (p: Pokemon): boolean => {
+    return (
+      !!p.name &&
+      oVal(p.events || {}).every(
+        (e) => e.type !== EventType.missed && e.type !== EventType.soulMiss,
+      )
+    );
+  };
+
+  private filterForPokemonDefeated = (p: Pokemon): boolean => {
+    return (
+      !!p.name &&
+      oVal(p.events || {}).some((e) => e.type === EventType.defeated)
+    );
+  };
+
+  private filterForPokemonMissed = (p: Pokemon): boolean => {
+    return (
+      !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
+    );
+  };
+
+  //----------------------------------#01F2DF
   //- Getters
 
   public getPlayersArray = () => {
@@ -68,12 +93,11 @@ export class Run {
     );
   };
 
-  private filterForPokemonNotMissed = (p: Pokemon): boolean => {
-    return (
-      !!p.name &&
-      oVal(p.events || {}).every(
-        (e) => e.type !== EventType.missed && e.type !== EventType.soulMiss,
-      )
+  public getPokemonInPlayerBox = (playerId: string) => {
+    if (!this.runData || !this.runData.players || !playerId) return;
+
+    return this.getPlayerPokemonArr(playerId).filter(
+      (p) => p.location === PokemonLocation.box,
     );
   };
 
@@ -91,13 +115,6 @@ export class Run {
     return pokemonInGrave.filter(this.filterForPokemonNotMissed);
   };
 
-  private filterForPokemonDefeated = (p: Pokemon): boolean => {
-    return (
-      !!p.name &&
-      oVal(p.events || {}).some((e) => e.type === EventType.defeated)
-    );
-  };
-
   public getPlayerDefeatCount = (playerId: string) => {
     if (!this.runData || !this.runData.players || !playerId) return;
 
@@ -105,12 +122,6 @@ export class Run {
       this.filterForPokemonDefeated,
     );
     return pokemonDefeated.length;
-  };
-
-  private filterForPokemonMissed = (p: Pokemon): boolean => {
-    return (
-      !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
-    );
   };
 
   public getPlayerMissedCount = (playerId: string) => {
@@ -132,8 +143,6 @@ export class Run {
 
     return matchingPokemon;
   };
-
-  // public getPlayerPokemonByOrigin = (origin: string, playerId: string) => {};
 
   public getPokemonLocationByOrigin = (origin: string): PokemonLocation => {
     const pokemonArr = this.getPokemonByOrigin(origin).filter((p) => !!p);
@@ -545,24 +554,20 @@ export class Run {
 }
 
 // FIXME: Make these specific functions instead
-export const updatePokemonLocation =
-  (runRef: Ref) =>
-  async (
-    playerId: string,
-    pokemonIndex: string,
-    pokemonLocation: PokemonLocation,
-    timelineLocation: PlaceName,
-  ) => {
-    const pokemonRef = runRef.child(
-      `players/${playerId}/pokemon/${pokemonIndex}`,
-    );
-    await pokemonRef.update({
-      location: pokemonLocation,
-    });
-    await pokemonRef
-      .child(`events/${timelineLocation}`)
-      .update(pokemonLocation);
-    return pokemonIndex;
-  };
+export const updatePokemonLocation = (runRef: Ref) => async (
+  playerId: string,
+  pokemonIndex: string,
+  pokemonLocation: PokemonLocation,
+  timelineLocation: PlaceName,
+) => {
+  const pokemonRef = runRef.child(
+    `players/${playerId}/pokemon/${pokemonIndex}`,
+  );
+  await pokemonRef.update({
+    location: pokemonLocation,
+  });
+  await pokemonRef.child(`events/${timelineLocation}`).update(pokemonLocation);
+  return pokemonIndex;
+};
 
 export default Run;
