@@ -1,11 +1,12 @@
 import React from "react";
 import { cleanName } from "lib/utils";
 import { EventType } from "models";
-import type { PokemonEvent } from "models";
-
 import Pokeball from "lib/icons/Pokeball";
 import { Timeline } from "antd";
-import { InboxOutlined, FrownOutlined, StarOutlined } from "@ant-design/icons";
+
+import { FrownOutlined, InboxOutlined, StarOutlined } from "@ant-design/icons";
+
+import type { PokemonEvent } from "models";
 
 function PokemonTimelineEvent({ event }: { event: PokemonEvent }) {
   const place = cleanName(event.location);
@@ -38,6 +39,12 @@ function PokemonTimelineEvent({ event }: { event: PokemonEvent }) {
     return (
       <Timeline.Item color="red" dot={<FrownOutlined />}>
         Soul died at {place}
+      </Timeline.Item>
+    );
+  if (event.type === EventType.soulMiss)
+    return (
+      <Timeline.Item color="red" dot={<FrownOutlined />}>
+        Soul missed at {place}
       </Timeline.Item>
     );
   if (event.type === EventType.evolved)

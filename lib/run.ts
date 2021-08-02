@@ -42,6 +42,10 @@ export class Run {
     return this.runData?.players?.[id];
   };
 
+  public getPlayerPokemonArr = (id: string) => {
+    return oVal(this.runData.players[id]?.pokemon || []);
+  };
+
   public getPokemonOnTeam = (): { [playerId: string]: Pokemon[] } => {
     if (!this.runData || !this.runData.players) return {};
 
@@ -59,9 +63,32 @@ export class Run {
   public getPokemonOnPlayerTeam = (playerId: string) => {
     if (!this.runData || !this.runData.players || !playerId) return;
 
-    return oVal(this.runData.players[playerId]?.pokemon || []).filter(
+    return this.getPlayerPokemonArr(playerId).filter(
       (p) => p.location === PokemonLocation.team,
     );
+  };
+
+  private filterForPokemonNotMissed = (p: Pokemon): boolean => {
+    return (
+      !!p.name &&
+      oVal(p.events || {}).every(
+        (e) => e.type !== EventType.missed && e.type !== EventType.soulMiss,
+      )
+    );
+  };
+
+  public getPokemonInPlayerGraveyard = (
+    playerId: string,
+    dontCountMisses: boolean = false,
+  ) => {
+    if (!this.runData || !this.runData.players || !playerId) return;
+
+    const pokemonInGrave = this.getPlayerPokemonArr(playerId).filter(
+      (p) => p.location === PokemonLocation.grave,
+    );
+
+    if (!dontCountMisses) return pokemonInGrave;
+    return pokemonInGrave.filter(this.filterForPokemonNotMissed);
   };
 
   public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
@@ -247,7 +274,7 @@ export class Run {
     playerId: string,
     locationCaught: PlaceName,
   ) => {
-    this.soulDeath(playerId, locationCaught, locationCaught);
+    this.soulDeath(playerId, locationCaught, locationCaught, true);
 
     const events: PokemonEvents = {
       0: { index: "0", type: EventType.missed, location: locationCaught },
@@ -455,6 +482,7 @@ export class Run {
     playerResponsible: string,
     pokemonOrigin: PlaceName,
     location: PlaceName,
+    missed: boolean = false,
   ) => {
     const playerArr = oVal(this.runData.players);
     let event;
@@ -471,7 +499,7 @@ export class Run {
         const eventRef = pokemonRef.child("events").push();
         event = {
           index: eventRef.key,
-          type: EventType.soulDeath,
+          type: missed ? EventType.soulMiss : EventType.soulDeath,
           location,
           details: {
             location: PokemonLocation.grave,

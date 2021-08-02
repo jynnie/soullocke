@@ -8,6 +8,7 @@ import { oKey, oVal } from "lib/utils";
 
 import BadgeBox from "./BadgeBox";
 import Team from "./Team";
+import Grave from "./Grave";
 
 import type { Player, Timeline as TL, Pokemon as PokemonData } from "models";
 export interface Data {
@@ -52,6 +53,12 @@ function Summary({ allBadges }: { allBadges: string[] }) {
       <div className={styles.teamsContainer}>
         {oKey(teamPokemon).map((player, j) => (
           <Team key={j} {...{ player, j }} />
+        ))}
+      </div>
+      <div>Grave</div>
+      <div className={styles.gravesContainer}>
+        {playerArr.map((player, j) => (
+          <Grave key={j} {...{ player: player.id }} />
         ))}
       </div>
     </div>

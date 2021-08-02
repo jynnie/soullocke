@@ -3,9 +3,7 @@ import cn from "classnames";
 import styles from "styles/Summary.module.scss";
 import { RunContext } from "pages/run/[id]";
 import { oVal } from "lib/utils";
-import {
-    EventType, MapLocation, PlaceName, Player, Pokemon as PokemonData, Timeline as TL, UseState
-} from "models";
+import { EventType, Pokemon as PokemonData } from "models";
 
 /**
  * We choose to use Pokesprite instead of PokeAPI here, because

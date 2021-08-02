@@ -1,9 +1,9 @@
 import React from "react";
 import Box from "ui-box";
 import { oVal } from "lib/utils";
-import { UseState, Pokemon, PokemonApiData, EventType } from "models";
+import { EventType, Pokemon, PokemonApiData, UseState } from "models";
 
-export function PokemonIcon({
+export function PokemonImage({
   updateSrc,
   pokemon,
   ...props
@@ -37,4 +37,4 @@ export function PokemonIcon({
   return <Box is="img" alt={pokemonName} src={src} {...props} />;
 }
 
-export default PokemonIcon;
+export default PokemonImage;

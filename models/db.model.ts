@@ -13,6 +13,7 @@ enum EventType {
   defeated,
   soulDeath,
   evolved,
+  soulMiss,
 }
 
 type PlaceName = string;
