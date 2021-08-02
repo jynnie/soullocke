@@ -44,8 +44,6 @@ function Team({ player: pid, j }: { player: string; j: number }) {
   const player = RUN.getPlayer(pid);
   const team = RUN.getPokemonOnPlayerTeam(pid);
 
-  console.log(player);
-
   return (
     <div className={styles.team}>
       <div className={styles.playerName}>{player.name}</div>

@@ -13,12 +13,14 @@ export function PokemonIcon({
   showBadge = false,
   width = 40,
   height = 40,
+  backgroundColor,
 }: {
   pokemon: Pokemon;
   onClick?: () => void;
   showBadge?: boolean;
   width?: number;
   height?: number;
+  backgroundColor?: string;
 }) {
   const pokemonNickname = pokemon?.nickname || "?";
   const pokemonLocation = pokemon?.location || PokemonLocation.grave;
@@ -26,7 +28,7 @@ export function PokemonIcon({
   const [src, setSrc]: UseState<string> = React.useState(null);
   const { data } = usePalette(src);
   const avatarStyle = {
-    backgroundColor: data?.vibrant || "var(--tertiary)",
+    backgroundColor: backgroundColor || data?.vibrant || "var(--tertiary)",
   };
 
   return (

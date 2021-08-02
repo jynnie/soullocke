@@ -13,12 +13,20 @@ function Grave({ player: pid, j }: { player: string; j: number }) {
 
   return (
     <div className={cn(styles.grave, { [styles.onRight]: j % 2 === 1 })}>
-      <div>
-        Defeat {defeatedNum} | Missed {missedNum}
+      <div className={styles.graveCount}>
+        {defeatedNum}D - {missedNum}M
       </div>
       <div className={styles.gravePokemon}>
         {grave.map((pokemon, i) => (
-          <PokemonIcon key={i} {...{ pokemon, width: 32, height: 32 }} />
+          <PokemonIcon
+            key={i}
+            {...{
+              pokemon,
+              width: 32,
+              height: 32,
+              backgroundColor: "var(--tertiary)",
+            }}
+          />
         ))}
       </div>
     </div>

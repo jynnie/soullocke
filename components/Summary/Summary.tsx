@@ -56,7 +56,9 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         ))}
       </div>
       <div className={styles.graveHeader}>
-        <div>Grave</div>
+        <div className={styles.graveDivider} />
+        <span aria-details="Graveyard">🪦</span>
+        <div className={styles.graveDivider} />
       </div>
       <div className={styles.gravesContainer}>
         {playerArr.map((player, j) => (
