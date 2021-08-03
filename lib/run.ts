@@ -93,11 +93,16 @@ export class Run {
     );
   };
 
-  public getPokemonInPlayerBox = (playerId: string) => {
+  public getPokemonInPlayerBox = (
+    playerId: string,
+    includeDaycare: boolean = false,
+  ) => {
     if (!this.runData || !this.runData.players || !playerId) return;
 
-    return this.getPlayerPokemonArr(playerId).filter(
-      (p) => p.location === PokemonLocation.box,
+    return this.getPlayerPokemonArr(playerId).filter((p) =>
+      p.location === PokemonLocation.box || includeDaycare
+        ? p.location === PokemonLocation.daycare
+        : false,
     );
   };
 

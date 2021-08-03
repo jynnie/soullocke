@@ -7,12 +7,12 @@ import PokemonIcon from "components/PokemonIcon";
 function Box({ player: pid, j }: { player: string; j: number }) {
   const { RUN } = React.useContext(RunContext);
 
-  const grave = RUN.getPokemonInPlayerBox(pid);
+  const boxedPokemon = RUN.getPokemonInPlayerBox(pid, true);
 
   return (
     <div className={cn(styles.grave, { [styles.onRight]: j % 2 === 1 })}>
       <div className={styles.gravePokemon}>
-        {grave.map((pokemon, i) => (
+        {boxedPokemon.map((pokemon, i) => (
           <PokemonIcon
             key={i}
             {...{

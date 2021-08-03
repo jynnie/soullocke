@@ -1,22 +1,26 @@
 🐛 Bugs
 
 🌶🌶🌶 Would prominently improve experience & usability
-- [X] Search should return evolved forms
+
+- [x] Search should return evolved forms
 
 🌶🌶 Would improve experience in certain scenarios
-- [X] Summary: Badge progress
-- [X] Summary: Team
-  - [X] Improve nametags
-- [X] Summary: Death/miss count
-- [X] Summary: Graveyard
-- [X] Summary: Box
-- [ ] Summary: Daycare
+
+- [x] Summary: Badge progress
+- [x] Summary: Team
+  - [x] Improve nametags
+- [x] Summary: Death/miss count
+- [x] Summary: Graveyard
+- [x] Summary: Box
+- [x] Summary: Daycare
 - [ ] Summary: Drag and drop between categories to move
 
 🌶 Should have, but low value add rn
+
 - [ ] Pokemon: Delete event
 - [ ] Pokemon: Delete
 
 🧊 Unseasoned thoughts
+
 - [ ] Roam Research style Legend for icons, or make indicators more obvious
 - [ ] Pokemon: Event Buttons instead of filling out form?
