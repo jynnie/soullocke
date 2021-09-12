@@ -66,3 +66,26 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
+
+.affix {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+
+  opacity: 0.2;
+  transition: opacity 0.4s;
+
+  cursor: pointer;
+}
+
+.affix:hover {
+  opacity: 1;
+}
+
+.affix a {
+  color: unset;
+}

@@ -10,12 +10,15 @@ import {
   Run,
   PokemonListApiData as ListPokemon,
 } from "models";
+import { SmileOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 
 import RunHome from "components/RunHome";
 import styles from "styles/Home.module.css";
 
 import RUN from "lib/run";
 import BADGES from "lib/badges";
+
 const NO_RUN = { notFound: true };
 
 //----------------------------------#01F2DF
@@ -125,6 +128,21 @@ function RunPage() {
 
         <main className={styles.main}>
           <RunHome {...runProps} />
+
+          <Tooltip
+            title="Hi there! Thanks for checking out Soullocke. If you have feedback or requests, click me."
+            placement="topRight"
+          >
+            <div className={styles.affix}>
+              <a
+                href="https://github.com/jynnie/soullocke/discussions"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SmileOutlined />
+              </a>
+            </div>
+          </Tooltip>
         </main>
       </div>
     </RunContext.Provider>
