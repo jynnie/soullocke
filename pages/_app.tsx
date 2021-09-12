@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import Head from "next/head";
 import firebase from "firebase";
 import firebaseConfig from "firebaseConfig";
@@ -10,8 +11,10 @@ import "../styles/globals.scss";
 //- Firebase Setup
 let db;
 try {
-  firebase.initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(firebaseConfig);
+  const analytics = (firebase as any)?.getAnalytics?.(app);
   db = firebase.database();
+  ReactGA.initialize("G-NKZJHF6JTY");
 } catch (error) {
   /*
    * We skip the "already exists" message which is

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 import Head from "next/head";
 import Error from "pages/_error";
 import { useRouter } from "next/router";
@@ -90,6 +91,11 @@ function RunPage() {
         );
         setAllPokemon(basePokemon);
       });
+  }, []);
+
+  //- Google analytics for page
+  React.useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   //----------------------------------#01F2DF
