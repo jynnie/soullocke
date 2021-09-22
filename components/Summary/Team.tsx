@@ -4,13 +4,14 @@ import styles from "styles/Summary.module.scss";
 import { RunContext } from "pages/run/[id]";
 import { oVal } from "lib/utils";
 import { EventType, Pokemon as PokemonData } from "models";
+import { pokemonAlternativeNames } from "lib/pokemonAlternativeNames";
 
 /**
  * We choose to use Pokesprite instead of PokeAPI here, because
  * where Pokemon's feet are, are on the same baseline. Providing
  * more aesthetic team summary images.
  */
-function TeamImage({
+export function TeamImage({
   pokemon,
   ...props
 }: {
@@ -24,10 +25,8 @@ function TeamImage({
   );
   const latestEvolution = evolutionEvents.slice(-1)?.[0];
   let searchPokemon = latestEvolution?.details?.evolution ?? pokemonName;
-  if (searchPokemon === "giratina-altered") searchPokemon = "giratina";
-  const derivativeIndex = searchPokemon.indexOf("-");
-  if (searchPokemon.indexOf("-") > 0)
-    searchPokemon = searchPokemon.slice(0, derivativeIndex);
+  const alternativePokemon = pokemonAlternativeNames[searchPokemon];
+  if (alternativePokemon) searchPokemon = alternativePokemon;
   const src = `https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/${searchPokemon}.png`;
 
   return <img alt={pokemonName} src={src} {...props} />;
