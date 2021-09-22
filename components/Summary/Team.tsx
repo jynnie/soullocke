@@ -51,9 +51,11 @@ function Team({ player: pid, j }: { player: string; j: number }) {
     <div className={styles.team}>
       <div className={styles.playerName}>{player.name}</div>
       {team.map((pokemon, i) => (
-        <div className={cn(styles.pokemon, { [styles.onRight]: j % 2 === 1 })}>
+        <div
+          key={i}
+          className={cn(styles.pokemon, { [styles.onRight]: j % 2 === 1 })}
+        >
           <TeamImage
-            key={i}
             className={cn({
               [styles.faceRight]: isFacingRight(team.length, i, j),
             })}
