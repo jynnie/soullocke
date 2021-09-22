@@ -1,4 +1,5 @@
 import React from "react";
+import mixpanel from "mixpanel-browser";
 import Head from "next/head";
 import Error from "pages/_error";
 import { useRouter } from "next/router";
@@ -17,6 +18,7 @@ import styles from "styles/Home.module.css";
 
 import RUN from "lib/run";
 import BADGES from "lib/badges";
+import { useMetrics } from "lib/hooks";
 
 const NO_RUN = { notFound: true };
 
@@ -107,6 +109,8 @@ function RunPage() {
     allLocations,
   };
 
+  useMetrics("Run Page", id, { pageId: id });
+
   //----------------------------------#01F2DF
   //- Return Components
   if (isLoadingRun) return null;
@@ -132,6 +136,7 @@ function RunPage() {
                 href="https://github.com/jynnie/soullocke/discussions"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => mixpanel.track("Feedback button")}
               >
                 <SmileOutlined />
               </a>
