@@ -1,6 +1,7 @@
 import React from "react";
 import firebase from "firebase";
 import firebaseConfig from "firebaseConfig";
+import mixpanel from "mixpanel-browser";
 
 import "antd/dist/antd.dark.css";
 // import "antd/dist/antd.css";
@@ -26,6 +27,11 @@ export const FirebaseContext: React.Context<{
 }> = React.createContext(null);
 
 function MyApp({ Component, pageProps }) {
+  React.useEffect(() => {
+    mixpanel.init("669064492edee6f09aca23f2ece2beed");
+    mixpanel.track("Visit site");
+  }, []);
+
   return (
     <>
       <FirebaseContext.Provider value={{ db }}>

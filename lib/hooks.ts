@@ -9,9 +9,9 @@ export const useToUpdate = (value) => {
   }, [value]);
 };
 
-export function useMetrics(componentName: string, restartKey: any, data: any) {
+export function useMetrics(componentName: string, requiredKey: any, data: any) {
   React.useEffect(() => {
-    if (componentName) {
+    if (componentName && requiredKey) {
       mixpanel.time_event(componentName);
     }
 
@@ -19,5 +19,5 @@ export function useMetrics(componentName: string, restartKey: any, data: any) {
       if (componentName && data) mixpanel.track(componentName, data);
       if (componentName && !data) mixpanel.track(componentName);
     };
-  }, [restartKey]);
+  }, [requiredKey]);
 }
