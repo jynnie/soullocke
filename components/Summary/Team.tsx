@@ -25,6 +25,9 @@ function TeamImage({
   const latestEvolution = evolutionEvents.slice(-1)?.[0];
   let searchPokemon = latestEvolution?.details?.evolution ?? pokemonName;
   if (searchPokemon === "giratina-altered") searchPokemon = "giratina";
+  const derivativeIndex = searchPokemon.indexOf("-");
+  if (searchPokemon.indexOf("-") > 0)
+    searchPokemon = searchPokemon.slice(0, derivativeIndex);
   const src = `https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/${searchPokemon}.png`;
 
   return <img alt={pokemonName} src={src} {...props} />;
