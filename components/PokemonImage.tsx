@@ -34,6 +34,7 @@ export function PokemonImage({
     }
   }, [pokemon?.name, evolutionEvents.length]);
 
+  if (!src) return <>{pokemonName}</>;
   return <Box is="img" alt={pokemonName} src={src} {...props} />;
 }
 

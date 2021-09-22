@@ -21,7 +21,10 @@ export function LocationSummary({
   return (
     <div className={styles.location}>
       {pokemonArr.length > 0 && <Tag {...{ pokemonLocation }}></Tag>}
-      {pokemonArr.map((p) => p?.nickname).join(" & ")}
+      {pokemonArr
+        .map((p) => p?.nickname)
+        .filter((p) => !!p)
+        .join(" & ")}
     </div>
   );
 }

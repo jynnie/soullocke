@@ -15,9 +15,17 @@ export function useMetrics(componentName: string, requiredKey: any, data: any) {
       mixpanel.time_event(componentName);
     }
 
+    function trackEvent() {
+      if (componentName && requiredKey) {
+        if (data) mixpanel.track(componentName, data);
+        if (!data) mixpanel.track(componentName);
+      }
+    }
+
+    window.addEventListener("beforeunload", trackEvent);
+
     return () => {
-      if (componentName && data) mixpanel.track(componentName, data);
-      if (componentName && !data) mixpanel.track(componentName);
+      window.removeEventListener("beforeunload", trackEvent);
     };
   }, [requiredKey]);
 }
