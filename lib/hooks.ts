@@ -22,10 +22,10 @@ export function useMetrics(componentName: string, requiredKey: any, data: any) {
       }
     }
 
-    window.addEventListener("beforeunload", trackEvent);
+    window.addEventListener("unload", trackEvent);
 
     return () => {
-      window.removeEventListener("beforeunload", trackEvent);
+      window.removeEventListener("unload", trackEvent);
     };
   }, [requiredKey]);
 }
