@@ -64,6 +64,10 @@ function RunPage() {
   const allBadges: string[] = (region && BADGES[region]) || [];
   const allLocations = (regionData && regionData.locations) || [];
 
+  React.useEffect(() => {
+    runDb.attachData([...allLocations.map((l) => l.name), ...allBadges]);
+  }, [allLocations]);
+
   //----------------------------------#01F2DF
   //- Subscribe to run data
   React.useEffect(() => {

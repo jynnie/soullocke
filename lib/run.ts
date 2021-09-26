@@ -1,5 +1,11 @@
 import type firebase from "firebase";
-import { EventType, Pokemon, PokemonEvent, PokemonLocation } from "models";
+import {
+  EventType,
+  MapLocation,
+  Pokemon,
+  PokemonEvent,
+  PokemonLocation,
+} from "models";
 
 import { oVal } from "./utils";
 
@@ -15,6 +21,7 @@ export class Run {
   runRef: Ref;
   runData: RunData;
   patchNum: number = 0;
+  allLocations: string[] = [];
 
   constructor(runRef: Ref) {
     this.runRef = runRef;
@@ -22,6 +29,10 @@ export class Run {
 
   public attachRef = (runRef: Ref) => {
     this.runRef = runRef;
+  };
+
+  public attachData = (allLocations: string[]) => {
+    this.allLocations = allLocations;
   };
 
   public updateRunData = (runData: RunData) => {

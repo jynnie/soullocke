@@ -67,7 +67,7 @@ function AddEventForm({
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemon.location,
   );
-  const timelineLocations = RUN.getTimelineLocationNames();
+  const timelineLocations = RUN.allLocations;
   const latestLocation = RUN.getLatestLocation();
 
   // Set initial values
