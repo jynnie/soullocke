@@ -72,6 +72,22 @@ function Home() {
         </p>
       </section>
 
+      <section className={styles.section}>
+        <h3>🍀 More Pokémon?</h3>
+        <p className={styles.description}>
+          Try out my interactive{" "}
+          <a
+            href="https://typesmart.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.highlight}
+          >
+            Typechart
+          </a>
+          .
+        </p>
+      </section>
+
       <footer className={styles.footer}>
         <span style={{ marginRight: "5px" }}>Made with {"<3"} by </span>
         <a href="https://github.com/jynnie/soullocke">jynnie</a>
