@@ -1,4 +1,5 @@
 import React from "react";
+import Box from "ui-box";
 import mixpanel from "mixpanel-browser";
 import Head from "next/head";
 import Error from "pages/_error";
@@ -51,9 +52,8 @@ function RunPage() {
   //- States & Variables
   const [runData, setRunData]: UseState<Run> = React.useState(null);
   const [regionData, setRegionData]: UseState<Region> = React.useState(null);
-  const [allPokemon, setAllPokemon]: UseState<ListPokemon[]> = React.useState(
-    null,
-  );
+  const [allPokemon, setAllPokemon]: UseState<ListPokemon[]> =
+    React.useState(null);
 
   // Booleans
   const isLoadingRun = !runData;
@@ -117,7 +117,12 @@ function RunPage() {
 
   //----------------------------------#01F2DF
   //- Return Components
-  if (isLoadingRun) return null;
+  if (isLoadingRun)
+    return (
+      <Box className="flex center" marginTop="45vh">
+        Loading...
+      </Box>
+    );
   if (!runExists)
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
