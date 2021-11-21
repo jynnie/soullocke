@@ -1,33 +1,35 @@
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.main,
+.section {
+  padding: 1rem;
+  max-width: 600px;
+  width: 100%;
+}
+
 .main {
-  padding: 5rem 0;
-  flex: 1;
+  padding: 16rem 1rem 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .footer {
   width: 100%;
   height: 100px;
-  border-top: 1px solid var(--tertiary);
+  background: var(--tertiary50);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-tertiary);
-}
-
-.footer img {
-  margin-left: 0.5rem;
+  color: var(--text-caption);
+  margin-top: 2rem;
 }
 
 .footer a {
@@ -36,56 +38,88 @@
   align-items: center;
 }
 
+.footer a:hover {
+  color: #a8ff78;
+}
+
 .title,
 .description {
-  text-align: center;
+  text-align: left;
 }
 
 .description {
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
+  line-height: 1.25;
+  color: var(--text-caption);
+  font-weight: lighter;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
-.card {
-  margin: 1rem;
-  flex-basis: 45%;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.affix {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-
-  opacity: 0.2;
-  transition: opacity 0.4s;
-
+.highlight {
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: all 0.2s;
+}
+.highlight:hover,
+.highlight:focus,
+.highlight:active {
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
-.affix:hover {
-  opacity: 1;
+.title {
+  background: #a8ff78; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right bottom,
+    #a8ff78,
+    #78ffd6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right bottom,
+    #a8ff78,
+    #78ffd6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  line-height: 1;
+  font-size: 4.2rem;
+  margin-bottom: 1rem;
 }
 
-.affix a {
-  color: unset;
+.actionButton {
+  background: #a8ff78; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right bottom,
+    #a8ff78 10%,
+    #78ffd6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right bottom,
+    #a8ff78 10%,
+    #78ffd6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-color: none;
+
+  color: var(--background);
+  font-weight: bold;
+}
+
+.actionButton:hover,
+.actionButton:focus,
+.actionButton:active {
+  background: #a8ff78; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right bottom,
+    #a8ff78,
+    #78ffd6 60%
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right bottom,
+    #a8ff78,
+    #78ffd6 60%
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: var(--background);
 }
