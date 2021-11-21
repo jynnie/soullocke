@@ -1,7 +1,9 @@
 import React from "react";
+import Box from "ui-box";
 import { RunContext } from "pages/run/[id]";
 import { UseState, MapLocation, PlaceName } from "models";
 
+import styles from "styles/Home.module.css";
 import { Popover, Button, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -28,16 +30,22 @@ export function AddToTimeline({
   };
 
   return (
-    <Popover
-      content={<Form {...{ allLocations, allBadges, onFinish, onCancel }} />}
-      trigger="click"
-      visible={showForm}
-      onVisibleChange={(v) => setShowForm(v)}
-    >
-      <Tooltip title="Add Location" placement="right">
-        <Button shape="circle" icon={<PlusOutlined />} />
-      </Tooltip>
-    </Popover>
+    <Box marginLeft={8} marginTop={12}>
+      <Popover
+        content={<Form {...{ allLocations, allBadges, onFinish, onCancel }} />}
+        trigger="click"
+        visible={showForm}
+        onVisibleChange={(v) => setShowForm(v)}
+      >
+        <Tooltip title="Add Location" placement="right">
+          <Button
+            shape="circle"
+            icon={<PlusOutlined />}
+            className={styles.secondaryButton}
+          />
+        </Tooltip>
+      </Popover>
+    </Box>
   );
 }
 

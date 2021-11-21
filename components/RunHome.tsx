@@ -23,7 +23,7 @@ function RunHome({ id, game, players, allBadges, allLocations }: Props) {
 
   return (
     <div className={styles.container}>
-      <h2>{game} soullocke</h2>
+      <h2>{game} Soullocke</h2>
       <h3>{playerArr.map((p) => p.name).join(" | ")}</h3>
       <div>codename: {id}</div>
 

@@ -123,7 +123,7 @@ function RunPage() {
 
   return (
     <RunContext.Provider value={{ RUN: runDb, allPokemon }}>
-      <div className={styles.innerContainer}>
+      <div className={styles.outerContainer}>
         <Head>
           <title>Soullocke | {id}</title>
         </Head>
