@@ -14,7 +14,7 @@ import { SmileOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 
 import RunHome from "components/RunHome";
-import styles from "styles/Home.module.css";
+import styles from "styles/Run.module.scss";
 
 import RUN from "lib/run";
 import BADGES from "lib/badges";
@@ -123,7 +123,7 @@ function RunPage() {
 
   return (
     <RunContext.Provider value={{ RUN: runDb, allPokemon }}>
-      <div className={styles.container}>
+      <div className={styles.innerContainer}>
         <Head>
           <title>Soullocke | {id}</title>
         </Head>

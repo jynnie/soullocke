@@ -39,7 +39,7 @@
 }
 
 .footer a:hover {
-  color: #a8ff78;
+  color: var(--brand);
 }
 
 .title,
@@ -68,16 +68,16 @@
 }
 
 .title {
-  background: #a8ff78; /* fallback for old browsers */
+  background: var(--brand); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right bottom,
-    #a8ff78,
-    #78ffd6
+    var(--brand),
+    var(--brand-secondary)
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right bottom,
-    #a8ff78,
-    #78ffd6
+    var(--brand),
+    var(--brand-secondary)
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   background-clip: text;
@@ -89,17 +89,19 @@
   margin-bottom: 1rem;
 }
 
+/* //* Buttons */
+
 .actionButton {
-  background: #a8ff78; /* fallback for old browsers */
+  background: var(--brand); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right bottom,
-    #a8ff78 10%,
-    #78ffd6
+    var(--brand) 10%,
+    var(--brand-secondary)
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right bottom,
-    #a8ff78 10%,
-    #78ffd6
+    var(--brand) 10%,
+    var(--brand-secondary)
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-color: none;
 
@@ -110,16 +112,23 @@
 .actionButton:hover,
 .actionButton:focus,
 .actionButton:active {
-  background: #a8ff78; /* fallback for old browsers */
+  background: var(--brand); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right bottom,
-    #a8ff78,
-    #78ffd6 60%
+    var(--brand),
+    var(--brand-secondary) 60%
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right bottom,
-    #a8ff78,
-    #78ffd6 60%
+    var(--brand),
+    var(--brand-secondary) 60%
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: var(--background);
+}
+
+.secondaryButton:hover,
+.secondaryButton:focus,
+.secondaryButton:active {
+  border-color: var(--brand50);
+  color: var(--brand);
 }

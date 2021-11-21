@@ -126,7 +126,10 @@ function NewRunPage() {
                       />
                     </Form.Item>
                     {fields.length > 1 ? (
-                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                      <MinusCircleOutlined
+                        style={{ marginLeft: "8px" }}
+                        onClick={() => remove(field.name)}
+                      />
                     ) : null}
                   </Form.Item>
                 ))}
@@ -135,6 +138,7 @@ function NewRunPage() {
                     type="dashed"
                     onClick={() => add()}
                     icon={<PlusOutlined />}
+                    className={styles.secondaryButton}
                   >
                     Add player
                   </Button>
@@ -145,7 +149,11 @@ function NewRunPage() {
           </Form.List>
 
           <Form.Item className={formStyles.itemButtons}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.actionButton}
+            >
               Create
             </Button>
           </Form.Item>
