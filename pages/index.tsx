@@ -56,9 +56,17 @@ function Home() {
       </section>
 
       <section className={styles.section}>
+        <h3>🤝 Can I Share my Run?</h3>
+        <p className={styles.description}>
+          Yes! Every run has a unique URL. You can share it with anyone you want
+          to collaborate with. Anyone with the URL can edit.
+        </p>
+      </section>
+
+      <section className={styles.section}>
         <h3>💬 Feedback?</h3>
         <p className={styles.description}>
-          This is my passion project and I'd love to hear any feedback you have!
+          This is my passion project and I'd love to hear any feedback you have.
           You can post suggestions here on{" "}
           <a
             href="https://github.com/jynnie/soullocke/discussions"
