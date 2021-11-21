@@ -5,17 +5,18 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { RunContext } from "pages/run/[id]";
 import { oKey, oVal } from "lib/utils";
 import {
-    EventType, MapLocation, PlaceName, Player, Pokemon as PokemonData, PokemonLocation,
-    Timeline as TL, UseState
+  EventType,
+  MapLocation,
+  PlaceName,
+  Player,
+  Pokemon as PokemonData,
+  PokemonLocation,
+  Timeline as TL,
+  UseState,
 } from "models";
 import styles from "styles/Timeline.module.scss";
-import Pokemon from "components/Pokemon";
-import LocationListing from "components/LocationListing";
-import LocationSummary from "components/LocationSummary";
 import AddToTimeline from "components/AddToTimeline";
-import AddPokemon from "components/AddPokemon";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
-import LocationActions from "components/LocationActions";
 import { message } from "antd";
 
 import Row from "./Row";
@@ -91,10 +92,13 @@ function TimelineGrid({
   const { RUN } = React.useContext(RunContext);
   const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
   const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
-  const [filteredData, setFilteredData]: UseState<Data[]> =
-    React.useState(null);
-  const [filterClassNames, setFilterClassNames]: UseState<string> =
-    React.useState(null);
+  const [filteredData, setFilteredData]: UseState<Data[]> = React.useState(
+    null,
+  );
+  const [
+    filterClassNames,
+    setFilterClassNames,
+  ]: UseState<string> = React.useState(null);
 
   //----------------------------------#01F2DF
   // Data

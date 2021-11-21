@@ -37,7 +37,7 @@ function AddPokemonForm({
     setPokemon(null);
     setNickname(null);
     setCaught(true);
-    if (onFinish) onFinish(pokemon, nickname, caught);
+    if (onFinish) onFinish(pokemon, nickname || pokemon, caught);
   };
 
   const handlePokemonChange = (value) => {
@@ -92,12 +92,6 @@ function AddPokemonForm({
         className={styles.item}
         name="nickname"
         initialValue={defaultValues?.nickname}
-        rules={[
-          {
-            required: caught,
-            message: "Please input your Pokémon's nickname",
-          },
-        ]}
       >
         <Input
           onChange={handleNicknameChange}

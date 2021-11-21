@@ -1,10 +1,6 @@
 import React from "react";
 import { oVal } from "lib/utils";
-import type {
-  Run,
-  MapLocation,
-  PokemonListApiData as ListPokemon,
-} from "models";
+import type { Run, MapLocation } from "models";
 
 import styles from "styles/Run.module.scss";
 import Timeline from "components/Timeline";
