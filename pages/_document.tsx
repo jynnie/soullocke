@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
           <meta property="og:url" content="https://soullocke.vercel.app/" />
           <meta
             name="og:description"
-            content="Soullocke (or soul-linked Nuzlocke) Tracker for encounters and progress. All Pokémon games (Sapphire, Emerald, Diamond, Pearl, Black, White, Sword, Shield, etc). Works best for two trainers, but can support any number in a run."
+            content="Soullocke (or soul-linked Nuzlocke) Tracker for encounters and progress. All mainline Pokémon games (Sapphire, Emerald, Diamond, Pearl, Black, White, Sword, Shield, etc). Works best for two trainers, but can support any number in a run."
           />
           <meta property="og:image" content="/clip.png" />
 
