@@ -53,7 +53,6 @@ const unova: string[] = [
   "Toxic_Badge",
   "Basic_Badge",
   "Insect_Badge",
-  "Insect_Badge",
   "Bolt_Badge",
   "Wave_Badge",
   "Quake_Badge",
