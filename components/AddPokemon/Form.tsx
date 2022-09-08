@@ -1,9 +1,10 @@
-import React from "react";
+import { Button, Checkbox, Form, Input, Select } from "antd";
+import cn from "classnames";
+import type { UseState } from "models";
 import { RunContext } from "pages/run/[id]";
-import type { UseState, PokemonListApiData as ListPokemon } from "models";
-
+import React from "react";
 import styles from "styles/Form.module.scss";
-import { Checkbox, Form, Select, Input, Button } from "antd";
+
 const { Option } = Select;
 
 function AddPokemonForm({
@@ -108,7 +109,7 @@ function AddPokemonForm({
         </Form.Item>
       )}
 
-      <Form.Item className={styles.itemButtons}>
+      <Form.Item className={cn(styles.itemButtons, "formButtons")}>
         {onCancel && <Button onClick={handleCancel}>Cancel</Button>}
 
         <Button type="primary" htmlType="submit">

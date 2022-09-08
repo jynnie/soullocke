@@ -6,15 +6,15 @@ import {
   PokemonEvent,
   PokemonLocation,
 } from "models";
+import type {
+  PlaceName,
+  PokemonEvents,
+  Run as RunData,
+  Timeline,
+} from "models";
 
 import { oVal } from "./utils";
 
-import type {
-  PokemonEvents,
-  PlaceName,
-  Timeline,
-  Run as RunData,
-} from "models";
 type Ref = firebase.database.Reference;
 
 export class Run {
@@ -414,14 +414,36 @@ export class Run {
     return event;
   };
 
-  // Take care that soullink doesn't get
-  // desynced
+  public editEvent = async (
+    playerId: string,
+    pokemonOrigin: string,
+    index: string,
+    type: EventType,
+    location: PlaceName,
+    details?: PokemonEvent["details"],
+  ) => {
+    const eventRef = this.runRef.child(
+      `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
+    );
+    return eventRef.update({
+      type,
+      location,
+      details,
+    });
+  };
+
+  // This can potentially make the soullocke get out of sync
   public removeEvent = (
     playerId: string,
     pokemonOrigin: string,
     index: string,
   ) => {
-    if (!this.runRef) return;
+    if (!this.runRef || !playerId || !pokemonOrigin) return;
+
+    const eventRef = this.runRef.child(
+      `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
+    );
+    return eventRef.set(null);
   };
 
   public swapPokemonOnTeam = async (
@@ -570,20 +592,24 @@ export class Run {
 }
 
 // FIXME: Make these specific functions instead
-export const updatePokemonLocation = (runRef: Ref) => async (
-  playerId: string,
-  pokemonIndex: string,
-  pokemonLocation: PokemonLocation,
-  timelineLocation: PlaceName,
-) => {
-  const pokemonRef = runRef.child(
-    `players/${playerId}/pokemon/${pokemonIndex}`,
-  );
-  await pokemonRef.update({
-    location: pokemonLocation,
-  });
-  await pokemonRef.child(`events/${timelineLocation}`).update(pokemonLocation);
-  return pokemonIndex;
-};
+export const updatePokemonLocation =
+  (runRef: Ref) =>
+  async (
+    playerId: string,
+    pokemonIndex: string,
+    pokemonLocation: PokemonLocation,
+    timelineLocation: PlaceName,
+  ) => {
+    const pokemonRef = runRef.child(
+      `players/${playerId}/pokemon/${pokemonIndex}`,
+    );
+    await pokemonRef.update({
+      location: pokemonLocation,
+    });
+    await pokemonRef
+      .child(`events/${timelineLocation}`)
+      .update(pokemonLocation);
+    return pokemonIndex;
+  };
 
 export default Run;

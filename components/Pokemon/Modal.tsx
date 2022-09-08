@@ -1,16 +1,17 @@
-import React from "react";
-import { cleanName, oVal } from "lib/utils";
-import { RunContext } from "pages/run/[id]";
-import { Pokemon, PokemonLocation, UseState } from "models";
-
-import Event from "./Event";
+import { Button, Modal, Timeline } from "antd";
 import AddEvent from "components/AddEvent";
-import PokemonImage from "components/PokemonImage";
 import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
+import PokemonImage from "components/PokemonImage";
+import { cleanName, oVal } from "lib/utils";
+import { Pokemon, PokemonLocation, UseState } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
 import styles from "styles/Pokemon.module.scss";
-import { Button, Modal, Timeline } from "antd";
+
 import { EditOutlined } from "@ant-design/icons";
+
+import Event from "./TimelineEvent";
 
 function PokemonModal({
   pokemon,
@@ -83,7 +84,7 @@ function PokemonModal({
 
       <Timeline>
         {eventsArr?.map((event, i) => (
-          <Event key={i} {...{ event }} />
+          <Event key={i} {...{ event, pokemon, playerId }} />
         ))}
         {pokemonIsAlive && <AddEvent {...{ pokemon }} />}
       </Timeline>

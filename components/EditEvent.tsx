@@ -4,7 +4,6 @@ import { cleanName, oVal } from "lib/utils";
 import {
   EventType,
   PlaceName,
-  Pokemon,
   PokemonEvent,
   PokemonLocation,
   UseState,
@@ -15,28 +14,37 @@ import styles from "styles/Form.module.scss";
 
 const { Option } = Select;
 
-function AddEventForm({
-  pokemon,
+function EditEvent({
+  event,
   onFinish,
   onCancel,
+  onDelete,
 }: {
-  pokemon: Pokemon;
+  event: PokemonEvent;
   onFinish?: (
     eventType: EventType,
     eventLocation: PlaceName,
     eventDetails: PokemonEvent["details"],
   ) => void;
   onCancel?: () => void;
+  onDelete?: () => void;
 }) {
   const { RUN, allPokemon } = React.useContext(RunContext);
 
   //----------------------------------#01F2DF
   //- States
-  const [location, setLocation]: UseState<string> = React.useState(null);
-  const [eventType, setEventType]: UseState<number> = React.useState(null);
+  const [location, setLocation]: UseState<string> = React.useState(
+    event?.location,
+  );
+  const [eventType, setEventType]: UseState<number> = React.useState(
+    event?.type,
+  );
   const [pokemonLocation, setPokemonLocation]: UseState<PokemonLocation> =
-    React.useState(null);
-  const [evolution, setEvolution]: UseState<string> = React.useState(null);
+    React.useState(event?.details?.location || null);
+  const [evolution, setEvolution]: UseState<string> = React.useState(
+    event?.details?.evolution || null,
+  );
+  // FIXME: Just use the form API hook instead of duplicating states
   const [form] = Form.useForm();
 
   //----------------------------------#01F2DF
@@ -60,23 +68,30 @@ function AddEventForm({
     if (onCancel) onCancel();
   };
 
+  const handleDelete = async () => {
+    await form.resetFields();
+    if (onDelete) onDelete();
+  };
+
   //----------------------------------#01F2DF
   //- Options
   const eventTypes = ["moved", "defeated", "evolved"];
-  const pokemonLocations = oVal(PokemonLocation).filter(
-    (l) => l !== pokemon.location,
-  );
+  const pokemonLocations = oVal(PokemonLocation);
   const timelineLocations = RUN.allLocations;
   const latestLocation = RUN.getLatestLocation();
 
-  // Set initial values
-  React.useEffect(() => {
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-  }, []);
-
   return (
-    <Form form={form} name="addPokemonEvent" onFinish={handleFinish}>
+    <Form
+      form={form}
+      name="addPokemonEvent"
+      onFinish={handleFinish}
+      initialValues={{
+        location: event?.location || latestLocation,
+        eventType: event?.type,
+        pokemonLocation: event?.details?.location,
+        evolution: event?.details?.evolution,
+      }}
+    >
       <Form.Item
         className={styles.item}
         label="At"
@@ -177,15 +192,25 @@ function AddEventForm({
         </Form.Item>
       )}
 
+      <p className="caption">
+        *Warning: Editing or deleting this event does not affect events of
+        linked Pokémon. Nor will it automatically update current Pokémon
+        location or name.
+      </p>
+
       <Form.Item className={cn(styles.itemButtons, "formButtons")}>
         <Button onClick={handleCancel}>Cancel</Button>
 
+        <Button danger onClick={handleDelete} htmlType="button">
+          Delete
+        </Button>
+
         <Button type="primary" htmlType="submit">
-          Add
+          Save
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default AddEventForm;
+export default EditEvent;

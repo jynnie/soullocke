@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  height: 1.2rem;
+
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.action {
+  display: none;
+  margin-top: -4px;
+}
+
+.container:hover .action {
+  display: block;
+}

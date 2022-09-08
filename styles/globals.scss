@@ -124,10 +124,27 @@ h2 {
   &.spaceBetween {
     justify-content: space-between;
   }
+
+  &.justifyEnd {
+    justify-content: flex-end;
+  }
+
+  &.gap05 {
+    gap: 0.5rem;
+  }
 }
 
-p.caption {
-  color: var(--text-caption);
+p {
+  &.caption {
+    color: var(--text-caption);
+    font-size: 0.8rem;
+  }
+  &.warning {
+    color: var(--orange-text);
+  }
+  &.alignRight {
+    text-align: right;
+  }
 }
 
 //----------------------------------#01F2DF
@@ -200,4 +217,36 @@ p.caption {
 
 .ant-tabs-ink-bar {
   background-color: var(--orange-text);
+}
+
+.ant-btn {
+  &:hover,
+  &:focus {
+    color: var(--blue-text);
+    border-color: var(--blue-border);
+  }
+
+  &.ant-btn-dangerous {
+    color: var(--pink-text);
+    &:hover,
+    &:focus {
+      color: var(--pink-text);
+      border-color: var(--pink-text);
+    }
+  }
+
+  &.ant-btn-primary {
+    border-color: var(--blue-background);
+    &:hover,
+    &:focus {
+      color: var(--text-primary);
+    }
+  }
+}
+
+.formButtons .ant-form-item-control-input-content {
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  gap: 0.2rem;
 }
