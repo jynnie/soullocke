@@ -84,7 +84,15 @@ function PokemonModal({
 
       <Timeline>
         {eventsArr?.map((event, i) => (
-          <Event key={i} {...{ event, pokemon, playerId }} />
+          <Event
+            key={i}
+            {...{
+              event,
+              pokemon,
+              playerId,
+              isLatestEvent: i === eventsArr.length - 1,
+            }}
+          />
         ))}
         {pokemonIsAlive && <AddEvent {...{ pokemon }} />}
       </Timeline>

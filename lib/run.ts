@@ -421,15 +421,23 @@ export class Run {
     type: EventType,
     location: PlaceName,
     details?: PokemonEvent["details"],
+    isLatestEvent?: boolean,
   ) => {
-    const eventRef = this.runRef.child(
-      `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
-    );
-    return eventRef.update({
-      type,
-      location,
-      details,
-    });
+    // If this is the latest event, we'll change the pokemon's location and
+    // other relevant details.
+    if (isLatestEvent) {
+      await this.removeEvent(playerId, pokemonOrigin, index);
+      return this.addEvent(playerId, pokemonOrigin, type, location, details);
+    } else {
+      const eventRef = this.runRef.child(
+        `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
+      );
+      return eventRef.update({
+        type,
+        location,
+        details,
+      });
+    }
   };
 
   // This can potentially make the soullocke get out of sync

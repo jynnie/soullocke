@@ -13,6 +13,7 @@ function EditEvent({
   onFinish,
   onCancel,
   onDelete,
+  isLatestEvent,
 }: {
   event: PokemonEvent;
   onFinish?: (
@@ -22,6 +23,7 @@ function EditEvent({
   ) => void;
   onCancel?: () => void;
   onDelete?: () => void;
+  isLatestEvent?: boolean;
 }) {
   const { RUN, allPokemon } = React.useContext(RunContext);
 
@@ -181,8 +183,9 @@ function EditEvent({
 
       <p className="caption">
         *Warning: Editing or deleting this event does not affect events of
-        linked Pokémon. Nor will it automatically update current Pokémon
-        location or name.
+        linked Pokémon.{" "}
+        {!isLatestEvent &&
+          "Nor will it automatically update current Pokémon location."}
       </p>
 
       <Form.Item className={cn(styles.itemButtons, "formButtons")}>

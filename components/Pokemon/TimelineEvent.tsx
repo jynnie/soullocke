@@ -20,10 +20,12 @@ function PokemonTimelineEvent({
   event,
   pokemon,
   playerId,
+  isLatestEvent,
 }: {
   event: PokemonEvent;
   pokemon: Pokemon;
   playerId: string;
+  isLatestEvent?: boolean;
 }) {
   const { RUN } = React.useContext(RunContext);
   const place = cleanName(event.location);
@@ -43,6 +45,7 @@ function PokemonTimelineEvent({
       eventType,
       location,
       details,
+      isLatestEvent && location === RUN.getLatestLocation(),
     );
     setIsEditing(false);
     setIsDeleting(false);
@@ -53,9 +56,14 @@ function PokemonTimelineEvent({
   }
 
   function handleDelete() {
-    return RUN.removeEvent(playerId, pokemon.origin, event.index);
     setIsEditing(false);
-    setIsDeleting(true);
+    setIsDeleting(false);
+    return RUN.removeEvent(playerId, pokemon.origin, event.index);
+  }
+
+  function handleCancel() {
+    setIsEditing(false);
+    setIsDeleting(false);
   }
 
   let eventDetails: string = undefined;
@@ -98,9 +106,10 @@ function PokemonTimelineEvent({
         <EditEvent
           {...{
             event,
-            onCancel: () => setIsEditing(false),
+            onCancel: handleCancel,
             onDelete: handleStartDelete,
             onFinish: handleSaveEdits,
+            isLatestEvent,
           }}
         />
         <DeleteEventModal
