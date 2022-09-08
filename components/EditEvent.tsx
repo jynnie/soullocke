@@ -1,13 +1,7 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
 import { cleanName, oVal } from "lib/utils";
-import {
-  EventType,
-  PlaceName,
-  PokemonEvent,
-  PokemonLocation,
-  UseState,
-} from "models";
+import { EventType, PlaceName, PokemonEvent, PokemonLocation } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
@@ -31,31 +25,25 @@ function EditEvent({
 }) {
   const { RUN, allPokemon } = React.useContext(RunContext);
 
-  //----------------------------------#01F2DF
-  //- States
-  const [location, setLocation]: UseState<string> = React.useState(
+  //* States----------------------------#07cf7f
+  const [location, setLocation] = React.useState<string | undefined>(
     event?.location,
   );
-  const [eventType, setEventType]: UseState<number> = React.useState(
+  const [eventType, setEventType] = React.useState<EventType | undefined>(
     event?.type,
   );
-  const [pokemonLocation, setPokemonLocation]: UseState<PokemonLocation> =
-    React.useState(event?.details?.location || null);
-  const [evolution, setEvolution]: UseState<string> = React.useState(
+  const [pokemonLocation, setPokemonLocation] =
+    React.useState<PokemonLocation | null>(event?.details?.location || null);
+  const [evolution, setEvolution] = React.useState<string | null>(
     event?.details?.evolution || null,
   );
+
   // FIXME: Just use the form API hook instead of duplicating states
   const [form] = Form.useForm();
 
-  //----------------------------------#01F2DF
-  //- Handlers
-  const handleEventTypeChange = setEventType;
-  const handleLocationChange = setLocation;
-  const handlePokemonLocationChange = setPokemonLocation;
-  const handleEvolutionChange = setEvolution;
-
+  //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onFinish)
       onFinish(eventType, location, {
         location: pokemonLocation,
@@ -64,17 +52,16 @@ function EditEvent({
   };
 
   const handleCancel = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onCancel) onCancel();
   };
 
   const handleDelete = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onDelete) onDelete();
   };
 
-  //----------------------------------#01F2DF
-  //- Options
+  //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
   const pokemonLocations = oVal(PokemonLocation);
   const timelineLocations = RUN.allLocations;
@@ -102,7 +89,7 @@ function EditEvent({
       >
         <Select
           className={styles.select}
-          onChange={handleLocationChange}
+          onChange={(value) => setLocation(value)}
           value={location}
           placeholder="Select the location of this event"
           showSearch
@@ -123,7 +110,7 @@ function EditEvent({
       >
         <Select
           className={styles.select}
-          onChange={handleEventTypeChange}
+          onChange={(value) => setEventType(value)}
           value={eventType}
           placeholder="Select an Event Type"
           showSearch
@@ -150,7 +137,7 @@ function EditEvent({
         >
           <Select
             className={styles.select}
-            onChange={handlePokemonLocationChange}
+            onChange={(value) => setPokemonLocation(value)}
             value={pokemonLocation}
             placeholder="Select new location"
             showSearch
@@ -178,7 +165,7 @@ function EditEvent({
         >
           <Select
             className={styles.select}
-            onChange={handleEvolutionChange}
+            onChange={(value) => setEvolution(value)}
             value={evolution}
             placeholder="Select evolution"
             showSearch

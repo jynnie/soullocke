@@ -1,15 +1,15 @@
-import React from "react";
+import { Button, Timeline } from "antd";
+import { EventType, PlaceName, Pokemon, PokemonEvent } from "models";
 import { RunContext } from "pages/run/[id]";
-import { UseState, PlaceName, Pokemon, EventType, PokemonEvent } from "models";
+import React from "react";
 
-import { Timeline, Button } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
 export function AddEvent({ pokemon }: { pokemon: Pokemon }) {
   const { RUN } = React.useContext(RunContext);
-  const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
+  const [showForm, setShowForm] = React.useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);
 

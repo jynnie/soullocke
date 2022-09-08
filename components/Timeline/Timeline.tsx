@@ -1,8 +1,7 @@
-import React from "react";
-import Box from "ui-box";
+import { message } from "antd";
 import cn from "classnames";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { RunContext } from "pages/run/[id]";
+import AddToTimeline from "components/AddToTimeline";
+import MovePokemonToTeam from "components/MovePokemonToTeam";
 import { oKey, oVal } from "lib/utils";
 import {
   EventType,
@@ -12,15 +11,15 @@ import {
   Pokemon as PokemonData,
   PokemonLocation,
   Timeline as TL,
-  UseState,
 } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "styles/Timeline.module.scss";
-import AddToTimeline from "components/AddToTimeline";
-import MovePokemonToTeam from "components/MovePokemonToTeam";
-import { message } from "antd";
+import Box from "ui-box";
 
-import Row from "./Row";
 import Filters, { Filter } from "./Filters";
+import Row from "./Row";
 
 // Reordering helper function
 const reorder = (list: TL[], startIndex, endIndex) => {
@@ -90,15 +89,12 @@ function TimelineGrid({
   allBadges: string[];
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [addToTeamOrigin, setATTO]: UseState<string> = React.useState(null);
-  const [addToTeamLocation, setATTL]: UseState<string> = React.useState(null);
-  const [filteredData, setFilteredData]: UseState<Data[]> = React.useState(
+  const [addToTeamOrigin, setATTO] = React.useState<string | null>(null);
+  const [addToTeamLocation, setATTL] = React.useState<string | null>(null);
+  const [filteredData, setFilteredData] = React.useState<Data[] | null>(null);
+  const [filterClassNames, setFilterClassNames] = React.useState<string | null>(
     null,
   );
-  const [
-    filterClassNames,
-    setFilterClassNames,
-  ]: UseState<string> = React.useState(null);
 
   //----------------------------------#01F2DF
   // Data

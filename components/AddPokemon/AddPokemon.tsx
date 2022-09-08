@@ -1,9 +1,9 @@
-import React from "react";
+import { Button, Popover, Tooltip } from "antd";
+import { PlaceName } from "models";
 import { RunContext } from "pages/run/[id]";
-import { UseState, PlaceName } from "models";
-
+import React from "react";
 import styles from "styles/Home.module.css";
-import { Popover, Button, Tooltip } from "antd";
+
 import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
@@ -18,7 +18,7 @@ export function AddPokemon({
   onFinish: (caught: boolean) => void;
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
+  const [showForm, setShowForm] = React.useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);
 

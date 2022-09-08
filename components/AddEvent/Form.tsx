@@ -7,7 +7,6 @@ import {
   Pokemon,
   PokemonEvent,
   PokemonLocation,
-  UseState,
 } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
@@ -30,22 +29,15 @@ function AddEventForm({
 }) {
   const { RUN, allPokemon } = React.useContext(RunContext);
 
-  //----------------------------------#01F2DF
-  //- States
-  const [location, setLocation]: UseState<string> = React.useState(null);
-  const [eventType, setEventType]: UseState<number> = React.useState(null);
-  const [pokemonLocation, setPokemonLocation]: UseState<PokemonLocation> =
-    React.useState(null);
-  const [evolution, setEvolution]: UseState<string> = React.useState(null);
+  //* States----------------------------#07cf7f
+  const [location, setLocation] = React.useState<string | null>(null);
+  const [eventType, setEventType] = React.useState<EventType | null>(null);
+  const [pokemonLocation, setPokemonLocation] =
+    React.useState<PokemonLocation | null>(null);
+  const [evolution, setEvolution] = React.useState<string | null>(null);
   const [form] = Form.useForm();
 
-  //----------------------------------#01F2DF
-  //- Handlers
-  const handleEventTypeChange = setEventType;
-  const handleLocationChange = setLocation;
-  const handlePokemonLocationChange = setPokemonLocation;
-  const handleEvolutionChange = setEvolution;
-
+  //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     await form.resetFields();
     if (onFinish)
@@ -60,8 +52,7 @@ function AddEventForm({
     if (onCancel) onCancel();
   };
 
-  //----------------------------------#01F2DF
-  //- Options
+  //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemon.location,
@@ -87,7 +78,7 @@ function AddEventForm({
       >
         <Select
           className={styles.select}
-          onChange={handleLocationChange}
+          onChange={(value) => setLocation(value)}
           value={location}
           placeholder="Select the location of this event"
           showSearch
@@ -108,7 +99,7 @@ function AddEventForm({
       >
         <Select
           className={styles.select}
-          onChange={handleEventTypeChange}
+          onChange={(value) => setEventType(value)}
           value={eventType}
           placeholder="Select an Event Type"
           showSearch
@@ -135,7 +126,7 @@ function AddEventForm({
         >
           <Select
             className={styles.select}
-            onChange={handlePokemonLocationChange}
+            onChange={(value) => setPokemonLocation(value)}
             value={pokemonLocation}
             placeholder="Select new location"
             showSearch
@@ -163,7 +154,7 @@ function AddEventForm({
         >
           <Select
             className={styles.select}
-            onChange={handleEvolutionChange}
+            onChange={(value) => setEvolution(value)}
             value={evolution}
             placeholder="Select evolution"
             showSearch

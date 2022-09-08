@@ -1,8 +1,7 @@
+import { Checkbox, Input } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import React from "react";
 import Box from "ui-box";
-import { UseState } from "models";
-
-import { Input, Checkbox } from "antd";
 
 export interface Filter {
   hideBadge: boolean;
@@ -14,14 +13,14 @@ export interface Filter {
 }
 
 function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
-  const [hideBadge, setHideBadge]: UseState<boolean> = React.useState(null);
-  const [hideTeam, setHideTeam]: UseState<boolean> = React.useState(null);
-  const [hideBox, setHideBox]: UseState<boolean> = React.useState(null);
-  const [hideDaycare, setHideDaycare]: UseState<boolean> = React.useState(null);
-  const [hideGrave, setHideGrave]: UseState<boolean> = React.useState(null);
-  const [inputVal, setInputVal]: UseState<string> = React.useState(null);
+  const [hideBadge, setHideBadge] = React.useState<boolean>(false);
+  const [hideTeam, setHideTeam] = React.useState<boolean>(false);
+  const [hideBox, setHideBox] = React.useState<boolean>(false);
+  const [hideDaycare, setHideDaycare] = React.useState<boolean>(false);
+  const [hideGrave, setHideGrave] = React.useState<boolean>(false);
+  const [inputVal, setInputVal] = React.useState<string>("");
 
-  const handleSearch = (e) => {
+  const handleSearch: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputVal(e.target.value);
     handleChange({ searchTerm: e.target.value });
   };
@@ -39,23 +38,23 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
       });
   };
 
-  const handleBadge = (e) => {
+  const handleBadge = (e: CheckboxChangeEvent) => {
     setHideBadge(!e.target.checked);
     handleChange({ hideBadge: !e.target.checked });
   };
-  const handleTeam = (e) => {
+  const handleTeam = (e: CheckboxChangeEvent) => {
     setHideTeam(!e.target.checked);
     handleChange({ hideTeam: !e.target.checked });
   };
-  const handleBox = (e) => {
+  const handleBox = (e: CheckboxChangeEvent) => {
     setHideBox(!e.target.checked);
     handleChange({ hideBox: !e.target.checked });
   };
-  const handleDaycare = (e) => {
+  const handleDaycare = (e: CheckboxChangeEvent) => {
     setHideDaycare(!e.target.checked);
     handleChange({ hideDaycare: !e.target.checked });
   };
-  const handleGrave = (e) => {
+  const handleGrave = (e: CheckboxChangeEvent) => {
     setHideGrave(!e.target.checked);
     handleChange({ hideGrave: !e.target.checked });
   };

@@ -4,7 +4,7 @@ import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
 import { cleanName, oVal } from "lib/utils";
-import { Pokemon, PokemonLocation, UseState } from "models";
+import { Pokemon, PokemonLocation } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Pokemon.module.scss";
@@ -27,7 +27,7 @@ function PokemonModal({
   onCancel: () => void;
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [editPokemon, setEditPokemon]: UseState<boolean> = React.useState(null);
+  const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
 
   const timelineArr = RUN.getTimelineLocationNames();
   const eventsArr = oVal(pokemon?.events || {}).sort(

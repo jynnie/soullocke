@@ -1,8 +1,8 @@
+import PokemonIcon from "components/PokemonIcon";
+import { Pokemon } from "models";
 import React from "react";
-import { UseState, Pokemon } from "models";
 
 import Modal from "./Modal";
-import PokemonIcon from "components/PokemonIcon";
 
 export function TimelinePokemon({
   pokemon,
@@ -13,7 +13,7 @@ export function TimelinePokemon({
   playerId: string;
   location: string;
 }) {
-  const [showModal, setShowModal]: UseState<boolean> = React.useState(null);
+  const [showModal, setShowModal] = React.useState<boolean>(false);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);

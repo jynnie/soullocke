@@ -1,10 +1,11 @@
-import React from "react";
+import { Button, Select, Tooltip } from "antd";
 import { cleanName } from "lib/utils";
-import type { UseState, MapLocation } from "models";
-
+import type { MapLocation } from "models";
+import React from "react";
 import styles from "styles/Form.module.scss";
-import { Select, Button, Tooltip } from "antd";
-import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
+
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+
 const { Option } = Select;
 
 function AddToTimelineForm({
@@ -18,14 +19,14 @@ function AddToTimelineForm({
   onFinish?: (location: string) => void;
   onCancel?: () => void;
 }) {
-  const [location, setLocation]: UseState<string> = React.useState(null);
+  const [location, setLocation] = React.useState<string>("");
 
   const handleFinish = () => {
     if (onFinish) onFinish(location);
     setLocation(null);
   };
 
-  const handleChange = (value) => {
+  const handleChange = (value: string) => {
     setLocation(value);
   };
 

@@ -1,11 +1,11 @@
+import { PlaceName } from "models";
 import React from "react";
-import { PlaceName, UseState } from "models";
 
 import Button from "./Button";
 import Modal from "./Modal";
 
 function Notes({ location }: { location: PlaceName }) {
-  const [showNotes, setShowNotes]: UseState<boolean> = React.useState(null);
+  const [showNotes, setShowNotes] = React.useState<boolean>(false);
 
   return (
     <>

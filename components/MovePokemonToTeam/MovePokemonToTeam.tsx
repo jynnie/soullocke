@@ -1,12 +1,11 @@
-import React from "react";
-import { isNullish, oKey, oVal } from "lib/utils";
-import { RunContext } from "pages/run/[id]";
-
-import styles from "styles/Pokemon.module.scss";
+import { Button, Modal } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
-import { Button, Modal } from "antd";
-import { Pokemon, PlaceName, UseState } from "models";
+import { isNullish, oKey, oVal } from "lib/utils";
+import { PlaceName, Pokemon } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Pokemon.module.scss";
 
 /**
  * Prompt for Moving Pokemon to Team
@@ -41,7 +40,7 @@ export function MovePokemonToTeam({
   const teamGroupedByOrigin = RUN.groupByOrigin(teamArr);
 
   // Handlers for actually swapping
-  const [swapOut, setSwapOut]: UseState<PlaceName[]> = React.useState([]);
+  const [swapOut, setSwapOut] = React.useState<PlaceName[]>([]);
   const selectGroup = (origin: PlaceName) => {
     let newVal = [...swapOut];
     newVal.push(origin);

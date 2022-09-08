@@ -1,11 +1,11 @@
-import React from "react";
-import Box from "ui-box";
-import { usePalette } from "react-palette";
-import { Pokemon, PokemonLocation, UseState } from "models";
-import styles from "styles/Pokemon.module.scss";
+import { Tooltip } from "antd";
 import LocationBadge from "components/LocationBadge";
 import PokemonImage from "components/PokemonImage";
-import { Tooltip } from "antd";
+import { Pokemon, PokemonLocation } from "models";
+import React from "react";
+import { usePalette } from "react-palette";
+import styles from "styles/Pokemon.module.scss";
+import Box from "ui-box";
 
 export function PokemonIcon({
   pokemon,
@@ -25,7 +25,7 @@ export function PokemonIcon({
   const pokemonNickname = pokemon?.nickname || "?";
   const pokemonLocation = pokemon?.location || PokemonLocation.grave;
 
-  const [src, setSrc]: UseState<string> = React.useState(null);
+  const [src, setSrc] = React.useState<string | null>(null);
   const { data } = usePalette(src);
   const avatarStyle = {
     backgroundColor: backgroundColor || data?.vibrant || "var(--tertiary)",

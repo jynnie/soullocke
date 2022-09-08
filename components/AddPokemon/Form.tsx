@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, Select } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import cn from "classnames";
-import type { UseState } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
@@ -21,8 +21,8 @@ function AddPokemonForm({
   showCaughtCheckbox?: boolean;
 }) {
   const { allPokemon } = React.useContext(RunContext);
-  const [pokemon, setPokemon]: UseState<string> = React.useState(null);
-  const [nickname, setNickname]: UseState<string> = React.useState(null);
+  const [pokemon, setPokemon] = React.useState<string | null>(null);
+  const [nickname, setNickname] = React.useState<string | null>(null);
   const [caught, setCaught] = React.useState(true);
 
   const [form] = Form.useForm();
@@ -41,17 +41,12 @@ function AddPokemonForm({
     if (onFinish) onFinish(pokemon, nickname || pokemon, caught);
   };
 
-  const handlePokemonChange = (value) => {
-    setPokemon(value);
-  };
-
-  const handleNicknameChange = (evt) => {
-    setNickname(evt.target.value);
-  };
-
-  const handleCaughtChange = (evt) => {
+  const handlePokemonChange = (value: string) => setPokemon(value);
+  const handleNicknameChange: React.ChangeEventHandler<HTMLInputElement> = (
+    evt,
+  ) => setNickname(evt.target.value);
+  const handleCaughtChange = (evt: CheckboxChangeEvent) =>
     setCaught(evt.target.checked);
-  };
 
   const handleCancel = () => {
     form.resetFields();

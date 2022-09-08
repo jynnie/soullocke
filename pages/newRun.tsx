@@ -1,30 +1,29 @@
-import React from "react";
-import REGIONS from "lib/regions";
+import { Button, Form, Input, Select } from "antd";
 import runId from "lib/random";
-import { useRouter } from "next/router";
+import REGIONS from "lib/regions";
 import { oVal } from "lib/utils";
-import { UseState } from "models";
+import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
-
-import styles from "styles/Home.module.css";
+import React from "react";
 import formStyles from "styles/Form.module.scss";
-import { Form, Input, Select, Button } from "antd";
+import styles from "styles/Home.module.css";
+
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+
 const { Option } = Select;
 
 function NewRunPage() {
   const db = React.useContext(FirebaseContext)?.db;
   const router = useRouter();
 
-  const [region, setRegion]: UseState<string> = React.useState(null);
-  const [game, setGame]: UseState<string> = React.useState(null);
-  const [players, setPlayers]: UseState<{
+  const [region, setRegion] = React.useState<string>(null);
+  const [game, setGame] = React.useState<string>(null);
+  const [players, setPlayers] = React.useState<{
     [key: number]: string;
-  }> = React.useState({});
+  }>({});
 
   const [form] = Form.useForm();
 
-  const handleRegionChange = setRegion;
   const handleGameChange = (evt) => setGame(evt.target.value);
   const handlePlayerChange = (index: number, value: string) => {
     const newPlayers = { ...players, [index]: value };
@@ -70,7 +69,7 @@ function NewRunPage() {
           <Form.Item label="Region" required={true}>
             <Select
               className={formStyles.select}
-              onChange={handleRegionChange}
+              onChange={(value) => setRegion(value)}
               value={region}
               placeholder="i.e. Hoenn"
               showSearch

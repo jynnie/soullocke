@@ -1,10 +1,10 @@
-import React from "react";
-import Box from "ui-box";
+import { Button, Popover, Tooltip } from "antd";
+import { MapLocation, PlaceName } from "models";
 import { RunContext } from "pages/run/[id]";
-import { UseState, MapLocation, PlaceName } from "models";
-
+import React from "react";
 import styles from "styles/Home.module.css";
-import { Popover, Button, Tooltip } from "antd";
+import Box from "ui-box";
+
 import { PlusOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
@@ -17,7 +17,7 @@ export function AddToTimeline({
   allBadges: string[];
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [showForm, setShowForm]: UseState<boolean> = React.useState(null);
+  const [showForm, setShowForm] = React.useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);
 

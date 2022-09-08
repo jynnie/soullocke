@@ -1,9 +1,8 @@
-import React from "react";
-import { RunContext } from "pages/run/[id]";
+import { Button, Input, Modal } from "antd";
 import { cleanName } from "lib/utils";
-import { PlaceName, UseState } from "models";
-
-import { Button, Modal, Input } from "antd";
+import { PlaceName } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
 
 function NotesModal({
   visible = false,
@@ -15,7 +14,7 @@ function NotesModal({
   onCancel: () => void;
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [notes, setNotes]: UseState<string> = React.useState(null);
+  const [notes, setNotes] = React.useState<string | null>(null);
 
   const existingNotes = RUN.getLocationNotes(location);
 
@@ -23,7 +22,7 @@ function NotesModal({
     setNotes(existingNotes);
   }, [existingNotes]);
 
-  const handleChange = (evt) => {
+  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (evt) => {
     setNotes(evt.target.value);
   };
 

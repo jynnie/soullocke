@@ -1,12 +1,12 @@
-import React from "react";
-import { cleanName, oVal } from "lib/utils";
-import { RunContext } from "pages/run/[id]";
-import { UseState, PlaceName, PokemonLocation } from "models";
-
-import styles from "styles/Form.module.scss";
+import { Button, Form, Modal, Select } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
-import { Form, Select, Button, Modal } from "antd";
+import { cleanName, oVal } from "lib/utils";
+import { PlaceName, PokemonLocation } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Form.module.scss";
+
 const { Option } = Select;
 
 export function MovePokemon({
@@ -22,8 +22,6 @@ export function MovePokemon({
 }) {
   const { RUN } = React.useContext(RunContext);
 
-  //----------------------------------#01F2DF
-  // Information Getters
   const pokemonMoving = RUN.getPokemonByOrigin(pokemonOrigin);
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
@@ -34,13 +32,10 @@ export function MovePokemon({
     (l) => l !== pokemonMoving[0]?.location,
   );
 
-  //----------------------------------#01F2DF
-  //- States
-  const [location, setLocation]: UseState<string> = React.useState(null);
-  const [
-    pokemonLocation,
-    setPokemonLocation,
-  ]: UseState<PokemonLocation> = React.useState(null);
+  //* States----------------------------#07cf7f
+  const [location, setLocation] = React.useState<string>("");
+  const [pokemonLocation, setPokemonLocation] =
+    React.useState<PokemonLocation | null>(null);
   const [form] = Form.useForm();
 
   // Set initial values
@@ -49,18 +44,14 @@ export function MovePokemon({
     setLocation(latestLocation);
   }, []);
 
-  //----------------------------------#01F2DF
-  //- Handlers
-  const handleLocationChange = setLocation;
-  const handlePokemonLocationChange = setPokemonLocation;
-
+  //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onFinish) onFinish(location, pokemonLocation);
   };
 
   const handleCancel = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onCancel) onCancel();
   };
 
@@ -89,7 +80,7 @@ export function MovePokemon({
         >
           <Select
             className={styles.select}
-            onChange={handleLocationChange}
+            onChange={(value) => setLocation(value)}
             value={location}
             placeholder="Select the location of this event"
             showSearch
@@ -115,7 +106,7 @@ export function MovePokemon({
         >
           <Select
             className={styles.select}
-            onChange={handlePokemonLocationChange}
+            onChange={(value) => setPokemonLocation(value)}
             value={pokemonLocation}
             placeholder="Select new location"
             showSearch

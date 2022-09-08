@@ -1,25 +1,19 @@
-import React from "react";
-import Box from "ui-box";
-import mixpanel from "mixpanel-browser";
-import Head from "next/head";
-import Error from "pages/_error";
-import { useRouter } from "next/router";
-import { FirebaseContext } from "pages/_app";
-import {
-  UseState,
-  Region,
-  Run,
-  PokemonListApiData as ListPokemon,
-} from "models";
-import { SmileOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
-
 import RunHome from "components/RunHome";
-import styles from "styles/Run.module.scss";
-
-import RUN from "lib/run";
 import BADGES from "lib/badges";
 import { useMetrics } from "lib/hooks";
+import RUN from "lib/run";
+import mixpanel from "mixpanel-browser";
+import { PokemonListApiData as ListPokemon, Region, Run } from "models";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { FirebaseContext } from "pages/_app";
+import Error from "pages/_error";
+import React from "react";
+import styles from "styles/Run.module.scss";
+import Box from "ui-box";
+
+import { SmileOutlined } from "@ant-design/icons";
 
 const NO_RUN = { notFound: true };
 
@@ -48,12 +42,10 @@ function RunPage() {
     if (db && id && runRef) runDb.attachRef(runRef);
   }, [!!db, id]);
 
-  //----------------------------------#01F2DF
-  //- States & Variables
-  const [runData, setRunData]: UseState<Run> = React.useState(null);
-  const [regionData, setRegionData]: UseState<Region> = React.useState(null);
-  const [allPokemon, setAllPokemon]: UseState<ListPokemon[]> =
-    React.useState(null);
+  //* States & Variables----------------#07cf7f
+  const [runData, setRunData] = React.useState<Run | null>(null);
+  const [regionData, setRegionData] = React.useState<Region | null>(null);
+  const [allPokemon, setAllPokemon] = React.useState<ListPokemon[]>([]);
 
   // Booleans
   const isLoadingRun = !runData;
@@ -68,8 +60,7 @@ function RunPage() {
     runDb.attachData([...allLocations.map((l) => l.name), ...allBadges]);
   }, [allLocations]);
 
-  //----------------------------------#01F2DF
-  //- Subscribe to run data
+  //* Subscribe to run data-------------#07cf7f
   React.useEffect(() => {
     if (runRef && id) {
       runRef.on("value", (snapshot) => {
@@ -101,8 +92,6 @@ function RunPage() {
       });
   }, []);
 
-  //----------------------------------#01F2DF
-  //- Props
   const runProps = {
     id,
     game,
@@ -115,8 +104,7 @@ function RunPage() {
 
   useMetrics("Run Page", id, { pageId: id });
 
-  //----------------------------------#01F2DF
-  //- Return Components
+  //* Components------------------------#07cf7f
   if (isLoadingRun)
     return (
       <Box className="flex center" marginTop="45vh">

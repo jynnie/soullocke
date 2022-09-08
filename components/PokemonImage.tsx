@@ -1,7 +1,7 @@
+import { oVal } from "lib/utils";
+import { EventType, Pokemon, PokemonApiData } from "models";
 import React from "react";
 import Box from "ui-box";
-import { oVal } from "lib/utils";
-import { EventType, Pokemon, PokemonApiData, UseState } from "models";
 
 export function PokemonImage({
   updateSrc,
@@ -18,7 +18,7 @@ export function PokemonImage({
     (e) => e.type === EventType.evolved,
   );
 
-  const [src, setSrc]: UseState<string> = React.useState(null);
+  const [src, setSrc] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (pokemonName) {
