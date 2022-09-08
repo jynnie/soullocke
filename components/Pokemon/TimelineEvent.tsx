@@ -87,7 +87,9 @@ function PokemonTimelineEvent({
   } else if (event.type === EventType.evolved) {
     eventColor = "blue";
     eventDot = <StarOutlined />;
-    eventDetails = `$Evolved into {event.details?.evolution || "?"} at ${place}`;
+    eventDetails = `Evolved into ${
+      event.details?.evolution || "?"
+    } at ${place}`;
   }
 
   if (isEditing) {
