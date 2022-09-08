@@ -54,6 +54,8 @@ function PokemonTimelineEvent({
 
   function handleDelete() {
     return RUN.removeEvent(playerId, pokemon.origin, event.index);
+    setIsEditing(false);
+    setIsDeleting(true);
   }
 
   let eventDetails: string = undefined;
