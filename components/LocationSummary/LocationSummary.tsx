@@ -1,5 +1,5 @@
 import { useToUpdate } from "hooks/useToUpdate";
-import { Pokemon, PokemonLocation } from "models";
+import { IPokemon, PokemonLocation } from "models";
 import React from "react";
 import styles from "styles/Location.module.scss";
 
@@ -9,7 +9,7 @@ export function LocationSummary({
   pokemon,
   pokemonLocation,
 }: {
-  pokemon: Pokemon[];
+  pokemon: IPokemon[];
   pokemonLocation: PokemonLocation;
 }) {
   useToUpdate(pokemon && pokemon.length);

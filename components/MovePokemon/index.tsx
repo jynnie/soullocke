@@ -2,11 +2,11 @@ import { Button, Form, Modal, Select } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
 import { useEffectOnce } from "hooks/useEffectOnce";
-import { cleanName, oVal } from "lib/utils";
 import { PlaceName, PokemonLocation } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { cleanName, oVal } from "utils/utils";
 
 const { Option } = Select;
 
@@ -23,7 +23,7 @@ export function MovePokemon({
 }) {
   const { RUN } = React.useContext(RunContext);
 
-  const pokemonMoving = RUN?.getPokemonByOrigin(pokemonOrigin);
+  const pokemonMoving = RUN?.DEPRECATED_getPokemonByOrigin(pokemonOrigin);
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");

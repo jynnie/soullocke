@@ -1,3 +1,5 @@
+import { IPokemon, Player, PokemonLocation } from "models/db.model";
+
 export const oVal = Object.values;
 
 export const oKey = Object.keys;
@@ -40,6 +42,23 @@ export const colorize = (str: string) => {
 export const alpha = (number: number) => {
   return ("0" + Math.round(number * 255).toString(16)).substr(-2);
 };
+
+export function getPokemonByOrigin(
+  playerArr: Player[],
+  origin: string,
+): (IPokemon | null)[] {
+  return playerArr.map((p) => p.pokemon?.[origin]);
+}
+
+export function getPokemonLocationByOrigin(
+  playerArr: Player[],
+  origin: string,
+): PokemonLocation {
+  const pokemonArr = getPokemonByOrigin(playerArr, origin).filter((p) => !!p);
+  const pokemonLocation: PokemonLocation =
+    pokemonArr?.[0]?.location || PokemonLocation.grave;
+  return pokemonLocation;
+}
 
 export const utils = {
   oVal,

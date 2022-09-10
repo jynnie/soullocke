@@ -1,7 +1,7 @@
-import { oVal } from "lib/utils";
-import { EventType, Pokemon, PokemonApiData } from "models";
+import { EventType, IPokemon, PokemonApiData } from "models";
 import React from "react";
 import Box from "ui-box";
+import { oVal } from "utils/utils";
 
 export function PokemonImage({
   updateSrc,
@@ -9,7 +9,7 @@ export function PokemonImage({
   ...props
 }: {
   updateSrc?: (src: string) => void;
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   [propName: string]: any;
 }) {
   const pokemonName = pokemon?.name || "?";

@@ -4,20 +4,18 @@ import { useAllBadges } from "hooks/useAllBadges";
 import { useAllPokemon } from "hooks/useAllPokemon";
 import { useMetrics } from "hooks/useMetrics";
 import { useRegionData } from "hooks/useRegionData";
+import { useRun } from "hooks/useRun";
 import RUN from "lib/run";
 import mixpanel from "mixpanel-browser";
 import { PokemonListApiData as ListPokemon, Run } from "models";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { FirebaseContext } from "pages/_app";
 import Error from "pages/_error";
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "styles/Run.module.scss";
 import Box from "ui-box";
 
 import { SmileOutlined } from "@ant-design/icons";
-
-const NO_RUN = { notFound: true };
 
 //----------------------------------#01F2DF
 //- Run Context
@@ -27,7 +25,6 @@ export const RunContext: React.Context<{
   id: string;
 }> = React.createContext({ allPokemon: [] as ListPokemon[], id: "" });
 
-// TODO: Refactor into hooks
 /**
  * Functional Run Page
  */
@@ -36,24 +33,14 @@ function RunPage() {
   const { id: rawId } = router.query;
   const id = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  const db = React.useContext(FirebaseContext)?.db;
-  const runRef = db?.ref(id);
-  // const runRef = React.useMemo(() => db?.ref(id), [!!db, id]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const runDb = React.useMemo(() => runRef && new RUN(runRef), [runRef]);
-
-  // Update runDb
-  useEffect(() => {
-    if (runDb && db && id && runRef) runDb.attachRef(runRef);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [!!db, id, !!runDb]);
-
   //* States & Variables----------------#07cf7f
-  const [runData, setRunData] = React.useState<Run | null>(null);
+  // FIXME: Do I need to subscribe to the run data at this level
+  const { value: runData } = useRun(id);
+  console.log(runData);
 
   // Booleans
   const isLoadingRun = !runData || !id;
-  const runExists = !!runData && !runData["notFound"];
+  const isRunExists = runData !== false;
 
   // Variables
   const { region, game, players, timeline } = runData || {};
@@ -61,18 +48,6 @@ function RunPage() {
   const regionData = useRegionData(region);
   const allLocations = regionData?.locations || [];
   const allPokemon = useAllPokemon();
-
-  //* Subscribe to run data-------------#07cf7f
-  useEffect(() => {
-    if (runRef && id) {
-      runRef.on("value", (snapshot) => {
-        const rawValue = snapshot.val() || NO_RUN;
-        runDb?.updateRunData(rawValue);
-        setRunData(rawValue);
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [!!db, id]);
 
   const runProps = {
     id,
@@ -91,11 +66,11 @@ function RunPage() {
         Loading...
       </Box>
     );
-  if (!runExists)
+  if (!isRunExists)
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
   return (
-    <RunContext.Provider value={{ RUN: runDb, allPokemon, id }}>
+    <RunContext.Provider value={{ allPokemon, id }}>
       <div className={styles.outerContainer}>
         <Head>
           <title>Soullocke | {id}</title>

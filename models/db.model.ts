@@ -43,7 +43,7 @@ interface PokemonEvent {
   }; // Includes details like what evolved into, etc.
 }
 
-interface Pokemon {
+interface IPokemon {
   playerId: string;
   origin: string;
   name: string;
@@ -65,7 +65,7 @@ interface Player {
   name: string;
   // Pokemon to locations is 1 to 1
   pokemon: {
-    [origin: string]: Pokemon;
+    [origin: string]: IPokemon;
   };
 }
 
@@ -92,7 +92,7 @@ export interface RealtimeDatabase {
 
 export type {
   PlaceName,
-  Pokemon,
+  IPokemon,
   PokemonEvents,
   PokemonEvent,
   Run,

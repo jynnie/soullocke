@@ -1,5 +1,5 @@
 import type firebase from "firebase";
-import { EventType, Pokemon, PokemonEvent, PokemonLocation } from "models";
+import { EventType, IPokemon, PokemonEvent, PokemonLocation } from "models";
 import type {
   PlaceName,
   PokemonEvents,
@@ -7,7 +7,7 @@ import type {
   Timeline,
 } from "models";
 
-import { oVal } from "./utils";
+import { oVal } from "../utils/utils";
 
 type Ref = firebase.database.Reference;
 
@@ -32,7 +32,7 @@ export class Run {
   //----------------------------------#01F2DF
   //- Helper Filters
 
-  private filterForPokemonNotMissed = (p: Pokemon): boolean => {
+  private filterForPokemonNotMissed = (p: IPokemon): boolean => {
     return (
       !!p.name &&
       oVal(p.events || {}).every(
@@ -41,14 +41,14 @@ export class Run {
     );
   };
 
-  private filterForPokemonDefeated = (p: Pokemon): boolean => {
+  private filterForPokemonDefeated = (p: IPokemon): boolean => {
     return (
       !!p.name &&
       oVal(p.events || {}).some((e) => e.type === EventType.defeated)
     );
   };
 
-  private filterForPokemonMissed = (p: Pokemon): boolean => {
+  private filterForPokemonMissed = (p: IPokemon): boolean => {
     return (
       !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
     );
@@ -57,7 +57,7 @@ export class Run {
   //----------------------------------#01F2DF
   //- Getters
 
-  public getPlayersArray = () => {
+  public DEPRECATED_getPlayersArray = () => {
     if (!this.runData) return;
     const playersArr = oVal(this.runData.players);
     return playersArr;
@@ -71,10 +71,10 @@ export class Run {
     return oVal(this.runData?.players[id]?.pokemon || []);
   };
 
-  public getPokemonOnTeam = (): { [playerId: string]: Pokemon[] } => {
+  public getPokemonOnTeam = (): { [playerId: string]: IPokemon[] } => {
     if (!this.runData || !this.runData.players) return {};
 
-    const result: Record<string, Pokemon[]> = {};
+    const result: Record<string, IPokemon[]> = {};
     const playersArr = oVal(this.runData.players);
     playersArr.forEach((player) => {
       const pokemonOnTeam = oVal(player.pokemon || []).filter(
@@ -138,10 +138,12 @@ export class Run {
     return pokemonMissed.length;
   };
 
-  public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
+  public DEPRECATED_getPokemonByOrigin = (
+    origin: string,
+  ): (IPokemon | null)[] => {
     if (!this.runData) return [];
 
-    const playersArr = this.getPlayersArray() || [];
+    const playersArr = this.DEPRECATED_getPlayersArray() || [];
     const matchingPokemon = playersArr.map(
       (player) => player.pokemon?.[origin],
     );
@@ -149,21 +151,17 @@ export class Run {
     return matchingPokemon;
   };
 
-  public getPokemonLocationByOrigin = (origin: string): PokemonLocation => {
-    const pokemonArr = this.getPokemonByOrigin(origin).filter((p) => !!p);
+  public DEPRECATED_getPokemonLocationByOrigin = (
+    origin: string,
+  ): PokemonLocation => {
+    const pokemonArr = this.DEPRECATED_getPokemonByOrigin(origin).filter(
+      (p) => !!p,
+    );
     const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
     return pokemonLocation;
   };
 
-  public haveAllPlayersGotPokemonAt = (origin: string) => {
-    if (!this.runData) return;
-
-    const existingPokemon = this.getPokemonByOrigin(origin).filter((p) => !!p);
-    const playersArr = this.getPlayersArray();
-    return existingPokemon.length === playersArr?.length;
-  };
-
-  public getTimelineLocations = (): Timeline[] => {
+  public DEPRECATED_getTimelineLocations = (): Timeline[] => {
     const timelineLocations = oVal(this.runData?.timeline || []).sort(
       (a, b) => a.index - b.index,
     );
@@ -171,7 +169,9 @@ export class Run {
   };
 
   public getTimelineLocationNames = (): PlaceName[] => {
-    const timelineLocations = this.getTimelineLocations().map((l) => l.name);
+    const timelineLocations = this.DEPRECATED_getTimelineLocations().map(
+      (l) => l.name,
+    );
     return timelineLocations;
   };
 
@@ -186,7 +186,7 @@ export class Run {
     return latestLocation;
   };
 
-  public getLocationNotes = (place: PlaceName): string => {
+  public DEPRECATED_getLocationNotes = (place: PlaceName): string => {
     if (!this.runData) return "";
 
     return this.runData.timeline?.[place]?.notes || "";
@@ -196,9 +196,9 @@ export class Run {
   //- Organizational Helpers
 
   public groupByOrigin = (
-    allPokemon: Pokemon[],
-  ): { [origin: string]: Pokemon[] } => {
-    const result: Record<string, Pokemon[]> = {};
+    allPokemon: IPokemon[],
+  ): { [origin: string]: IPokemon[] } => {
+    const result: Record<string, IPokemon[]> = {};
     for (let pokemon of allPokemon) {
       const origin = pokemon.origin;
       if (origin in result) continue;
@@ -242,7 +242,7 @@ export class Run {
     return key;
   };
 
-  public setTimelineOrder = async (newOrder: Timeline[]) => {
+  public DEPRECATED_setTimelineOrder = async (newOrder: Timeline[]) => {
     if (!this.runRef) return;
 
     const result = newOrder.reduce((acc, t) => ({ ...acc, [t.name]: t }), {});
@@ -300,7 +300,7 @@ export class Run {
     const newPokemonRef = this.runRef.child(
       `players/${playerId}/pokemon/${locationCaught}`,
     );
-    const pokemon: Pokemon = {
+    const pokemon: IPokemon = {
       playerId,
       origin: locationCaught,
       name: pokemonName,
@@ -327,7 +327,7 @@ export class Run {
     const newPokemonRef = this.runRef.child(
       `players/${playerId}/pokemon/${locationCaught}`,
     );
-    const pokemon: Pokemon = {
+    const pokemon: IPokemon = {
       playerId,
       origin: locationCaught,
       name: pokemonName,

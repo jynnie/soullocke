@@ -1,18 +1,18 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
 import { useEffectOnce } from "hooks/useEffectOnce";
-import { cleanName, oVal } from "lib/utils";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
+  IPokemon,
   PlaceName,
-  Pokemon,
   PokemonEvent,
   PokemonLocation,
 } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { cleanName, oVal } from "utils/utils";
 
 const { Option } = Select;
 
@@ -21,7 +21,7 @@ function AddEventForm({
   onFinish,
   onCancel,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   onFinish?: (
     eventType: EventType,
     eventLocation: PlaceName,

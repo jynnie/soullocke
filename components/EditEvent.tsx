@@ -1,6 +1,5 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
-import { cleanName, oVal } from "lib/utils";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
@@ -11,6 +10,7 @@ import {
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { cleanName, oVal } from "utils/utils";
 
 const { Option } = Select;
 

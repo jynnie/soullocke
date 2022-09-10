@@ -3,11 +3,11 @@ import AddEvent from "components/AddEvent";
 import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
-import { cleanName, oVal } from "lib/utils";
-import { Pokemon, PokemonLocation } from "models";
+import { IPokemon, PokemonLocation } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Pokemon.module.scss";
+import { cleanName, oVal } from "utils/utils";
 
 import { EditOutlined } from "@ant-design/icons";
 
@@ -20,7 +20,7 @@ function PokemonModal({
   showModal,
   onCancel,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   playerId: string;
   location: string;
   showModal: boolean;

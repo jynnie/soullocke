@@ -2,12 +2,12 @@ import { Button, Modal, Timeline } from "antd";
 import { ModalProps } from "antd/lib/modal";
 import EditEvent from "components/EditEvent";
 import Pokeball from "lib/icons/Pokeball";
-import { cleanName } from "lib/utils";
-import { EventType, Pokemon } from "models";
+import { EventType, IPokemon } from "models";
 import type { PokemonEvent } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Event.module.scss";
+import { cleanName } from "utils/utils";
 
 import {
   EditOutlined,
@@ -23,7 +23,7 @@ function PokemonTimelineEvent({
   isLatestEvent,
 }: {
   event: PokemonEvent;
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   playerId: string;
   isLatestEvent?: boolean;
 }) {

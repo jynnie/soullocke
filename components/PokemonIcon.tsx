@@ -1,7 +1,7 @@
 import { Tooltip } from "antd";
 import LocationBadge from "components/LocationBadge";
 import PokemonImage from "components/PokemonImage";
-import { Pokemon, PokemonLocation } from "models";
+import { IPokemon, PokemonLocation } from "models";
 import React from "react";
 import { usePalette } from "react-palette";
 import styles from "styles/Pokemon.module.scss";
@@ -15,7 +15,7 @@ export function PokemonIcon({
   height = 40,
   backgroundColor,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   onClick?: () => void;
   showBadge?: boolean;
   width?: number;

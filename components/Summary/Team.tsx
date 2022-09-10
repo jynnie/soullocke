@@ -1,10 +1,10 @@
 import cn from "classnames";
 import { pokemonAlternativeNames } from "lib/pokemonAlternativeNames";
-import { oVal } from "lib/utils";
-import { EventType, Pokemon as PokemonData } from "models";
+import { EventType, IPokemon as PokemonData } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Summary.module.scss";
+import { oVal } from "utils/utils";
 
 /**
  * We choose to use Pokesprite instead of PokeAPI here, because

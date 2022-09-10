@@ -1,11 +1,11 @@
 import { Button, Modal } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
-import { isNullish, oKey, oVal } from "lib/utils";
-import { PlaceName, Pokemon } from "models";
+import { IPokemon, PlaceName } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Pokemon.module.scss";
+import { isNullish, oKey, oVal } from "utils/utils";
 
 /**
  * Prompt for Moving Pokemon to Team
@@ -29,11 +29,11 @@ export function MovePokemonToTeam({
   const teamLength = oVal(teamsByPlayer)[0]?.length;
   const noSwapsNeeded = teamLength < 6;
   const numSwapsNeeded = teamLength - 5;
-  const pokemonToSwitchIn = RUN?.getPokemonByOrigin(pokemonOrigin);
+  const pokemonToSwitchIn = RUN?.DEPRECATED_getPokemonByOrigin(pokemonOrigin);
   const pokemonToSwitchNames = pokemonToSwitchIn
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const teamArr: Pokemon[] = oVal(teamsByPlayer).reduce(
+  const teamArr: IPokemon[] = oVal(teamsByPlayer).reduce(
     (acc, ps) => acc.concat(...ps),
     [],
   );

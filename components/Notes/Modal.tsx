@@ -1,8 +1,8 @@
 import { Button, Input, Modal } from "antd";
-import { cleanName } from "lib/utils";
 import { PlaceName } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
+import { cleanName } from "utils/utils";
 
 function NotesModal({
   visible = false,
@@ -16,7 +16,7 @@ function NotesModal({
   const { RUN } = React.useContext(RunContext);
   const [notes, setNotes] = React.useState<string>("");
 
-  const existingNotes = RUN?.getLocationNotes(location);
+  const existingNotes = RUN?.DEPRECATED_getLocationNotes(location);
 
   React.useEffect(() => {
     setNotes(existingNotes ?? "");
