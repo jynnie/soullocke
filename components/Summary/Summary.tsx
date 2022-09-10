@@ -54,8 +54,8 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         <div className={styles.sectionDivider} />
       </div>
       <div className={styles.dualContainer}>
-        {playersArr?.map((player, j) => (
-          <Boxed key={j} {...{ player: player.id, j }} />
+        {teams?.map((team, j) => (
+          <Boxed key={j} {...{ box: team.box, j }} />
         ))}
       </div>
     </div>
