@@ -15,7 +15,6 @@ export class Run {
   runRef: Ref;
   runData?: RunData;
   patchNum: number = 0;
-  allLocations: string[] = [];
 
   constructor(runRef: Ref) {
     this.runRef = runRef;
@@ -23,10 +22,6 @@ export class Run {
 
   public attachRef = (runRef: Ref) => {
     this.runRef = runRef;
-  };
-
-  public attachData = (allLocations: string[]) => {
-    this.allLocations = allLocations;
   };
 
   public updateRunData = (runData: RunData) => {

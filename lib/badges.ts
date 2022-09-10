@@ -223,7 +223,6 @@ export {
 export const BADGES = {
   indigo,
   kanto: indigo,
-  badgeImages: images,
   johto,
   hoenn,
   sinnoh,

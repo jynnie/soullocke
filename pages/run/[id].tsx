@@ -1,10 +1,12 @@
 import { Tooltip } from "antd";
 import RunHome from "components/RunHome";
+import { useAllBadges } from "hooks/useAllBadges";
+import { useAllPokemon } from "hooks/useAllPokemon";
 import { useMetrics } from "hooks/useMetrics";
-import BADGES from "lib/badges";
+import { useRegionData } from "hooks/useRegionData";
 import RUN from "lib/run";
 import mixpanel from "mixpanel-browser";
-import { PokemonListApiData as ListPokemon, Region, Run } from "models";
+import { PokemonListApiData as ListPokemon, Run } from "models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
@@ -22,7 +24,8 @@ const NO_RUN = { notFound: true };
 export const RunContext: React.Context<{
   RUN?: RUN;
   allPokemon: ListPokemon[];
-}> = React.createContext({ allPokemon: [] as ListPokemon[] });
+  id: string;
+}> = React.createContext({ allPokemon: [] as ListPokemon[], id: "" });
 
 // TODO: Refactor into hooks
 /**
@@ -47,8 +50,6 @@ function RunPage() {
 
   //* States & Variables----------------#07cf7f
   const [runData, setRunData] = React.useState<Run | null>(null);
-  const [regionData, setRegionData] = React.useState<Region | null>(null);
-  const [allPokemon, setAllPokemon] = React.useState<ListPokemon[]>([]);
 
   // Booleans
   const isLoadingRun = !runData || !id;
@@ -56,13 +57,10 @@ function RunPage() {
 
   // Variables
   const { region, game, players, timeline } = runData || {};
-  const allBadges: string[] = (region && (BADGES as any)[region]) || [];
-  const allLocations = (regionData && regionData.locations) || [];
-
-  useEffect(() => {
-    runDb?.attachData([...allLocations.map((l) => l.name), ...allBadges]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allBadges, allLocations]);
+  const allBadges = useAllBadges();
+  const regionData = useRegionData(region);
+  const allLocations = regionData?.locations || [];
+  const allPokemon = useAllPokemon();
 
   //* Subscribe to run data-------------#07cf7f
   useEffect(() => {
@@ -70,34 +68,11 @@ function RunPage() {
       runRef.on("value", (snapshot) => {
         const rawValue = snapshot.val() || NO_RUN;
         runDb?.updateRunData(rawValue);
-        ("");
         setRunData(rawValue);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [!!db, id]);
-
-  //- Get region data
-  useEffect(() => {
-    if (runExists && region) {
-      fetch(`https://pokeapi.co/api/v2/region/${region}/`)
-        .then((res) => res.json())
-        .then((data) => setRegionData(data));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, region]);
-
-  //- Get list of all pokemon
-  useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=1118")
-      .then((res) => res.json())
-      .then((data) => {
-        const basePokemon = data.results.filter(
-          (p: { name: string }) => !/(mega|gmax)/gi.test(p.name),
-        );
-        setAllPokemon(basePokemon);
-      });
-  }, []);
 
   const runProps = {
     id,
@@ -120,7 +95,7 @@ function RunPage() {
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
   return (
-    <RunContext.Provider value={{ RUN: runDb, allPokemon }}>
+    <RunContext.Provider value={{ RUN: runDb, allPokemon, id }}>
       <div className={styles.outerContainer}>
         <Head>
           <title>Soullocke | {id}</title>
