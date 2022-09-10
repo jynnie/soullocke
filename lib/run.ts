@@ -242,14 +242,6 @@ export class Run {
     return key;
   };
 
-  public DEPRECATED_setTimelineOrder = async (newOrder: Timeline[]) => {
-    if (!this.runRef) return;
-
-    const result = newOrder.reduce((acc, t) => ({ ...acc, [t.name]: t }), {});
-
-    return this.runRef.child("timeline").set(result);
-  };
-
   public saveLocationNotes = (place: PlaceName, notes: string) => {
     if (!this.runData) return;
 

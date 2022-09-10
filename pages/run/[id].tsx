@@ -44,7 +44,7 @@ function RunPage() {
 
   // Variables
   const { region, game, players, timeline } = runData || {};
-  const allBadges = useAllBadges();
+  const allBadges = useAllBadges(region);
   const regionData = useRegionData(region);
   const allLocations = regionData?.locations || [];
   const allPokemon = useAllPokemon();

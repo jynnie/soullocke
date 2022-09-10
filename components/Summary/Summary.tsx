@@ -1,15 +1,14 @@
+import { usePlayersArray } from "hooks/usePlayersArray";
 import { PokemonLocation } from "models";
 import type { Player, IPokemon as PokemonData, Timeline as TL } from "models";
-import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "styles/Summary.module.scss";
 import Box from "ui-box";
-import { oKey, oVal } from "utils/utils";
 
 import BadgeBox from "./BadgeBox";
 import Boxed from "./Box";
 import Grave from "./Grave";
-import Team from "./Team";
+import { Team } from "./Team";
 
 export interface Data {
   location: TL;
@@ -23,36 +22,18 @@ export interface Data {
  * Timeline Grid
  */
 function Summary({ allBadges }: { allBadges: string[] }) {
-  const { RUN } = React.useContext(RunContext);
+  const playersArr = usePlayersArray();
+  const teams = useTeam(playersArr);
 
-  //----------------------------------#01F2DF
-  // Data
-  const playerArr = RUN?.DEPRECATED_getPlayersArray() || [];
-  const teamPokemon: { [playerId: string]: PokemonData[] } = {};
-
-  // Sort pokemon per player into categories
-  for (const player of playerArr) {
-    // Initialize arrays
-    teamPokemon[player.id] = [];
-
-    const pokemon = oVal(player.pokemon || {});
-    for (const p of pokemon) {
-      if (!p) continue;
-
-      const l = p.location;
-      if (l === PokemonLocation.team) {
-        teamPokemon[player.id].push(p);
-      }
-    }
-  }
-
-  //----------------------------------#01F2DF
   return (
     <div className={styles.container}>
       <BadgeBox {...{ allBadges }} />
       <Box className={styles.dualContainer} minHeight={97}>
-        {oKey(teamPokemon).map((player, j) => (
-          <Team key={j} {...{ player, j }} />
+        {Object.values(teams).map((team, j) => (
+          <Team
+            key={j}
+            {...{ player: team.player, pokemonTeam: team.pokemon, j }}
+          />
         ))}
       </Box>
 
@@ -62,7 +43,7 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         <div className={styles.sectionDivider} />
       </div>
       <Box className={styles.dualContainer} marginTop="-1rem">
-        {playerArr.map((player, j) => (
+        {playersArr.map((player, j) => (
           <Grave key={j} {...{ player: player.id, j }} />
         ))}
       </Box>
@@ -73,12 +54,41 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         <div className={styles.sectionDivider} />
       </div>
       <div className={styles.dualContainer}>
-        {playerArr.map((player, j) => (
+        {playersArr.map((player, j) => (
           <Boxed key={j} {...{ player: player.id, j }} />
         ))}
       </div>
     </div>
   );
+}
+
+function useTeam(playersArr: Player[]) {
+  const pokemonTeams = useMemo(() => {
+    const teamPokemon: {
+      [playerId: string]: { pokemon: PokemonData[]; player: Player };
+    } = {};
+
+    // Sort pokemon per player into categories
+    for (const player of playersArr) {
+      // Initialize arrays
+      teamPokemon[player.id] = { pokemon: [], player: player };
+      const team: PokemonData[] = [];
+      const pokemon = Object.values(player.pokemon || {});
+
+      for (const p of pokemon) {
+        if (!p) continue;
+        const l = p.location;
+        if (l === PokemonLocation.team) {
+          team.push(p);
+        }
+      }
+      teamPokemon[player.id].pokemon = team;
+    }
+
+    return teamPokemon;
+  }, [playersArr]);
+
+  return pokemonTeams;
 }
 
 export default Summary;
