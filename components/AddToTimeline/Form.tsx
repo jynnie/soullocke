@@ -23,7 +23,7 @@ function AddToTimelineForm({
 
   const handleFinish = () => {
     if (onFinish) onFinish(location);
-    setLocation(null);
+    setLocation("");
   };
 
   const handleChange = (value: string) => {
@@ -32,7 +32,7 @@ function AddToTimelineForm({
 
   const handleCancel = () => {
     if (onCancel) onCancel();
-    setLocation(null);
+    setLocation("");
   };
 
   return (

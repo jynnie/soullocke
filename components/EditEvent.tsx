@@ -1,7 +1,13 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
 import { cleanName, oVal } from "lib/utils";
-import { EventType, PlaceName, PokemonEvent, PokemonLocation } from "models";
+import {
+  EVENT_NAME_TO_TYPE,
+  EventType,
+  PlaceName,
+  PokemonEvent,
+  PokemonLocation,
+} from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
@@ -34,10 +40,11 @@ function EditEvent({
   const [eventType, setEventType] = React.useState<EventType | undefined>(
     event?.type,
   );
-  const [pokemonLocation, setPokemonLocation] =
-    React.useState<PokemonLocation | null>(event?.details?.location || null);
-  const [evolution, setEvolution] = React.useState<string | null>(
-    event?.details?.evolution || null,
+  const [pokemonLocation, setPokemonLocation] = React.useState<
+    PokemonLocation | undefined
+  >(event?.details?.location);
+  const [evolution, setEvolution] = React.useState<string | undefined>(
+    event?.details?.evolution,
   );
 
   // FIXME: Just use the form API hook instead of duplicating states
@@ -46,7 +53,7 @@ function EditEvent({
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     form.resetFields();
-    if (onFinish)
+    if (onFinish && eventType && location)
       onFinish(eventType, location, {
         location: pokemonLocation,
         evolution,
@@ -66,8 +73,8 @@ function EditEvent({
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
   const pokemonLocations = oVal(PokemonLocation);
-  const timelineLocations = RUN.allLocations;
-  const latestLocation = RUN.getLatestLocation();
+  const timelineLocations = RUN?.allLocations || [];
+  const latestLocation = RUN?.getLatestLocation();
 
   return (
     <Form
@@ -118,7 +125,11 @@ function EditEvent({
           showSearch
         >
           {eventTypes.map((t) => (
-            <Option key={t} value={EventType[t]} className={styles.option}>
+            <Option
+              key={t}
+              value={EVENT_NAME_TO_TYPE[t]}
+              className={styles.option}
+            >
               {t}
             </Option>
           ))}

@@ -219,7 +219,8 @@ export {
   kalos,
   galar,
 };
-export default {
+
+export const BADGES = {
   indigo,
   kanto: indigo,
   badgeImages: images,
@@ -230,3 +231,4 @@ export default {
   kalos,
   galar,
 };
+export default BADGES;

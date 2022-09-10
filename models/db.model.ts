@@ -1,4 +1,3 @@
-//------- enums
 enum PokemonLocation {
   team = "team",
   box = "box",
@@ -16,9 +15,19 @@ enum EventType {
   soulMiss,
 }
 
+export const EVENT_NAME_TO_TYPE: Record<string, EventType> = {
+  catch: EventType.catch,
+  missed: EventType.missed,
+  moved: EventType.moved,
+  defeated: EventType.defeated,
+  soulDeath: EventType.soulDeath,
+  evolved: EventType.evolved,
+  soulMiss: EventType.soulMiss,
+};
+
 type PlaceName = string;
 
-//------- realtime database
+//* Realtime Database-----------------#07cf7f
 
 interface PokemonEvents {
   [index: string]: PokemonEvent;
@@ -66,13 +75,18 @@ interface Run {
   game: string;
   region: string;
 
-  timeline: Timeline[];
+  // Only used for when a run is not found
+  notFound?: boolean;
+
+  // Arrays are stored as records in rtdb
+  timeline: Record<string, Timeline>;
   players: {
     [id: string]: Player;
   };
 }
 
-interface RealtimeDatabase {
+// This isn't used anywhere, but describes the rtdb structure
+export interface RealtimeDatabase {
   [id: string]: Run;
 }
 

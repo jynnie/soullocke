@@ -1,25 +1,23 @@
 🐛 Bugs
 
-🌶🌶🌶 Would prominently improve experience & usability
+🌶🌶🌶 Super cool
 
-- [x] Search should return evolved forms
+- [ ] Better linting & null checks
+- [ ] Enable multiple locations on the timeline
+- [ ] Cooler summary view styles
 
-🌶🌶 Would improve experience in certain scenarios
+🌶🌶 Would improve most experiences or could be cool
 
-- [x] Summary: Badge progress
-- [x] Summary: Team
-  - [x] Improve nametags
-- [x] Summary: Death/miss count
-- [x] Summary: Graveyard
-- [x] Summary: Box
-- [x] Summary: Daycare
 - [ ] Summary: Drag and drop between categories to move
 - [ ] Timeline: Inline editing
+- [ ] Event view?
+- [ ] Box view?
+- [ ] Refactor from API -> Hooks
 
 🌶 Should have, but low value add rn
 
-- [ ] Pokemon: Delete event
 - [ ] Pokemon: Delete
+- [ ] Unit tests
 
 🧊 Unseasoned thoughts
 

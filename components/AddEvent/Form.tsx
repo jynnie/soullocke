@@ -1,7 +1,9 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
+import { useEffectOnce } from "hooks/useEffectOnce";
 import { cleanName, oVal } from "lib/utils";
 import {
+  EVENT_NAME_TO_TYPE,
   EventType,
   PlaceName,
   Pokemon,
@@ -30,17 +32,22 @@ function AddEventForm({
   const { RUN, allPokemon } = React.useContext(RunContext);
 
   //* States----------------------------#07cf7f
-  const [location, setLocation] = React.useState<string | null>(null);
-  const [eventType, setEventType] = React.useState<EventType | null>(null);
-  const [pokemonLocation, setPokemonLocation] =
-    React.useState<PokemonLocation | null>(null);
-  const [evolution, setEvolution] = React.useState<string | null>(null);
+  const [location, setLocation] = React.useState<string | undefined>(undefined);
+  const [eventType, setEventType] = React.useState<EventType | undefined>(
+    undefined,
+  );
+  const [pokemonLocation, setPokemonLocation] = React.useState<
+    PokemonLocation | undefined
+  >(undefined);
+  const [evolution, setEvolution] = React.useState<string | undefined>(
+    undefined,
+  );
   const [form] = Form.useForm();
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    await form.resetFields();
-    if (onFinish)
+    form.resetFields();
+    if (onFinish && eventType && location)
       onFinish(eventType, location, {
         location: pokemonLocation,
         evolution,
@@ -48,7 +55,7 @@ function AddEventForm({
   };
 
   const handleCancel = async () => {
-    await form.resetFields();
+    form.resetFields();
     if (onCancel) onCancel();
   };
 
@@ -57,14 +64,15 @@ function AddEventForm({
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemon.location,
   );
-  const timelineLocations = RUN.allLocations;
-  const latestLocation = RUN.getLatestLocation();
+  const timelineLocations = RUN?.allLocations || [];
 
+  // FIXME: Use initialValues instead
   // Set initial values
-  React.useEffect(() => {
+  useEffectOnce(() => {
+    const latestLocation = RUN?.getLatestLocation();
     form.setFieldsValue({ location: latestLocation });
     setLocation(latestLocation);
-  }, []);
+  });
 
   return (
     <Form form={form} name="addPokemonEvent" onFinish={handleFinish}>
@@ -105,7 +113,11 @@ function AddEventForm({
           showSearch
         >
           {eventTypes.map((t) => (
-            <Option key={t} value={EventType[t]} className={styles.option}>
+            <Option
+              key={t}
+              value={EVENT_NAME_TO_TYPE[t]}
+              className={styles.option}
+            >
               {t}
             </Option>
           ))}

@@ -1,17 +1,16 @@
-import React from "react";
-import Box from "ui-box";
-import cn from "classnames";
-import { RunContext } from "pages/run/[id]";
-import styles from "styles/Summary.module.scss";
-import { PokemonLocation } from "models";
 import { oKey, oVal } from "lib/utils";
+import { PokemonLocation } from "models";
+import type { Player, Pokemon as PokemonData, Timeline as TL } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Summary.module.scss";
+import Box from "ui-box";
 
 import BadgeBox from "./BadgeBox";
-import Team from "./Team";
-import Grave from "./Grave";
 import Boxed from "./Box";
+import Grave from "./Grave";
+import Team from "./Team";
 
-import type { Player, Timeline as TL, Pokemon as PokemonData } from "models";
 export interface Data {
   location: TL;
   players: Player[];
@@ -28,7 +27,7 @@ function Summary({ allBadges }: { allBadges: string[] }) {
 
   //----------------------------------#01F2DF
   // Data
-  const playerArr = RUN.getPlayersArray();
+  const playerArr = RUN?.getPlayersArray() || [];
   const teamPokemon: { [playerId: string]: PokemonData[] } = {};
 
   // Sort pokemon per player into categories

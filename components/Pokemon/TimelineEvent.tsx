@@ -38,7 +38,7 @@ function PokemonTimelineEvent({
     location: string,
     details: PokemonEvent["details"],
   ) {
-    await RUN.editEvent(
+    await RUN?.editEvent(
       playerId,
       pokemon.origin,
       event.index,
@@ -58,7 +58,7 @@ function PokemonTimelineEvent({
   function handleDelete() {
     setIsEditing(false);
     setIsDeleting(false);
-    return RUN.removeEvent(playerId, pokemon.origin, event.index);
+    return RUN?.removeEvent(playerId, pokemon.origin, event.index);
   }
 
   function handleCancel() {
@@ -66,9 +66,9 @@ function PokemonTimelineEvent({
     setIsDeleting(false);
   }
 
-  let eventDetails: string = undefined;
-  let eventDot: React.ReactElement = undefined;
-  let eventColor: string = undefined;
+  let eventDetails: string = "";
+  let eventDot: React.ReactElement | undefined = undefined;
+  let eventColor: string = "";
   if (event.type === EventType.catch) {
     eventDot = <Pokeball size={18} />;
     eventDetails = `Caught on ${place}`;
@@ -148,8 +148,8 @@ function DeleteEventModal(props: DeleteEventModalProps) {
       {...props}
     >
       <p>
-        This only deletes this event for this Pokémon. Deleting this event won't
-        change this or linked Pokémons' origin, name, or location.
+        This only deletes this event for this Pokémon. Deleting this event won
+        {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
       <div className="flex justifyEnd gap05">
         <Button onClick={props?.onCancel}>Cancel</Button>

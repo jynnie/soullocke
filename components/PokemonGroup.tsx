@@ -1,7 +1,7 @@
-import React from "react";
-import Box from "ui-box";
 import cn from "classnames";
+import React from "react";
 import styles from "styles/Pokemon.module.scss";
+import Box from "ui-box";
 
 export function PokemonGroup({
   className,

@@ -1,11 +1,10 @@
-import React from "react";
-import { oVal } from "lib/utils";
-import type { Run, MapLocation } from "models";
-
-import styles from "styles/Run.module.scss";
-import Timeline from "components/Timeline";
-import Summary from "components/Summary";
 import { Tabs } from "antd";
+import Summary from "components/Summary";
+import Timeline from "components/Timeline";
+import { oVal } from "lib/utils";
+import type { MapLocation, Run } from "models";
+import React from "react";
+import styles from "styles/Run.module.scss";
 
 const { TabPane } = Tabs;
 

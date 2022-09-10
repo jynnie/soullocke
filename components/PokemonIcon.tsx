@@ -9,7 +9,7 @@ import Box from "ui-box";
 
 export function PokemonIcon({
   pokemon,
-  onClick = null,
+  onClick,
   showBadge = false,
   width = 40,
   height = 40,
@@ -25,8 +25,8 @@ export function PokemonIcon({
   const pokemonNickname = pokemon?.nickname || "?";
   const pokemonLocation = pokemon?.location || PokemonLocation.grave;
 
-  const [src, setSrc] = React.useState<string | null>(null);
-  const { data } = usePalette(src);
+  const [src, setSrc] = React.useState<string>("");
+  const { data } = usePalette(src || "");
   const avatarStyle = {
     backgroundColor: backgroundColor || data?.vibrant || "var(--tertiary)",
   };

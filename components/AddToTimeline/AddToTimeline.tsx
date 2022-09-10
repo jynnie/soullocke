@@ -22,7 +22,7 @@ export function AddToTimeline({
   const toggleForm = () => setShowForm(!showForm);
 
   const onFinish = async (location: PlaceName) => {
-    await RUN.addNewLocation(location);
+    await RUN?.addNewLocation(location);
     toggleForm();
   };
   const onCancel = () => {

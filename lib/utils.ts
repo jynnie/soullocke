@@ -41,7 +41,7 @@ export const alpha = (number: number) => {
   return ("0" + Math.round(number * 255).toString(16)).substr(-2);
 };
 
-export default {
+export const utils = {
   oVal,
   oKey,
   cleanName,
@@ -50,3 +50,4 @@ export default {
   colorize,
   alpha,
 };
+export default utils;

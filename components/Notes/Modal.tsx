@@ -14,12 +14,12 @@ function NotesModal({
   onCancel: () => void;
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [notes, setNotes] = React.useState<string | null>(null);
+  const [notes, setNotes] = React.useState<string>("");
 
-  const existingNotes = RUN.getLocationNotes(location);
+  const existingNotes = RUN?.getLocationNotes(location);
 
   React.useEffect(() => {
-    setNotes(existingNotes);
+    setNotes(existingNotes ?? "");
   }, [existingNotes]);
 
   const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (evt) => {
@@ -27,12 +27,14 @@ function NotesModal({
   };
 
   const handleSave = () => {
-    RUN.saveLocationNotes(location, notes);
+    RUN?.saveLocationNotes(location, notes);
   };
 
   const footer = [
-    <Button onClick={onCancel}>Cancel</Button>,
-    <Button onClick={handleSave} type="primary">
+    <Button key="cancel" onClick={onCancel}>
+      Cancel
+    </Button>,
+    <Button key="save" onClick={handleSave} type="primary">
       Save
     </Button>,
   ];

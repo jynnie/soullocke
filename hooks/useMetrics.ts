@@ -1,13 +1,5 @@
-import React from "react";
 import mixpanel from "mixpanel-browser";
-
-export const useToUpdate = (value) => {
-  const [, setUpdater] = React.useState(Math.random());
-
-  React.useEffect(() => {
-    setUpdater(Math.random());
-  }, [value]);
-};
+import React from "react";
 
 export function useMetrics(componentName: string, requiredKey: any, data: any) {
   React.useEffect(() => {
@@ -29,5 +21,6 @@ export function useMetrics(componentName: string, requiredKey: any, data: any) {
     return () => {
       window.removeEventListener("unload", trackEvent);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requiredKey]);
 }

@@ -1,12 +1,12 @@
-import React from "react";
-import type { PlaceName } from "models";
-import type { Data } from "./Timeline";
-
-import Pokemon from "components/Pokemon";
-import LocationListing from "../LocationListing";
-import LocationSummary from "components/LocationSummary";
 import AddPokemon from "components/AddPokemon";
 import LocationActions from "components/LocationActions";
+import LocationSummary from "components/LocationSummary";
+import Pokemon from "components/Pokemon";
+import type { PlaceName } from "models";
+import React from "react";
+
+import LocationListing from "../LocationListing";
+import type { Data } from "./Timeline";
 
 function TimelineRow({
   data,

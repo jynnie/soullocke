@@ -4,7 +4,7 @@
  * Summary view.
  */
 
-export const pokemonAlternativeNames = {
+export const pokemonAlternativeNames: Record<string, string> = {
   "aegislash-shield": "aegislash",
   "araquanid-totem": "araquanid",
   "basculin-red-striped": "basculin",

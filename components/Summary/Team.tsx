@@ -1,10 +1,10 @@
-import React from "react";
 import cn from "classnames";
-import styles from "styles/Summary.module.scss";
-import { RunContext } from "pages/run/[id]";
+import { pokemonAlternativeNames } from "lib/pokemonAlternativeNames";
 import { oVal } from "lib/utils";
 import { EventType, Pokemon as PokemonData } from "models";
-import { pokemonAlternativeNames } from "lib/pokemonAlternativeNames";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Summary.module.scss";
 
 /**
  * We choose to use Pokesprite instead of PokeAPI here, because
@@ -43,12 +43,12 @@ function isFacingRight(teamLength: number, i: number, j: number) {
 function Team({ player: pid, j }: { player: string; j: number }) {
   const { RUN } = React.useContext(RunContext);
 
-  const player = RUN.getPlayer(pid);
-  const team = RUN.getPokemonOnPlayerTeam(pid);
+  const player = RUN?.getPlayer(pid);
+  const team = RUN?.getPokemonOnPlayerTeam(pid) || [];
 
   return (
     <div className={styles.team}>
-      <div className={styles.playerName}>{player.name}</div>
+      <div className={styles.playerName}>{player?.name ?? "Unknown"}</div>
       {team.map((pokemon, i) => (
         <div
           key={i}

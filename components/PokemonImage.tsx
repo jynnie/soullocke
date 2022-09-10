@@ -32,7 +32,8 @@ export function PokemonImage({
           if (updateSrc) updateSrc(foundSrc);
         });
     }
-  }, [pokemon?.name, evolutionEvents.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemon.name, pokemonName, evolutionEvents.length, updateSrc]);
 
   if (!src) return <>{pokemonName}</>;
   return <Box is="img" alt={pokemonName} src={src} {...props} />;

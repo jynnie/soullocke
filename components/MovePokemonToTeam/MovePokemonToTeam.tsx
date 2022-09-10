@@ -25,11 +25,11 @@ export function MovePokemonToTeam({
   const { RUN } = React.useContext(RunContext);
 
   // Information Getters
-  const teamsByPlayer = RUN.getPokemonOnTeam();
+  const teamsByPlayer = RUN?.getPokemonOnTeam() || {};
   const teamLength = oVal(teamsByPlayer)[0]?.length;
   const noSwapsNeeded = teamLength < 6;
   const numSwapsNeeded = teamLength - 5;
-  const pokemonToSwitchIn = RUN.getPokemonByOrigin(pokemonOrigin);
+  const pokemonToSwitchIn = RUN?.getPokemonByOrigin(pokemonOrigin);
   const pokemonToSwitchNames = pokemonToSwitchIn
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
@@ -37,7 +37,7 @@ export function MovePokemonToTeam({
     (acc, ps) => acc.concat(...ps),
     [],
   );
-  const teamGroupedByOrigin = RUN.groupByOrigin(teamArr);
+  const teamGroupedByOrigin = RUN?.groupByOrigin(teamArr) || {};
 
   // Handlers for actually swapping
   const [swapOut, setSwapOut] = React.useState<PlaceName[]>([]);
@@ -52,7 +52,7 @@ export function MovePokemonToTeam({
     if (onCancel) onCancel();
   };
   const handleAdd = async () => {
-    await RUN.swapPokemonOnTeam(pokemonOrigin, swapOut, currentLocation);
+    await RUN?.swapPokemonOnTeam(pokemonOrigin, swapOut, currentLocation);
     if (onCancel) return onCancel();
     return true;
   };
@@ -83,9 +83,9 @@ export function MovePokemonToTeam({
     >
       <div className="flex column center">
         <PokemonGroup marginBottom={12}>
-          {pokemonToSwitchIn.map((p, i) => (
-            <PokemonIcon key={i} pokemon={p} />
-          ))}
+          {pokemonToSwitchIn?.map(
+            (p, i) => p && <PokemonIcon key={i} pokemon={p} />,
+          )}
         </PokemonGroup>
 
         {noSwapsNeeded && <p>No swaps necessary to add</p>}

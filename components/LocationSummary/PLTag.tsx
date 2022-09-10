@@ -1,9 +1,8 @@
-import React from "react";
+import { Tag } from "antd";
 import cn from "classnames";
 import { PokemonLocation } from "models";
-
+import React from "react";
 import styles from "styles/Location.module.scss";
-import { Tag } from "antd";
 
 const BADGE_TEXT = {
   [PokemonLocation.box]: "B",

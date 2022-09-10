@@ -14,7 +14,13 @@ import {
 } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvidedDraggableProps,
+  DropResult,
+  Droppable,
+} from "react-beautiful-dnd";
 import styles from "styles/Timeline.module.scss";
 import Box from "ui-box";
 
@@ -22,7 +28,7 @@ import Filters, { Filter } from "./Filters";
 import Row from "./Row";
 
 // Reordering helper function
-const reorder = (list: TL[], startIndex, endIndex) => {
+const reorder = (list: TL[], startIndex: number, endIndex: number) => {
   let result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -33,11 +39,15 @@ const reorder = (list: TL[], startIndex, endIndex) => {
 };
 
 // Styling draggable things
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: "none",
-  background: isDragging ? "var(--tertiary)" : "transparent",
-  ...draggableStyle,
-});
+const getItemStyle = (
+  isDragging: boolean,
+  draggableStyle: DraggableProvidedDraggableProps["style"],
+) =>
+  ({
+    userSelect: "none",
+    background: isDragging ? "var(--tertiary)" : "transparent",
+    ...draggableStyle,
+  } as React.CSSProperties);
 
 // Create <tr /> classnames for filtering
 const getClassNames = (data: Data): string => {
@@ -55,7 +65,7 @@ function matchesPokemonName(d: Data, filters: Filter): boolean {
   return d.pokemonNames?.toLowerCase().includes(searchTerm);
 }
 
-function makePokemonNameString(acc: string, p: PokemonData): string {
+function makePokemonNameString(acc: string, p: PokemonData | null): string {
   if (!p) return acc;
   let newNameString = `${acc} ${p.name} ${p.nickname}`;
 
@@ -89,28 +99,27 @@ function TimelineGrid({
   allBadges: string[];
 }) {
   const { RUN } = React.useContext(RunContext);
-  const [addToTeamOrigin, setATTO] = React.useState<string | null>(null);
-  const [addToTeamLocation, setATTL] = React.useState<string | null>(null);
-  const [filteredData, setFilteredData] = React.useState<Data[] | null>(null);
-  const [filterClassNames, setFilterClassNames] = React.useState<string | null>(
-    null,
-  );
+  const [addToTeamOrigin, setATTO] = React.useState<string>("");
+  const [addToTeamLocation, setATTL] = React.useState<string>("");
+  const [filteredData, setFilteredData] = React.useState<Data[]>([]);
+  const [filterClassNames, setFilterClassNames] = React.useState<string>("");
 
   //----------------------------------#01F2DF
   // Data
-  const timelineArr = RUN.getTimelineLocations();
-  const playerArr = RUN.getPlayersArray();
+  const timelineArr = RUN?.getTimelineLocations() || [];
+  const playerArr = RUN?.getPlayersArray() || [];
   const allDataArr: Data[] = timelineArr.map((l) => {
-    const pokemon = RUN.getPokemonByOrigin(l.name);
+    const pokemon = RUN?.getPokemonByOrigin(l.name) || [];
     const pokemonNames = pokemon.reduce(makePokemonNameString, "");
 
     return {
       location: l,
       players: playerArr,
-      pokemon,
+      pokemon: pokemon.filter((p) => !!p) as PokemonData[],
       pokemonNames,
-      pokemonLocation: RUN.getPokemonLocationByOrigin(l.name),
-      notes: RUN.getLocationNotes(l.name),
+      pokemonLocation:
+        RUN?.getPokemonLocationByOrigin(l.name) || PokemonLocation.box,
+      notes: RUN?.getLocationNotes(l.name) || "",
     };
   });
 
@@ -122,20 +131,20 @@ function TimelineGrid({
   };
 
   const clearMove = () => {
-    setATTO(null);
-    setATTL(null);
+    setATTO("");
+    setATTL("");
   };
 
   const handleFinishAdd = (location: PlaceName) => {
     return (caught: boolean) => {
-      const allPokemonSet = RUN.haveAllPlayersGotPokemonAt(location);
+      const allPokemonSet = RUN?.haveAllPlayersGotPokemonAt(location);
       if (caught && allPokemonSet) {
         moveToTeam(location, location);
       }
     };
   };
 
-  const onDragEnd = async (result) => {
+  const onDragEnd = async (result: DropResult) => {
     // dropped outside the list
     if (!result.destination) return;
 
@@ -151,16 +160,16 @@ function TimelineGrid({
   };
 
   const handleFilterChange = (filters: Filter) => {
-    const classnames = [];
+    const classnames: string[] = [];
     oKey(filters).forEach((f) => {
-      if (filters[f] && f.includes("hide")) classnames.push(styles[f]);
+      if ((filters as any)[f] && f.includes("hide")) classnames.push(styles[f]);
     });
     if (!!filters.searchTerm) {
       const newFiltered = allDataArr.filter((d) =>
         matchesPokemonName(d, filters),
       );
       setFilteredData(newFiltered);
-    } else setFilteredData(null);
+    } else setFilteredData([]);
     setFilterClassNames(classnames.join(" "));
   };
 
@@ -183,11 +192,11 @@ function TimelineGrid({
           </thead>
 
           <Droppable droppableId="droppable">
-            {(p, i) => (
+            {(p) => (
               <tbody
                 {...p.droppableProps}
                 ref={p.innerRef}
-                key={i}
+                key={p.droppableProps["data-rbd-droppable-id"]}
                 className={filterClassNames}
               >
                 {allDataArr.map((data, i) => (

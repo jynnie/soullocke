@@ -27,7 +27,7 @@ export function AddPokemon({
     nickname: string,
     caught: boolean,
   ) => {
-    await RUN.addPokemon(pokemonName, nickname, playerId, location, caught);
+    await RUN?.addPokemon(pokemonName, nickname, playerId, location, caught);
     if (onFinish) onFinish(caught);
     toggleForm();
   };

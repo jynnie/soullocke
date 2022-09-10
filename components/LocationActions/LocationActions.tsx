@@ -1,9 +1,9 @@
-import React from "react";
-import { PlaceName } from "models";
-
-import Move from "./Move";
-import Delete from "./Delete";
 import Notes from "components/Notes";
+import { PlaceName } from "models";
+import React from "react";
+
+import Delete from "./Delete";
+import Move from "./Move";
 
 export function LocationActions({
   location,

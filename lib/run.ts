@@ -1,11 +1,5 @@
 import type firebase from "firebase";
-import {
-  EventType,
-  MapLocation,
-  Pokemon,
-  PokemonEvent,
-  PokemonLocation,
-} from "models";
+import { EventType, Pokemon, PokemonEvent, PokemonLocation } from "models";
 import type {
   PlaceName,
   PokemonEvents,
@@ -19,7 +13,7 @@ type Ref = firebase.database.Reference;
 
 export class Run {
   runRef: Ref;
-  runData: RunData;
+  runData?: RunData;
   patchNum: number = 0;
   allLocations: string[] = [];
 
@@ -79,13 +73,13 @@ export class Run {
   };
 
   public getPlayerPokemonArr = (id: string) => {
-    return oVal(this.runData.players[id]?.pokemon || []);
+    return oVal(this.runData?.players[id]?.pokemon || []);
   };
 
   public getPokemonOnTeam = (): { [playerId: string]: Pokemon[] } => {
     if (!this.runData || !this.runData.players) return {};
 
-    const result = {};
+    const result: Record<string, Pokemon[]> = {};
     const playersArr = oVal(this.runData.players);
     playersArr.forEach((player) => {
       const pokemonOnTeam = oVal(player.pokemon || []).filter(
@@ -152,7 +146,7 @@ export class Run {
   public getPokemonByOrigin = (origin: string): (Pokemon | null)[] => {
     if (!this.runData) return [];
 
-    const playersArr = this.getPlayersArray();
+    const playersArr = this.getPlayersArray() || [];
     const matchingPokemon = playersArr.map(
       (player) => player.pokemon?.[origin],
     );
@@ -171,7 +165,7 @@ export class Run {
 
     const existingPokemon = this.getPokemonByOrigin(origin).filter((p) => !!p);
     const playersArr = this.getPlayersArray();
-    return existingPokemon.length === playersArr.length;
+    return existingPokemon.length === playersArr?.length;
   };
 
   public getTimelineLocations = (): Timeline[] => {
@@ -198,9 +192,9 @@ export class Run {
   };
 
   public getLocationNotes = (place: PlaceName): string => {
-    if (!this.runData) return;
+    if (!this.runData) return "";
 
-    return this.runData.timeline?.[place]?.notes;
+    return this.runData.timeline?.[place]?.notes || "";
   };
 
   //----------------------------------#01F2DF
@@ -209,7 +203,7 @@ export class Run {
   public groupByOrigin = (
     allPokemon: Pokemon[],
   ): { [origin: string]: Pokemon[] } => {
-    const result = {};
+    const result: Record<string, Pokemon[]> = {};
     for (let pokemon of allPokemon) {
       const origin = pokemon.origin;
       if (origin in result) continue;
@@ -245,7 +239,7 @@ export class Run {
 
     await this.runRef.child(`timeline/${key}`).set(null);
 
-    const playerArr = oVal(this.runData.players);
+    const playerArr = oVal(this.runData?.players || {});
     for (let player of playerArr) {
       await this.runRef.child(`players/${player.id}/pokemon/${key}`).set(null);
     }
@@ -318,7 +312,7 @@ export class Run {
       nickname,
       events,
       location: PokemonLocation.box, // FIXME
-      shiny: false, // FIXME
+      shiny: false, // FIXME:
     };
     await newPokemonRef.set(pokemon);
     return pokemon;
@@ -345,7 +339,7 @@ export class Run {
       nickname,
       events,
       location: PokemonLocation.grave, // FIXME
-      shiny: false, // FIXME
+      shiny: false, // FIXME:
     };
     await newPokemonRef.set(pokemon);
     return pokemon;
@@ -367,7 +361,7 @@ export class Run {
       origin,
       name: pokemonName,
       nickname,
-      shiny: false, // FIXME
+      shiny: false, // FIXME:
     };
     await newPokemonRef.update(pokemon);
 
@@ -481,7 +475,7 @@ export class Run {
     location: PlaceName,
     pokemonLocation: PokemonLocation,
   ) => {
-    const playerArr = oVal(this.runData.players);
+    const playerArr = oVal(this.runData?.players || {});
     let event;
 
     for (let player of playerArr) {
@@ -570,7 +564,7 @@ export class Run {
     location: PlaceName,
     missed: boolean = false,
   ) => {
-    const playerArr = oVal(this.runData.players);
+    const playerArr = oVal(this.runData?.players || {});
     let event;
 
     playerArr.forEach((player) => {
@@ -598,26 +592,5 @@ export class Run {
     return event;
   };
 }
-
-// FIXME: Make these specific functions instead
-export const updatePokemonLocation =
-  (runRef: Ref) =>
-  async (
-    playerId: string,
-    pokemonIndex: string,
-    pokemonLocation: PokemonLocation,
-    timelineLocation: PlaceName,
-  ) => {
-    const pokemonRef = runRef.child(
-      `players/${playerId}/pokemon/${pokemonIndex}`,
-    );
-    await pokemonRef.update({
-      location: pokemonLocation,
-    });
-    await pokemonRef
-      .child(`events/${timelineLocation}`)
-      .update(pokemonLocation);
-    return pokemonIndex;
-  };
 
 export default Run;

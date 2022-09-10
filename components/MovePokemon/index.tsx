@@ -1,6 +1,7 @@
 import { Button, Form, Modal, Select } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
+import { useEffectOnce } from "hooks/useEffectOnce";
 import { cleanName, oVal } from "lib/utils";
 import { PlaceName, PokemonLocation } from "models";
 import { RunContext } from "pages/run/[id]";
@@ -22,32 +23,33 @@ export function MovePokemon({
 }) {
   const { RUN } = React.useContext(RunContext);
 
-  const pokemonMoving = RUN.getPokemonByOrigin(pokemonOrigin);
+  const pokemonMoving = RUN?.getPokemonByOrigin(pokemonOrigin);
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const timelineLocations = RUN.getTimelineLocationNames();
-  const latestLocation = RUN.getLatestLocation();
+  const timelineLocations = RUN?.getTimelineLocationNames();
+  const latestLocation = RUN?.getLatestLocation();
   const pokemonLocations = oVal(PokemonLocation).filter(
-    (l) => l !== pokemonMoving[0]?.location,
+    (l) => l !== pokemonMoving?.[0]?.location,
   );
 
   //* States----------------------------#07cf7f
   const [location, setLocation] = React.useState<string>("");
-  const [pokemonLocation, setPokemonLocation] =
-    React.useState<PokemonLocation | null>(null);
+  const [pokemonLocation, setPokemonLocation] = React.useState<
+    PokemonLocation | undefined
+  >(undefined);
   const [form] = Form.useForm();
 
   // Set initial values
-  React.useEffect(() => {
+  useEffectOnce(() => {
     form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-  }, []);
+    setLocation(latestLocation ?? "");
+  });
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     form.resetFields();
-    if (onFinish) onFinish(location, pokemonLocation);
+    if (onFinish && pokemonLocation) onFinish(location, pokemonLocation);
   };
 
   const handleCancel = async () => {
@@ -63,9 +65,9 @@ export function MovePokemon({
     >
       <div className="flex column center">
         <PokemonGroup marginBottom={12}>
-          {pokemonMoving.map((p, i) => (
-            <PokemonIcon key={i} pokemon={p} />
-          ))}
+          {pokemonMoving?.map(
+            (p, i) => p && <PokemonIcon key={i} pokemon={p} />,
+          )}
         </PokemonGroup>
       </div>
 
@@ -85,7 +87,7 @@ export function MovePokemon({
             placeholder="Select the location of this event"
             showSearch
           >
-            {timelineLocations.map((l) => (
+            {timelineLocations?.map((l) => (
               <Option key={l} value={l} className={styles.option}>
                 {cleanName(l)}
               </Option>

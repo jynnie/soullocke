@@ -29,7 +29,7 @@ function PokemonModal({
   const { RUN } = React.useContext(RunContext);
   const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
 
-  const timelineArr = RUN.getTimelineLocationNames();
+  const timelineArr = RUN?.getTimelineLocationNames() || [];
   const eventsArr = oVal(pokemon?.events || {}).sort(
     (a, b) => timelineArr.indexOf(a.location) - timelineArr.indexOf(b.location),
   );
@@ -40,7 +40,7 @@ function PokemonModal({
   };
 
   const handleFinish = (pokemonName: string, nickname: string): void => {
-    RUN.backfillPokemon(pokemonName, nickname, playerId, location);
+    RUN?.backfillPokemon(pokemonName, nickname, playerId, location);
     if (editPokemon) setEditPokemon(false);
   };
 
@@ -72,7 +72,7 @@ function PokemonModal({
       {(!pokemon.name || editPokemon) && (
         <PokemonForm
           showCaughtCheckbox={false}
-          onCancel={editPokemon && handleCancelEditing}
+          onCancel={editPokemon ? handleCancelEditing : undefined}
           onFinish={handleFinish}
           finishText={editPokemon ? "Save" : "Add"}
           defaultValues={{

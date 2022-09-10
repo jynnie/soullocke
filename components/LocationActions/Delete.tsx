@@ -1,10 +1,9 @@
-import React from "react";
-import cn from "classnames";
-import { RunContext } from "pages/run/[id]";
-import { PlaceName } from "models";
-
-import styles from "styles/Location.module.scss";
 import { Button, Popconfirm } from "antd";
+import cn from "classnames";
+import { PlaceName } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Location.module.scss";
 
 function ConfirmTitle() {
   return (
@@ -23,7 +22,7 @@ export function DeleteLocation({ location }: { location: PlaceName }) {
   const { RUN } = React.useContext(RunContext);
 
   const handleDelete = async () => {
-    await RUN.deleteLocation(location);
+    await RUN?.deleteLocation(location);
   };
 
   return (
@@ -33,12 +32,9 @@ export function DeleteLocation({ location }: { location: PlaceName }) {
       okText="Yes"
       cancelText="No"
     >
-      <Button
-        className={styles.listingDeleteButton}
-        type="text"
-        children="Delete"
-        size="small"
-      />
+      <Button className={styles.listingDeleteButton} type="text" size="small">
+        Delete
+      </Button>
     </Popconfirm>
   );
 }

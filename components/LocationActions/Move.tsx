@@ -1,10 +1,9 @@
-import React from "react";
-import { RunContext } from "pages/run/[id]";
-import { PlaceName, PokemonLocation } from "models";
-
-import styles from "styles/Location.module.scss";
-import MovePokemon from "components/MovePokemon";
 import { Button } from "antd";
+import MovePokemon from "components/MovePokemon";
+import { PlaceName, PokemonLocation } from "models";
+import { RunContext } from "pages/run/[id]";
+import React from "react";
+import styles from "styles/Location.module.scss";
 
 export function Move({
   location: origin,
@@ -24,7 +23,7 @@ export function Move({
     if (pokemonLocation === PokemonLocation.team)
       handleMoveToTeam(origin, location);
     else {
-      RUN.movePokemon(origin, location, pokemonLocation);
+      RUN?.movePokemon(origin, location, pokemonLocation);
     }
     setShowModal(false);
   };
@@ -41,9 +40,10 @@ export function Move({
         className={styles.listingMoveButton}
         onClick={() => setShowModal(true)}
         type="text"
-        children="Move"
         size="small"
-      />
+      >
+        Move
+      </Button>
     </>
   );
 }

@@ -18,7 +18,7 @@ export function AddEvent({ pokemon }: { pokemon: Pokemon }) {
     eventLocation: PlaceName,
     eventDetails: PokemonEvent["details"],
   ) => {
-    await RUN.addEvent(
+    await RUN?.addEvent(
       pokemon.playerId,
       pokemon.origin,
       eventType,

@@ -1,7 +1,6 @@
-import React from "react";
 import { cleanName } from "lib/utils";
 import { PlaceName } from "models";
-
+import React from "react";
 import styles from "styles/Location.module.scss";
 
 export function LocationListing({ location }: { location: PlaceName }) {
