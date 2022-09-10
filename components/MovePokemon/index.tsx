@@ -27,7 +27,7 @@ export function MovePokemon({
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const timelineLocations = RUN?.getTimelineLocationNames();
+  const timelineLocations = RUN?.DEPRECATED_getTimelineLocationNames();
   const latestLocation = RUN?.getLatestLocation();
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemonMoving?.[0]?.location,

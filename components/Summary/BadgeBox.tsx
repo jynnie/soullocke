@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { RunContext } from "pages/run/[id]";
+import useEarnedBadges from "hooks/useEarnedBadges";
 import React from "react";
 import styles from "styles/Summary.module.scss";
 
@@ -8,10 +8,8 @@ import styles from "styles/Summary.module.scss";
 /**
  * Badge Progress Box
  */
-function BadgeBox({ allBadges }: { allBadges: string[] }) {
-  const { RUN } = React.useContext(RunContext);
-
-  const earnedBadges = RUN?.getEarnedBadges() || [];
+export function BadgeBox({ allBadges }: { allBadges: string[] }) {
+  const earnedBadges = useEarnedBadges();
 
   return (
     <div className={styles.badgeBox}>
@@ -28,5 +26,3 @@ function BadgeBox({ allBadges }: { allBadges: string[] }) {
     </div>
   );
 }
-
-export default BadgeBox;

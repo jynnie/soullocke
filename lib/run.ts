@@ -41,13 +41,6 @@ export class Run {
     );
   };
 
-  private filterForPokemonDefeated = (p: IPokemon): boolean => {
-    return (
-      !!p.name &&
-      oVal(p.events || {}).some((e) => e.type === EventType.defeated)
-    );
-  };
-
   private filterForPokemonMissed = (p: IPokemon): boolean => {
     return (
       !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
@@ -168,21 +161,16 @@ export class Run {
     return timelineLocations;
   };
 
-  public getTimelineLocationNames = (): PlaceName[] => {
+  public DEPRECATED_getTimelineLocationNames = (): PlaceName[] => {
     const timelineLocations = this.DEPRECATED_getTimelineLocations().map(
       (l) => l.name,
     );
     return timelineLocations;
   };
 
-  public getEarnedBadges = (): PlaceName[] => {
-    const allLocations = this.getTimelineLocationNames();
-    const allBadges = allLocations.filter((name) => /badge/gi.test(name));
-    return allBadges;
-  };
-
   public getLatestLocation = (): PlaceName => {
-    const latestLocation = this.getTimelineLocationNames()?.slice(-1)?.[0];
+    const latestLocation =
+      this.DEPRECATED_getTimelineLocationNames()?.slice(-1)?.[0];
     return latestLocation;
   };
 

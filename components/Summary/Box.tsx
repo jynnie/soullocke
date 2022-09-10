@@ -4,7 +4,7 @@ import { IPokemon } from "models";
 import React from "react";
 import styles from "styles/Summary.module.scss";
 
-function Box({ box, j }: { box: IPokemon[]; j: number }) {
+export function Box({ box, j }: { box: IPokemon[]; j: number }) {
   return (
     <div className={cn(styles.grave, { [styles.onRight]: j % 2 === 1 })}>
       <div className={styles.gravePokemon}>
@@ -22,5 +22,3 @@ function Box({ box, j }: { box: IPokemon[]; j: number }) {
     </div>
   );
 }
-
-export default Box;

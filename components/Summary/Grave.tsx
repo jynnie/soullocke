@@ -4,7 +4,7 @@ import { EventType, IPokemon } from "models";
 import React from "react";
 import styles from "styles/Summary.module.scss";
 
-function Grave({ grave, j }: { grave: IPokemon[]; j: number }) {
+export function Grave({ grave, j }: { grave: IPokemon[]; j: number }) {
   const defeatedNum = grave.filter(filterForPokemonDefeated).length || 0;
   const missedNum = grave.filter(filterForPokemonMissed).length || 0;
 
@@ -41,5 +41,3 @@ function Grave({ grave, j }: { grave: IPokemon[]; j: number }) {
     </div>
   );
 }
-
-export default Grave;

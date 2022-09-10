@@ -29,7 +29,7 @@ function PokemonModal({
   const { RUN } = React.useContext(RunContext);
   const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
 
-  const timelineArr = RUN?.getTimelineLocationNames() || [];
+  const timelineArr = RUN?.DEPRECATED_getTimelineLocationNames() || [];
   const eventsArr = oVal(pokemon?.events || {}).sort(
     (a, b) => timelineArr.indexOf(a.location) - timelineArr.indexOf(b.location),
   );

@@ -5,9 +5,9 @@ import React, { useMemo } from "react";
 import styles from "styles/Summary.module.scss";
 import Box from "ui-box";
 
-import BadgeBox from "./BadgeBox";
-import Boxed from "./Box";
-import Grave from "./Grave";
+import { BadgeBox } from "./BadgeBox";
+import { Box as Boxed } from "./Box";
+import { Grave } from "./Grave";
 import { Team } from "./Team";
 
 export interface Data {
