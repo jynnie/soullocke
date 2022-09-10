@@ -1,7 +1,8 @@
 import { usePlayersArray } from "hooks/usePlayersArray";
 import { useRunChild } from "hooks/useRun";
 import { EventType, IPokemon, PokemonEvent, Run, Timeline } from "models";
-import { getPokemonByOrigin, getPokemonLocationByOrigin } from "utils/utils";
+import { getPokemonByOrigin } from "utils/getPokemonByOrigin";
+import { getPokemonLocationByOrigin } from "utils/getPokemonLocationByOrigin";
 
 import { Data } from "./Timeline";
 
@@ -18,7 +19,7 @@ export function useTimelineData() {
   }
 
   const allDataArr: Data[] = timelineArr.map((l) => {
-    const pokemon = getPokemonByOrigin(playerArr, l.name) || [];
+    const pokemon = getPokemonByOrigin({ playerArr, origin: l.name }) || [];
     const pokemonNames = pokemon.reduce(makePokemonNameString, "");
 
     return {

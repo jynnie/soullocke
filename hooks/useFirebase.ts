@@ -7,8 +7,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
  */
 export function useFirebase<T extends Object>(
   path?: string,
-  defaultValue?: T,
-  fallbackValue?: T,
+  { defaultValue, fallbackValue }: { defaultValue?: T; fallbackValue?: T } = {},
 ) {
   const db = useContext(FirebaseContext)?.db;
   const dbRef = useMemo(() => db?.ref(path), [db, path]);

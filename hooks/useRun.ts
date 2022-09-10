@@ -10,7 +10,10 @@ import { useFirebase } from "./useFirebase";
  * @returns undefined while loading, returns false if no such run exists
  */
 export function useRun(id?: string) {
-  return useFirebase<Run | false>(id, undefined, false);
+  return useFirebase<Run | false>(id, {
+    defaultValue: undefined,
+    fallbackValue: false,
+  });
 }
 
 export function useRunChild<T extends Object>(
@@ -18,7 +21,7 @@ export function useRunChild<T extends Object>(
   defaultValue?: T,
 ) {
   const runId = useRunId();
-  return useFirebase<T>(`${runId}/${childPath}`, defaultValue);
+  return useFirebase<T>(`${runId}/${childPath}`, { defaultValue });
 }
 
 export function useRunId() {

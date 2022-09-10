@@ -20,7 +20,7 @@ import {
 } from "react-beautiful-dnd";
 import styles from "styles/Timeline.module.scss";
 import Box from "ui-box";
-import { getPokemonByOrigin } from "utils/utils";
+import { getPokemonByOrigin } from "utils/getPokemonByOrigin";
 
 import Filters from "./Filters";
 import Row from "./Row";
@@ -66,7 +66,7 @@ function TimelineGrid({
   }
 
   function haveAllPlayersGotPokemonAt(origin: string) {
-    const existingPokemon = getPokemonByOrigin(playerArr, origin).filter(
+    const existingPokemon = getPokemonByOrigin({ playerArr, origin }).filter(
       (p) => !!p,
     );
     return existingPokemon.length === playerArr.length;
