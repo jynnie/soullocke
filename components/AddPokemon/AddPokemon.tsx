@@ -1,6 +1,6 @@
 import { Button, Popover, Tooltip } from "antd";
+import { useAddEvent } from "hooks/useAddEvent";
 import { PlaceName } from "models";
-import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Home.module.css";
 
@@ -17,23 +17,21 @@ export function AddPokemon({
   location: PlaceName;
   onFinish: (caught: boolean) => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
   const [showForm, setShowForm] = React.useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);
+  const { addPokemon } = useAddEvent(playerId, location);
 
   const handleFinish = async (
     pokemonName: string,
     nickname: string,
     caught: boolean,
   ) => {
-    await RUN?.addPokemon(pokemonName, nickname, playerId, location, caught);
-    if (onFinish) onFinish(caught);
+    await addPokemon(pokemonName, nickname, caught);
+    onFinish?.(caught);
     toggleForm();
   };
-  const onCancel = () => {
-    toggleForm();
-  };
+  const onCancel = () => toggleForm();
 
   return (
     <Popover

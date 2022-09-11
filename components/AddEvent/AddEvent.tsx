@@ -8,7 +8,7 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import Form from "./Form";
 
 export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
-  const addEvent = useAddEvent(pokemon.playerId, pokemon.origin);
+  const { addEvent } = useAddEvent(pokemon.playerId, pokemon.origin);
   const [showForm, setShowForm] = useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);

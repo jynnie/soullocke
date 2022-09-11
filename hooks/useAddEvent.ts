@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import {
   EventType,
+  IPokemon,
   PlaceName,
   Player,
   PokemonEvent,
@@ -131,5 +132,52 @@ export function useAddEvent(
     }
   }
 
-  return addEvent;
+  async function addPokemon(
+    pokemonName: string,
+    nickname: string,
+    isCaught: boolean,
+  ) {
+    if (!players.ref) return;
+
+    const newPokemonRef = players.ref.child(
+      `${actingPlayerId}/pokemon/${actingPokemonOrigin}`,
+    );
+
+    let pokemon: IPokemon;
+    if (isCaught) {
+      pokemon = {
+        playerId: actingPlayerId,
+        origin: actingPokemonOrigin,
+        name: pokemonName,
+        nickname,
+        events: {
+          0: {
+            index: "0",
+            type: EventType.catch,
+            location: actingPokemonOrigin,
+          },
+        },
+        location: PokemonLocation.box,
+      };
+    } else {
+      soulDeath(actingPokemonOrigin, true);
+      pokemon = {
+        playerId: actingPlayerId,
+        origin: actingPokemonOrigin,
+        name: pokemonName,
+        nickname,
+        events: {
+          0: {
+            index: "0",
+            type: EventType.missed,
+            location: actingPokemonOrigin,
+          },
+        },
+        location: PokemonLocation.grave,
+      };
+    }
+    await newPokemonRef.set(pokemon);
+  }
+
+  return { addEvent, addPokemon };
 }
