@@ -1,15 +1,15 @@
 import { Button, Timeline } from "antd";
+import { useAddEvent } from "hooks/useAddEvent";
 import { EventType, IPokemon, PlaceName, PokemonEvent } from "models";
-import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useState } from "react";
 
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 import Form from "./Form";
 
 export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
-  const { RUN } = React.useContext(RunContext);
-  const [showForm, setShowForm] = React.useState<boolean>(false);
+  const addEvent = useAddEvent(pokemon.playerId, pokemon.origin);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   const toggleForm = () => setShowForm(!showForm);
 
@@ -18,16 +18,7 @@ export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
     eventLocation: PlaceName,
     eventDetails: PokemonEvent["details"],
   ) => {
-    await RUN?.addEvent(
-      pokemon.playerId,
-      pokemon.origin,
-      eventType,
-      eventLocation,
-      eventDetails,
-    );
-    toggleForm();
-  };
-  const onCancel = () => {
+    await addEvent(eventType, eventLocation, eventDetails);
     toggleForm();
   };
 
@@ -35,7 +26,7 @@ export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
     <Timeline.Item dot={<PlusCircleOutlined size={18} />}>
       {!showForm && <Button onClick={toggleForm}>Add Event</Button>}
 
-      {showForm && <Form {...{ pokemon, onFinish, onCancel }} />}
+      {showForm && <Form {...{ pokemon, onFinish, onCancel: toggleForm }} />}
     </Timeline.Item>
   );
 }

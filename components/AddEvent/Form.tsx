@@ -1,6 +1,6 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
-import { useEffectOnce } from "hooks/useEffectOnce";
+import { useTimelineLocationNames } from "hooks/useTimelineLocationNames";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
@@ -10,8 +10,9 @@ import {
   PokemonLocation,
 } from "models";
 import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "styles/Form.module.scss";
+import { getLastItem } from "utils/getLastItem";
 import { cleanName, oVal } from "utils/utils";
 
 const { Option } = Select;
@@ -29,7 +30,8 @@ function AddEventForm({
   ) => void;
   onCancel?: () => void;
 }) {
-  const { RUN, allPokemon } = React.useContext(RunContext);
+  const { allPokemon } = React.useContext(RunContext);
+  const timelineLocations = useTimelineLocationNames();
 
   //* States----------------------------#07cf7f
   const [location, setLocation] = React.useState<string | undefined>(undefined);
@@ -43,6 +45,16 @@ function AddEventForm({
     undefined,
   );
   const [form] = Form.useForm();
+
+  // WORKAROUND: We set the initial value to the latest location
+  // once that data loads. Since we're dependent on the hook, we
+  // useEffect to wait for the info.
+  useEffect(() => {
+    const latestLocation = getLastItem(timelineLocations);
+    form.setFieldsValue({ location: latestLocation });
+    setLocation(latestLocation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timelineLocations.length]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
@@ -64,15 +76,6 @@ function AddEventForm({
   const pokemonLocations = oVal(PokemonLocation).filter(
     (l) => l !== pokemon.location,
   );
-  const timelineLocations = RUN?.allLocations || [];
-
-  // FIXME: Use initialValues instead
-  // Set initial values
-  useEffectOnce(() => {
-    const latestLocation = RUN?.getLatestLocation();
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-  });
 
   return (
     <Form form={form} name="addPokemonEvent" onFinish={handleFinish}>

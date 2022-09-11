@@ -41,12 +41,6 @@ export class Run {
     );
   };
 
-  private filterForPokemonMissed = (p: IPokemon): boolean => {
-    return (
-      !!p.name && oVal(p.events || {}).some((e) => e.type === EventType.missed)
-    );
-  };
-
   //----------------------------------#01F2DF
   //- Getters
 
@@ -111,24 +105,6 @@ export class Run {
 
     if (!dontCountMisses) return pokemonInGrave;
     return pokemonInGrave.filter(this.filterForPokemonNotMissed);
-  };
-
-  public getPlayerDefeatCount = (playerId: string) => {
-    if (!this.runData || !this.runData.players || !playerId) return;
-
-    const pokemonDefeated = this.getPlayerPokemonArr(playerId).filter(
-      this.filterForPokemonDefeated,
-    );
-    return pokemonDefeated.length;
-  };
-
-  public getPlayerMissedCount = (playerId: string) => {
-    if (!this.runData || !this.runData.players || !playerId) return;
-
-    const pokemonMissed = this.getPlayerPokemonArr(playerId).filter(
-      this.filterForPokemonMissed,
-    );
-    return pokemonMissed.length;
   };
 
   public DEPRECATED_getPokemonByOrigin = (
@@ -358,7 +334,7 @@ export class Run {
   //----------------------------------#01F2DF
   //- Pokemon Events
 
-  public addEvent = async (
+  public DEPRECATED_addEvent = async (
     playerId: string,
     pokemonOrigin: string,
     type: EventType,
@@ -371,14 +347,14 @@ export class Run {
     if (type === EventType.moved && !!details?.location) {
       event = this.movePokemon(pokemonOrigin, location, details.location);
     } else if (type === EventType.defeated) {
-      event = this.markAsDefeated(playerId, pokemonOrigin, location);
+      // event = this.markAsDefeated(playerId, pokemonOrigin, location);
     } else if (type === EventType.evolved && !!details?.evolution) {
-      event = this.addEvolution(
-        playerId,
-        pokemonOrigin,
-        location,
-        details.evolution,
-      );
+      // event = this.addEvolution(
+      //   playerId,
+      //   pokemonOrigin,
+      //   location,
+      //   details.evolution,
+      // );
     }
     return event;
   };
@@ -396,7 +372,13 @@ export class Run {
     // other relevant details.
     if (isLatestEvent) {
       await this.removeEvent(playerId, pokemonOrigin, index);
-      return this.addEvent(playerId, pokemonOrigin, type, location, details);
+      return this.DEPRECATED_addEvent(
+        playerId,
+        pokemonOrigin,
+        type,
+        location,
+        details,
+      );
     } else {
       const eventRef = this.runRef.child(
         `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
@@ -471,59 +453,6 @@ export class Run {
       };
       eventRef.set(event);
     }
-
-    return event;
-  };
-
-  private markAsDefeated = (
-    playerWhoDefeated: string,
-    pokemonOrigin: PlaceName,
-    location: PlaceName,
-  ) => {
-    if (!this.runRef || !this.runData) return;
-
-    this.soulDeath(playerWhoDefeated, pokemonOrigin, location);
-
-    const pokemonRef = this.runRef.child(
-      `players/${playerWhoDefeated}/pokemon/${pokemonOrigin}`,
-    );
-    const eventRef = pokemonRef.child("events").push();
-    const event = {
-      index: eventRef.key,
-      type: EventType.defeated,
-      location,
-      details: {
-        location: PokemonLocation.grave,
-      },
-    };
-
-    eventRef.set(event);
-    pokemonRef.child("location").set(PokemonLocation.grave);
-
-    return event;
-  };
-
-  private addEvolution = (
-    playerId: string,
-    pokemonOrigin: PlaceName,
-    location: PlaceName,
-    evolution: string,
-  ) => {
-    const pokemonRef = this.runRef.child(
-      `players/${playerId}/pokemon/${pokemonOrigin}`,
-    );
-
-    pokemonRef.child("origin").set(pokemonOrigin);
-    const eventRef = pokemonRef.child("events").push();
-    const event = {
-      index: eventRef.key,
-      type: EventType.evolved,
-      location,
-      details: {
-        evolution,
-      },
-    };
-    eventRef.set(event);
 
     return event;
   };
