@@ -1,6 +1,6 @@
 import { Button, Popover, Tooltip } from "antd";
+import { useAddNewLocation } from "hooks/useAddNewLocation";
 import { MapLocation, PlaceName } from "models";
-import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Home.module.css";
 import Box from "ui-box";
@@ -16,18 +16,16 @@ export function AddToTimeline({
   allLocations: MapLocation[];
   allBadges: string[];
 }) {
-  const { RUN } = React.useContext(RunContext);
   const [showForm, setShowForm] = React.useState<boolean>(false);
+  const addNewLocation = useAddNewLocation();
 
   const toggleForm = () => setShowForm(!showForm);
 
   const onFinish = async (location: PlaceName) => {
-    await RUN?.addNewLocation(location);
+    await addNewLocation(location);
     toggleForm();
   };
-  const onCancel = () => {
-    toggleForm();
-  };
+  const onCancel = () => toggleForm();
 
   return (
     <Box marginLeft={8} marginTop={12}>

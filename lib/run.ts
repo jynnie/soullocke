@@ -1,11 +1,6 @@
 import type firebase from "firebase";
 import { EventType, IPokemon, PokemonEvent, PokemonLocation } from "models";
-import type {
-  PlaceName,
-  PokemonEvents,
-  Run as RunData,
-  Timeline,
-} from "models";
+import type { PlaceName, Run as RunData, Timeline } from "models";
 
 import { oVal } from "../utils/utils";
 
@@ -173,25 +168,6 @@ export class Run {
 
   //----------------------------------#01F2DF
   //- Timeline
-
-  public addNewLocation = async (location: PlaceName) => {
-    if (!this.runData || !this.runRef || !location) return;
-
-    let index: number = 0;
-    if (this.runData.timeline) {
-      const prevLargest = oVal(this.runData.timeline).reduce((prev, current) =>
-        prev.index > current.index ? prev : current,
-      );
-      index = prevLargest.index + 1;
-    }
-
-    await this.runRef.child(`timeline/${location}`).set({
-      key: location,
-      index,
-      name: location,
-    });
-    return location;
-  };
 
   public deleteLocation = async (key: string) => {
     if (!this.runRef) return;
