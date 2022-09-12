@@ -6,8 +6,6 @@ export function useAddNewLocation() {
   const timeline = useRunChild<Run["timeline"]>("timeline");
 
   async function addNewLocation(location: PlaceName) {
-    timeline.value;
-
     const prevLargestIndex = Object.values(timeline.value || []).reduce(
       (prev, current) => (prev > current.index ? prev : current.index),
       -1,

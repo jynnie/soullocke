@@ -169,19 +169,6 @@ export class Run {
   //----------------------------------#01F2DF
   //- Timeline
 
-  public deleteLocation = async (key: string) => {
-    if (!this.runRef) return;
-
-    await this.runRef.child(`timeline/${key}`).set(null);
-
-    const playerArr = oVal(this.runData?.players || {});
-    for (let player of playerArr) {
-      await this.runRef.child(`players/${player.id}/pokemon/${key}`).set(null);
-    }
-
-    return key;
-  };
-
   public saveLocationNotes = (place: PlaceName, notes: string) => {
     if (!this.runData) return;
 
@@ -356,40 +343,6 @@ export class Run {
   //- Other Pokemon Events
 
   public removePokemon = () => {};
-
-  private soulDeath = (
-    playerResponsible: string,
-    pokemonOrigin: PlaceName,
-    location: PlaceName,
-    missed: boolean = false,
-  ) => {
-    const playerArr = oVal(this.runData?.players || {});
-    let event;
-
-    playerArr.forEach((player) => {
-      const isPlayerResponsible = player.id === playerResponsible;
-      if (!isPlayerResponsible) {
-        const pokemonRef = this.runRef.child(
-          `players/${player.id}/pokemon/${pokemonOrigin}`,
-        );
-
-        pokemonRef.child("origin").set(pokemonOrigin);
-        pokemonRef.child("location").set(PokemonLocation.grave);
-        const eventRef = pokemonRef.child("events").push();
-        event = {
-          index: eventRef.key,
-          type: missed ? EventType.soulMiss : EventType.soulDeath,
-          location,
-          details: {
-            location: PokemonLocation.grave,
-          },
-        };
-        eventRef.set(event);
-      }
-    });
-
-    return event;
-  };
 }
 
 export default Run;
