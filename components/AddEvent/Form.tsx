@@ -10,7 +10,7 @@ import {
   PokemonLocation,
 } from "models";
 import { RunContext } from "pages/run/[id]";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styles from "styles/Form.module.scss";
 import { getLastItem } from "utils/getLastItem";
 import { cleanName, oVal } from "utils/utils";
@@ -32,6 +32,7 @@ function AddEventForm({
 }) {
   const { allPokemon } = React.useContext(RunContext);
   const timelineLocations = useTimelineLocationNames();
+  const latestLocation = getLastItem(timelineLocations);
 
   //* States----------------------------#07cf7f
   const [location, setLocation] = React.useState<string | undefined>(undefined);
@@ -46,19 +47,22 @@ function AddEventForm({
   );
   const [form] = Form.useForm();
 
+  const resetFields = useCallback(() => {
+    form.resetFields();
+    form.setFieldsValue({ location: latestLocation });
+    setLocation(latestLocation);
+  }, [form, latestLocation]);
+
   // WORKAROUND: We set the initial value to the latest location
   // once that data loads. Since we're dependent on the hook, we
   // useEffect to wait for the info.
   useEffect(() => {
-    const latestLocation = getLastItem(timelineLocations);
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timelineLocations.length]);
+    resetFields();
+  }, [resetFields]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    form.resetFields();
+    resetFields();
     if (onFinish && eventType && location)
       onFinish(eventType, location, {
         location: pokemonLocation,
@@ -67,8 +71,8 @@ function AddEventForm({
   };
 
   const handleCancel = async () => {
-    form.resetFields();
-    if (onCancel) onCancel();
+    resetFields();
+    onCancel?.();
   };
 
   //* Options---------------------------#07cf7f
@@ -86,6 +90,7 @@ function AddEventForm({
         rules={[
           { required: true, message: "Please choose where this happened" },
         ]}
+        initialValue={latestLocation}
       >
         <Select
           className={styles.select}

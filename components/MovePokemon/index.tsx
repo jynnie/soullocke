@@ -1,12 +1,13 @@
 import { Button, Form, Modal, Select } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
-import { useEffectOnce } from "hooks/useEffectOnce";
+import { usePokemonByOrigin } from "hooks/usePokemonByOrigin";
+import { useTimelineLocationNames } from "hooks/useTimelineLocationNames";
 import { PlaceName, PokemonLocation } from "models";
-import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "styles/Form.module.scss";
-import { cleanName, oVal } from "utils/utils";
+import { getLastItem } from "utils/getLastItem";
+import { cleanName } from "utils/utils";
 
 const { Option } = Select;
 
@@ -21,15 +22,12 @@ export function MovePokemon({
   onCancel?: () => void;
   onFinish?: (location: PlaceName, pokemonLocation: PokemonLocation) => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
-
-  const pokemonMoving = RUN?.DEPRECATED_getPokemonByOrigin(pokemonOrigin);
+  const pokemonMoving = usePokemonByOrigin(pokemonOrigin);
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const timelineLocations = RUN?.DEPRECATED_getTimelineLocationNames();
-  const latestLocation = RUN?.getLatestLocation();
-  const pokemonLocations = oVal(PokemonLocation).filter(
+  const timelineLocations = useTimelineLocationNames();
+  const pokemonLocations = Object.values(PokemonLocation).filter(
     (l) => l !== pokemonMoving?.[0]?.location,
   );
 
@@ -40,11 +38,15 @@ export function MovePokemon({
   >(undefined);
   const [form] = Form.useForm();
 
-  // Set initial values
-  useEffectOnce(() => {
+  // WORKAROUND: We set the initial value to the latest location
+  // once that data loads. Since we're dependent on the hook, we
+  // useEffect to wait for the info.
+  useEffect(() => {
+    const latestLocation = getLastItem(timelineLocations);
     form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation ?? "");
-  });
+    setLocation(latestLocation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timelineLocations.length]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {

@@ -13,6 +13,10 @@ import { useRunChild } from "./useRun";
 export function useAddEvent(
   actingPlayerId: string,
   actingPokemonOrigin: string,
+  config?: {
+    callback: () => void;
+    startMoveToTeam: (origin: PlaceName, location: PlaceName) => void;
+  },
 ) {
   const players = useRunChild<Record<string, Player>>("players", {});
 
@@ -60,7 +64,6 @@ export function useAddEvent(
 
     for (const player of Object.values(players.value || {})) {
       const isPlayerResponsible = player.id === actingPlayerId;
-      console.log(player.id, isPlayerResponsible);
       if (isPlayerResponsible) continue;
 
       const pokemonRef = players.ref.child(
@@ -118,18 +121,27 @@ export function useAddEvent(
     });
   }
 
-  function addEvent(
+  async function addEvent(
     type: EventType,
-    location: PlaceName,
+    eventLocation: PlaceName,
     details?: PokemonEvent["details"],
   ) {
     if (type === EventType.moved && !!details?.location) {
-      return movePokemon(location, details.location);
+      if (
+        details.location === PokemonLocation.team &&
+        !!config?.startMoveToTeam
+      ) {
+        config.startMoveToTeam(actingPokemonOrigin, eventLocation);
+      } else {
+        await movePokemon(eventLocation, details.location);
+      }
     } else if (type === EventType.defeated) {
-      return markAsDefeated(location);
+      await markAsDefeated(eventLocation);
     } else if (type === EventType.evolved && !!details?.evolution) {
-      return addEvolution(location, details.evolution);
+      await addEvolution(eventLocation, details.evolution);
     }
+
+    config?.callback?.();
   }
 
   async function addPokemon(

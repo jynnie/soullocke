@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import MovePokemon from "components/MovePokemon";
-import { PlaceName, PokemonLocation } from "models";
-import { RunContext } from "pages/run/[id]";
+import { useAddEvent } from "hooks/useAddEvent";
+import { EventType, PlaceName, PokemonLocation } from "models";
 import React from "react";
 import styles from "styles/Location.module.scss";
 
@@ -12,21 +12,16 @@ export function Move({
   location: PlaceName;
   handleMoveToTeam: (origin: string, location: string) => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
-
   const [showModal, setShowModal] = React.useState(false);
 
-  const handleMove = async (
-    location: PlaceName,
-    pokemonLocation: PokemonLocation,
-  ) => {
-    if (pokemonLocation === PokemonLocation.team)
-      handleMoveToTeam(origin, location);
-    else {
-      RUN?.movePokemon(origin, location, pokemonLocation);
-    }
-    setShowModal(false);
-  };
+  const { addEvent } = useAddEvent("", origin, {
+    callback: () => setShowModal(false),
+    startMoveToTeam: handleMoveToTeam,
+  });
+
+  function handleMove(location: PlaceName, pokemonLocation: PokemonLocation) {
+    return addEvent(EventType.moved, location, { location: pokemonLocation });
+  }
 
   return (
     <>
