@@ -2,7 +2,7 @@ import { Button, Modal, Timeline } from "antd";
 import { ModalProps } from "antd/lib/modal";
 import EditEvent from "components/EditEvent";
 import Pokeball from "lib/icons/Pokeball";
-import { EventType, IPokemon } from "models";
+import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
@@ -14,6 +14,7 @@ import {
   FrownOutlined,
   InboxOutlined,
   StarOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 
 function PokemonTimelineEvent({
@@ -74,7 +75,12 @@ function PokemonTimelineEvent({
     eventDetails = `Caught on ${place}`;
   } else if (event.type === EventType.moved) {
     eventColor = "gray";
-    eventDot = <InboxOutlined />;
+    eventDot =
+      event.details?.location === PokemonLocation.team ? (
+        <TeamOutlined />
+      ) : (
+        <InboxOutlined />
+      );
     eventDetails = `Moved to ${event.details?.location} while at ${place}`;
   } else if (event.type === EventType.missed) {
     eventColor = "red";
