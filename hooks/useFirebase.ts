@@ -15,12 +15,12 @@ export function useFirebase<T extends Object>(
   const [value, setReadValue] = useState<T | undefined>(defaultValue);
 
   useEffect(() => {
-    dbRef?.on("value", (snapshot) => {
+    const listener = dbRef?.on("value", (snapshot) => {
       const rawValue = snapshot.val() || fallbackValue;
       setReadValue(rawValue);
     });
     return () => {
-      dbRef?.off();
+      dbRef?.off("value", listener);
     };
   }, [dbRef, fallbackValue]);
 

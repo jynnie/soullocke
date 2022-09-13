@@ -3,6 +3,7 @@
 🌶🌶🌶 Super cool
 
 - [x] Better linting & null checks
+  - [ ] New pokemon not automatically added to team
 - [x] Enable multiple locations on the timeline
   - [x] Can create
   - [x] Can reorder

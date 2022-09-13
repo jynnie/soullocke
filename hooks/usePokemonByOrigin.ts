@@ -8,7 +8,7 @@ export function usePokemonByOrigin(origin: string) {
   const allPokemonOfOrigin: IPokemon[] = [];
   const playerArr = Object.values(players.value || {});
   for (const p of playerArr) {
-    const pokemonOfOrigin = Object.values(p.pokemon).find(
+    const pokemonOfOrigin = Object.values(p.pokemon || {}).find(
       (pokemon) => pokemon.origin === origin,
     );
     if (pokemonOfOrigin) allPokemonOfOrigin.push(pokemonOfOrigin);
