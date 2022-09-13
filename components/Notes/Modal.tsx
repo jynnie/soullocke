@@ -1,19 +1,18 @@
 import { Button, Input, Modal } from "antd";
 import { useLocationNotes } from "hooks/useLocationNotes";
-import { PlaceName } from "models";
 import React, { useEffect } from "react";
 import { cleanName } from "utils/utils";
 
 function NotesModal({
   visible = false,
-  location,
+  locationKey,
   onCancel,
 }: {
   visible: boolean;
-  location: PlaceName;
+  locationKey: string;
   onCancel: () => void;
 }) {
-  const existingNotes = useLocationNotes(location);
+  const existingNotes = useLocationNotes(locationKey);
   const [notes, setNotes] = React.useState<string>("");
 
   useEffect(() => {
@@ -40,7 +39,8 @@ function NotesModal({
 
   return (
     <Modal
-      title={`${cleanName(location)} Notes`}
+      // FIXME: Use location name instead of key
+      title={`${cleanName(locationKey)} Notes`}
       {...{ visible, footer, onCancel }}
     >
       <Input.TextArea

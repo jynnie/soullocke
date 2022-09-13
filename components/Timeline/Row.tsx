@@ -2,7 +2,6 @@ import AddPokemon from "components/AddPokemon";
 import LocationActions from "components/LocationActions";
 import LocationSummary from "components/LocationSummary";
 import Pokemon from "components/Pokemon";
-import type { PlaceName } from "models";
 import React from "react";
 
 import LocationListing from "../LocationListing";
@@ -14,7 +13,7 @@ function TimelineRow({
   moveToTeam,
 }: {
   data: Data;
-  handleFinishAdd: (location: PlaceName) => (caught: boolean) => void;
+  handleFinishAdd: (locationKey: string) => (caught: boolean) => void;
   moveToTeam: (origin: string, location: string) => void;
 }) {
   return (
@@ -23,12 +22,12 @@ function TimelineRow({
 
       {data.players?.map((p) => {
         const key = data.location.key + p.name;
-        const playerPokemon = p.pokemon?.[data.location.name];
+        const playerPokemon = p.pokemon?.[data.location.key];
         const isBadge = /badge/gi.test(data.location.name);
         const props = {
           playerId: p.id,
-          location: data.location.name,
-          onFinish: handleFinishAdd(data.location.name),
+          location: data.location.key,
+          onFinish: handleFinishAdd(data.location.key),
           pokemon: playerPokemon,
         };
 
@@ -45,7 +44,7 @@ function TimelineRow({
         />
       </td>
 
-      <LocationActions location={data.location.name} {...{ moveToTeam }} />
+      <LocationActions locationKey={data.location.key} {...{ moveToTeam }} />
     </>
   );
 }

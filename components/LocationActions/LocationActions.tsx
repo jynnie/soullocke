@@ -1,15 +1,14 @@
 import Notes from "components/Notes";
-import { PlaceName } from "models";
 import React from "react";
 
 import Delete from "./Delete";
 import Move from "./Move";
 
 export function LocationActions({
-  location,
+  locationKey,
   moveToTeam,
 }: {
-  location: PlaceName;
+  locationKey: string;
   moveToTeam: (origin: string, location: string) => void;
 }) {
   const handleMoveToTeam = (origin: string, location: string) => {
@@ -18,9 +17,9 @@ export function LocationActions({
 
   return (
     <td>
-      <Notes {...{ location }} />
-      <Move {...{ location, handleMoveToTeam }} />
-      <Delete {...{ location }} />
+      <Notes {...{ locationKey }} />
+      <Move {...{ locationKey, handleMoveToTeam }} />
+      <Delete {...{ locationKey }} />
     </td>
   );
 }

@@ -1,7 +1,6 @@
 import { Button, Popconfirm } from "antd";
 import cn from "classnames";
 import { useDeleteLocation } from "hooks/useDeleteLocation";
-import { PlaceName } from "models";
 import React from "react";
 import styles from "styles/Location.module.scss";
 
@@ -18,8 +17,8 @@ function ConfirmTitle() {
   );
 }
 
-export function DeleteLocation({ location }: { location: PlaceName }) {
-  const deleteLocation = useDeleteLocation(location);
+export function DeleteLocation({ locationKey }: { locationKey: string }) {
+  const deleteLocation = useDeleteLocation(locationKey);
 
   return (
     <Popconfirm

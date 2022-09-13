@@ -1,8 +1,8 @@
-import { IPokemon, PlaceName, Player } from "models/db.model";
+import { IPokemon, Player } from "models/db.model";
 
 import { useRunChild } from "./useRun";
 
-export function usePokemonByOrigin(origin: PlaceName) {
+export function usePokemonByOrigin(origin: string) {
   const players = useRunChild<Record<string, Player>>("players", {});
 
   const allPokemonOfOrigin: IPokemon[] = [];

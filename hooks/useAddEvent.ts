@@ -23,7 +23,7 @@ export function useAddEvent(
   const addEventToFirebase = useAddEventToFirebase();
   const movePokemon = useMovePokemon(players);
 
-  async function soulDeath(location: PlaceName, missed?: boolean) {
+  async function soulDeath(locationKey: string, missed?: boolean) {
     if (!players.ref) return;
 
     for (const player of Object.values(players.value || {})) {
@@ -40,7 +40,7 @@ export function useAddEvent(
 
       addEventToFirebase(pokemonRef, {
         type: !!missed ? EventType.soulMiss : EventType.soulDeath,
-        location,
+        location: locationKey,
         details: {
           location: PokemonLocation.grave,
         },
@@ -48,7 +48,7 @@ export function useAddEvent(
     }
   }
 
-  async function markAsDefeated(location: PlaceName) {
+  async function markAsDefeated(locationKey: string) {
     if (!players.ref) return;
 
     // Add the event to the responsible member
@@ -57,7 +57,7 @@ export function useAddEvent(
     );
     await addEventToFirebase(pokemonRef, {
       type: EventType.defeated,
-      location,
+      location: locationKey,
       details: {
         location: PokemonLocation.grave,
       },
@@ -67,10 +67,10 @@ export function useAddEvent(
     pokemonRef.child("location").set(PokemonLocation.grave);
 
     // Mark everyone else as soul deaths
-    soulDeath(location);
+    soulDeath(locationKey);
   }
 
-  async function addEvolution(location: PlaceName, evolution: string) {
+  async function addEvolution(locationKey: string, evolution: string) {
     if (!players.ref) return;
     const pokemonRef = players.ref.child(
       `${actingPlayerId}/pokemon/${actingPokemonOrigin}`,
@@ -78,7 +78,7 @@ export function useAddEvent(
 
     await addEventToFirebase(pokemonRef, {
       type: EventType.evolved,
-      location,
+      location: locationKey,
       details: {
         evolution,
       },
@@ -87,7 +87,7 @@ export function useAddEvent(
 
   async function addEvent(
     type: EventType,
-    eventLocation: PlaceName,
+    eventLocationKey: string,
     details?: PokemonEvent["details"],
   ) {
     if (type === EventType.moved && !!details?.location) {
@@ -95,14 +95,18 @@ export function useAddEvent(
         details.location === PokemonLocation.team &&
         !!config?.startMoveToTeam
       ) {
-        config.startMoveToTeam(actingPokemonOrigin, eventLocation);
+        config.startMoveToTeam(actingPokemonOrigin, eventLocationKey);
       } else {
-        await movePokemon(actingPokemonOrigin, eventLocation, details.location);
+        await movePokemon(
+          actingPokemonOrigin,
+          eventLocationKey,
+          details.location,
+        );
       }
     } else if (type === EventType.defeated) {
-      await markAsDefeated(eventLocation);
+      await markAsDefeated(eventLocationKey);
     } else if (type === EventType.evolved && !!details?.evolution) {
-      await addEvolution(eventLocation, details.evolution);
+      await addEvolution(eventLocationKey, details.evolution);
     }
 
     config?.callback?.();
