@@ -25,107 +25,7 @@ export class Run {
   };
 
   //----------------------------------#01F2DF
-  //- Helper Filters
-
-  private filterForPokemonNotMissed = (p: IPokemon): boolean => {
-    return (
-      !!p.name &&
-      oVal(p.events || {}).every(
-        (e) => e.type !== EventType.missed && e.type !== EventType.soulMiss,
-      )
-    );
-  };
-
-  //----------------------------------#01F2DF
   //- Getters
-
-  public DEPRECATED_getPlayersArray = () => {
-    if (!this.runData) return;
-    const playersArr = oVal(this.runData.players);
-    return playersArr;
-  };
-
-  public getPlayer = (id: string) => {
-    return this.runData?.players?.[id];
-  };
-
-  public getPlayerPokemonArr = (id: string) => {
-    return oVal(this.runData?.players[id]?.pokemon || []);
-  };
-
-  public DEPRECATED_getPokemonOnTeam = (): {
-    [playerId: string]: IPokemon[];
-  } => {
-    if (!this.runData || !this.runData.players) return {};
-
-    const result: Record<string, IPokemon[]> = {};
-    const playersArr = oVal(this.runData.players);
-    playersArr.forEach((player) => {
-      const pokemonOnTeam = oVal(player.pokemon || []).filter(
-        (p) => p.location === PokemonLocation.team,
-      );
-      result[player.id] = pokemonOnTeam;
-    });
-    return result;
-  };
-
-  public getPokemonOnPlayerTeam = (playerId: string) => {
-    if (!this.runData || !this.runData.players || !playerId) return;
-
-    return this.getPlayerPokemonArr(playerId).filter(
-      (p) => p.location === PokemonLocation.team,
-    );
-  };
-
-  public getPokemonInPlayerBox = (
-    playerId: string,
-    includeDaycare: boolean = false,
-  ) => {
-    if (!this.runData || !this.runData.players || !playerId) return;
-
-    return this.getPlayerPokemonArr(playerId).filter(
-      (p) =>
-        p.location === PokemonLocation.box ||
-        (includeDaycare ? p.location === PokemonLocation.daycare : false),
-    );
-  };
-
-  public getPokemonInPlayerGraveyard = (
-    playerId: string,
-    dontCountMisses: boolean = false,
-  ) => {
-    if (!this.runData || !this.runData.players || !playerId) return;
-
-    const pokemonInGrave = this.getPlayerPokemonArr(playerId).filter(
-      (p) => p.location === PokemonLocation.grave,
-    );
-
-    if (!dontCountMisses) return pokemonInGrave;
-    return pokemonInGrave.filter(this.filterForPokemonNotMissed);
-  };
-
-  public DEPRECATED_getPokemonByOrigin = (
-    origin: string,
-  ): (IPokemon | null)[] => {
-    if (!this.runData) return [];
-
-    const playersArr = this.DEPRECATED_getPlayersArray() || [];
-    const matchingPokemon = playersArr.map(
-      (player) => player.pokemon?.[origin],
-    );
-
-    return matchingPokemon;
-  };
-
-  public DEPRECATED_getPokemonLocationByOrigin = (
-    origin: string,
-  ): PokemonLocation => {
-    const pokemonArr = this.DEPRECATED_getPokemonByOrigin(origin).filter(
-      (p) => !!p,
-    );
-    const pokemonLocation = pokemonArr?.[0]?.location || PokemonLocation.grave;
-    return pokemonLocation;
-  };
 
   public DEPRECATED_getTimelineLocations = (): Timeline[] => {
     const timelineLocations = oVal(this.runData?.timeline || []).sort(
@@ -219,7 +119,7 @@ export class Run {
   //- Pokemon Events
 
   public DEPRECATED_addEvent = async (
-    playerId: string,
+    _playerId: string,
     pokemonOrigin: string,
     type: EventType,
     location: PlaceName,
@@ -287,28 +187,6 @@ export class Run {
       `players/${playerId}/pokemon/${pokemonOrigin}/events/${index}`,
     );
     return eventRef.set(null);
-  };
-
-  public swapPokemonOnTeam = async (
-    originToTeam: PlaceName | PlaceName[],
-    originFromTeam: PlaceName | PlaceName[],
-    location: PlaceName,
-  ) => {
-    const joiningTeam = Array.isArray(originToTeam)
-      ? originToTeam
-      : [originToTeam];
-    const leavingTeam = Array.isArray(originFromTeam)
-      ? originFromTeam
-      : [originFromTeam];
-
-    const joiningPromises = joiningTeam.map((o) =>
-      this.movePokemon(o, location, PokemonLocation.team),
-    );
-    const leavingPromises = leavingTeam.map((o) =>
-      this.movePokemon(o, location, PokemonLocation.box),
-    );
-    await Promise.all([...joiningPromises, ...leavingPromises]);
-    return true;
   };
 
   private movePokemon = async (

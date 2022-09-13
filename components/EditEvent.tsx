@@ -1,5 +1,6 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
+import { useTimelineLocationNames } from "hooks/useTimelineLocationNames";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
@@ -10,6 +11,7 @@ import {
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { getLastItem } from "utils/getLastItem";
 import { cleanName, oVal } from "utils/utils";
 
 const { Option } = Select;
@@ -31,7 +33,7 @@ function EditEvent({
   onDelete?: () => void;
   isLatestEvent?: boolean;
 }) {
-  const { RUN, allPokemon } = React.useContext(RunContext);
+  const { allPokemon } = React.useContext(RunContext);
 
   //* States----------------------------#07cf7f
   const [location, setLocation] = React.useState<string | undefined>(
@@ -73,8 +75,8 @@ function EditEvent({
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
   const pokemonLocations = oVal(PokemonLocation);
-  const timelineLocations = RUN?.allLocations || [];
-  const latestLocation = RUN?.getLatestLocation();
+  const timelineLocations = useTimelineLocationNames();
+  const latestLocation = getLastItem(timelineLocations);
 
   return (
     <Form
