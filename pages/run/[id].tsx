@@ -31,12 +31,12 @@ function RunPage() {
   const allLocations = regionData?.locations || [];
   const allPokemon = useAllPokemon();
 
-  const isRunExists = region !== false && !!id;
+  const isRunNonexistent = region === false || !id;
 
   useMetrics("Run Page", id, { pageId: id });
 
   //* Components------------------------#07cf7f
-  if (!isRunExists)
+  if (isRunNonexistent)
     return <Error statusCode={404} title={`Hmm, we can't find run '${id}'`} />;
 
   return (
@@ -50,7 +50,7 @@ function RunPage() {
           <RunHome {...{ id, allBadges, allLocations }} />
 
           <Tooltip
-            title="Hi there! Thanks for checking out Soullocke. If you have feedback or requests, click me."
+            title="Hi there! Thanks for checking out Soullocke. If you have feedback or issues, click me."
             placement="topRight"
           >
             <div className={styles.affix}>
