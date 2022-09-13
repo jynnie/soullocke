@@ -5,7 +5,6 @@ import MovePokemonToTeam from "components/MovePokemonToTeam";
 import {
   IPokemon,
   MapLocation,
-  PlaceName,
   Player,
   PokemonLocation,
   Timeline as TL,
