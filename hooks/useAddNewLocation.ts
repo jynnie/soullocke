@@ -11,10 +11,11 @@ export function useAddNewLocation() {
       -1,
     );
     const index = prevLargestIndex + 1;
+    const uuid = self.crypto.randomUUID();
 
     await timeline.update({
-      [location]: {
-        key: location,
+      [uuid]: {
+        key: uuid,
         index,
         name: location,
       },
