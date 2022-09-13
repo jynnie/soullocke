@@ -4,7 +4,6 @@ import { useTimelineLocations } from "hooks/useTimelineLocations";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
-  PlaceName,
   PokemonEvent,
   PokemonLocation,
 } from "models";
@@ -26,7 +25,7 @@ function EditEvent({
   event: PokemonEvent;
   onFinish?: (
     eventType: EventType,
-    eventLocation: PlaceName,
+    eventLocationKey: string,
     eventDetails: PokemonEvent["details"],
   ) => void;
   onCancel?: () => void;
@@ -36,7 +35,7 @@ function EditEvent({
   const { allPokemon } = React.useContext(RunContext);
 
   //* States----------------------------#07cf7f
-  const [location, setLocation] = React.useState<string | undefined>(
+  const [locationKey, setLocationKey] = React.useState<string | undefined>(
     event?.location,
   );
   const [eventType, setEventType] = React.useState<EventType | undefined>(
@@ -55,8 +54,8 @@ function EditEvent({
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     form.resetFields();
-    if (onFinish && eventType && location)
-      onFinish(eventType, location, {
+    if (onFinish && eventType && locationKey)
+      onFinish(eventType, locationKey, {
         location: pokemonLocation,
         evolution,
       });
@@ -100,8 +99,8 @@ function EditEvent({
       >
         <Select
           className={styles.select}
-          onChange={(value) => setLocation(value)}
-          value={location}
+          onChange={(value) => setLocationKey(value)}
+          value={locationKey}
           placeholder="Select the location of this event"
           showSearch
         >

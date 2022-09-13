@@ -1,10 +1,10 @@
 import { Button, Modal, Timeline } from "antd";
 import { ModalProps } from "antd/lib/modal";
 import EditEvent from "components/EditEvent";
+import { useEditEvent } from "hooks/useEditEvent";
 import Pokeball from "lib/icons/Pokeball";
 import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
-import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Event.module.scss";
 import { cleanName } from "utils/utils";
@@ -32,27 +32,23 @@ function PokemonTimelineEvent({
   playerId: string;
   isLatestEvent?: boolean;
 }) {
-  const { RUN } = React.useContext(RunContext);
   const place = cleanName(event.locationName || event.location);
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+
+  const { editEvent, deleteEvent } = useEditEvent(
+    playerId,
+    pokemon.origin,
+    event.index,
+  );
 
   async function handleSaveEdits(
     eventType: EventType,
     location: string,
     details: PokemonEvent["details"],
   ) {
-    await RUN?.editEvent(
-      playerId,
-      pokemon.origin,
-      event.index,
-      eventType,
-      // TODO:?
-      location,
-      details,
-      isLatestEvent && location === RUN.getLatestLocation(),
-    );
+    await editEvent(eventType, location, details, isLatestEvent);
     setIsEditing(false);
     setIsDeleting(false);
   }
@@ -64,7 +60,7 @@ function PokemonTimelineEvent({
   function handleDelete() {
     setIsEditing(false);
     setIsDeleting(false);
-    return RUN?.removeEvent(playerId, pokemon.origin, event.index);
+    return deleteEvent();
   }
 
   function handleCancel() {

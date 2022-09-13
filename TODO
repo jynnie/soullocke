@@ -3,6 +3,7 @@
 🌶🌶🌶 Super cool
 
 - [ ] Better linting & null checks
+  - [ ] Check realtime updates (not working after editing event)
 - [ ] Enable multiple locations on the timeline
   - [x] Can create
   - [x] Can reorder
