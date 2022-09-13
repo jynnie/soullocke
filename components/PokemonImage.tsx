@@ -1,5 +1,4 @@
-import { oVal } from "lib/utils";
-import { EventType, Pokemon, PokemonApiData } from "models";
+import { EventType, IPokemon, PokemonApiData } from "models";
 import React from "react";
 import Box from "ui-box";
 
@@ -9,11 +8,11 @@ export function PokemonImage({
   ...props
 }: {
   updateSrc?: (src: string) => void;
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   [propName: string]: any;
 }) {
   const pokemonName = pokemon?.name || "?";
-  const pokemonEventsArr = oVal(pokemon?.events || []);
+  const pokemonEventsArr = Object.values(pokemon?.events || []);
   const evolutionEvents = pokemonEventsArr.filter(
     (e) => e.type === EventType.evolved,
   );
@@ -32,7 +31,8 @@ export function PokemonImage({
           if (updateSrc) updateSrc(foundSrc);
         });
     }
-  }, [pokemon?.name, evolutionEvents.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemon.name, pokemonName, evolutionEvents.length, updateSrc]);
 
   if (!src) return <>{pokemonName}</>;
   return <Box is="img" alt={pokemonName} src={src} {...props} />;

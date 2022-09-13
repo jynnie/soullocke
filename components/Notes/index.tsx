@@ -4,7 +4,7 @@ import React from "react";
 import Button from "./Button";
 import Modal from "./Modal";
 
-function Notes({ location }: { location: PlaceName }) {
+function Notes({ locationKey }: { locationKey: PlaceName }) {
   const [showNotes, setShowNotes] = React.useState<boolean>(false);
 
   return (
@@ -12,7 +12,7 @@ function Notes({ location }: { location: PlaceName }) {
       <Button onClick={() => setShowNotes(true)} />
       <Modal
         visible={showNotes}
-        {...{ location, onCancel: () => setShowNotes(false) }}
+        {...{ locationKey, onCancel: () => setShowNotes(false) }}
       />
     </>
   );

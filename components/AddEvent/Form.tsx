@@ -1,16 +1,19 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
-import { cleanName, oVal } from "lib/utils";
+import { useTimelineLocations } from "hooks/useTimelineLocations";
 import {
+  EVENT_NAME_TO_TYPE,
   EventType,
+  IPokemon,
   PlaceName,
-  Pokemon,
   PokemonEvent,
   PokemonLocation,
 } from "models";
 import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import styles from "styles/Form.module.scss";
+import { getLastItem } from "utils/getLastItem";
+import { cleanName } from "utils/utils";
 
 const { Option } = Select;
 
@@ -19,7 +22,7 @@ function AddEventForm({
   onFinish,
   onCancel,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   onFinish?: (
     eventType: EventType,
     eventLocation: PlaceName,
@@ -27,20 +30,40 @@ function AddEventForm({
   ) => void;
   onCancel?: () => void;
 }) {
-  const { RUN, allPokemon } = React.useContext(RunContext);
+  const { allPokemon } = React.useContext(RunContext);
+  const timelineLocations = useTimelineLocations();
+  const latestLocation = getLastItem(timelineLocations);
 
   //* States----------------------------#07cf7f
-  const [location, setLocation] = React.useState<string | null>(null);
-  const [eventType, setEventType] = React.useState<EventType | null>(null);
-  const [pokemonLocation, setPokemonLocation] =
-    React.useState<PokemonLocation | null>(null);
-  const [evolution, setEvolution] = React.useState<string | null>(null);
+  const [location, setLocation] = React.useState<string | undefined>(undefined);
+  const [eventType, setEventType] = React.useState<EventType | undefined>(
+    undefined,
+  );
+  const [pokemonLocation, setPokemonLocation] = React.useState<
+    PokemonLocation | undefined
+  >(undefined);
+  const [evolution, setEvolution] = React.useState<string | undefined>(
+    undefined,
+  );
   const [form] = Form.useForm();
+
+  const resetFields = useCallback(() => {
+    form.resetFields();
+    form.setFieldsValue({ location: latestLocation?.key });
+    setLocation(latestLocation?.key);
+  }, [form, latestLocation?.key]);
+
+  // WORKAROUND: We set the initial value to the latest location
+  // once that data loads. Since we're dependent on the hook, we
+  // useEffect to wait for the info.
+  useEffect(() => {
+    resetFields();
+  }, [resetFields]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    await form.resetFields();
-    if (onFinish)
+    resetFields();
+    if (onFinish && eventType && location)
       onFinish(eventType, location, {
         location: pokemonLocation,
         evolution,
@@ -48,23 +71,15 @@ function AddEventForm({
   };
 
   const handleCancel = async () => {
-    await form.resetFields();
-    if (onCancel) onCancel();
+    resetFields();
+    onCancel?.();
   };
 
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
-  const pokemonLocations = oVal(PokemonLocation).filter(
+  const pokemonLocations = Object.values(PokemonLocation).filter(
     (l) => l !== pokemon.location,
   );
-  const timelineLocations = RUN.allLocations;
-  const latestLocation = RUN.getLatestLocation();
-
-  // Set initial values
-  React.useEffect(() => {
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-  }, []);
 
   return (
     <Form form={form} name="addPokemonEvent" onFinish={handleFinish}>
@@ -75,6 +90,7 @@ function AddEventForm({
         rules={[
           { required: true, message: "Please choose where this happened" },
         ]}
+        initialValue={latestLocation?.key}
       >
         <Select
           className={styles.select}
@@ -84,8 +100,8 @@ function AddEventForm({
           showSearch
         >
           {timelineLocations.map((l) => (
-            <Option key={l} value={l} className={styles.option}>
-              {cleanName(l)}
+            <Option key={l.key} value={l.key} className={styles.option}>
+              {cleanName(l.name)}
             </Option>
           ))}
         </Select>
@@ -105,7 +121,11 @@ function AddEventForm({
           showSearch
         >
           {eventTypes.map((t) => (
-            <Option key={t} value={EventType[t]} className={styles.option}>
+            <Option
+              key={t}
+              value={EVENT_NAME_TO_TYPE[t]}
+              className={styles.option}
+            >
               {t}
             </Option>
           ))}

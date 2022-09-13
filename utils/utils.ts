@@ -1,19 +1,17 @@
-export const oVal = Object.values;
+export function cleanName(name: string = "") {
+  return name.replace(/(_|-)/g, " ");
+}
 
-export const oKey = Object.keys;
-
-export const cleanName = (name: string = "") => name.replace(/(_|-)/g, " ");
-
-export const isNullish = (v: any) => {
+export function isNullish(v: any) {
   const random = Math.random();
   return (v ?? random) === random;
-};
+}
 
 /**
  * hashString & colorize credits go to
  * https://stackoverflow.com/questions/11120840/hash-string-into-rgb-color
  */
-export const hashString = (str: string): number => {
+export function hashString(str: string): number {
   if (!str) return 0;
 
   let hash = 0;
@@ -22,9 +20,9 @@ export const hashString = (str: string): number => {
     hash = hash & hash; // Convert to 32bit integer
   }
   return hash;
-};
+}
 
-export const colorize = (str: string) => {
+export function colorize(str: string) {
   const hash = hashString(str);
   const r = (hash & 0xff0000) >> 16;
   const g = (hash & 0x00ff00) >> 8;
@@ -35,18 +33,17 @@ export const colorize = (str: string) => {
     ("0" + g.toString(16)).substr(-2) +
     ("0" + b.toString(16)).substr(-2)
   );
-};
+}
 
-export const alpha = (number: number) => {
+export function alpha(number: number) {
   return ("0" + Math.round(number * 255).toString(16)).substr(-2);
-};
+}
 
-export default {
-  oVal,
-  oKey,
+export const utils = {
   cleanName,
   isNullish,
   hashString,
   colorize,
   alpha,
 };
+export default utils;

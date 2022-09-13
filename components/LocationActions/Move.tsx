@@ -1,33 +1,29 @@
-import React from "react";
-import { RunContext } from "pages/run/[id]";
-import { PlaceName, PokemonLocation } from "models";
-
-import styles from "styles/Location.module.scss";
-import MovePokemon from "components/MovePokemon";
 import { Button } from "antd";
+import MovePokemon from "components/MovePokemon";
+import { useAddEvent } from "hooks/useAddEvent";
+import { EventType, PokemonLocation } from "models";
+import React from "react";
+import styles from "styles/Location.module.scss";
 
 export function Move({
-  location: origin,
+  locationKey: origin,
   handleMoveToTeam,
 }: {
-  location: PlaceName;
-  handleMoveToTeam: (origin: string, location: string) => void;
+  locationKey: string;
+  handleMoveToTeam: (origin: string, locationKey: string) => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
-
   const [showModal, setShowModal] = React.useState(false);
 
-  const handleMove = async (
-    location: PlaceName,
-    pokemonLocation: PokemonLocation,
-  ) => {
-    if (pokemonLocation === PokemonLocation.team)
-      handleMoveToTeam(origin, location);
-    else {
-      RUN.movePokemon(origin, location, pokemonLocation);
-    }
-    setShowModal(false);
-  };
+  const { addEvent } = useAddEvent("", origin, {
+    callback: () => setShowModal(false),
+    startMoveToTeam: handleMoveToTeam,
+  });
+
+  function handleMove(locationKey: string, pokemonLocation: PokemonLocation) {
+    return addEvent(EventType.moved, locationKey, {
+      location: pokemonLocation,
+    });
+  }
 
   return (
     <>
@@ -41,9 +37,10 @@ export function Move({
         className={styles.listingMoveButton}
         onClick={() => setShowModal(true)}
         type="text"
-        children="Move"
         size="small"
-      />
+      >
+        Move
+      </Button>
     </>
   );
 }

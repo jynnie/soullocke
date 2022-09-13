@@ -1,25 +1,27 @@
-import React from "react";
-import { oVal } from "lib/utils";
-import type { Run, MapLocation } from "models";
-
-import styles from "styles/Run.module.scss";
-import Timeline from "components/Timeline";
-import Summary from "components/Summary";
 import { Tabs } from "antd";
+import Summary from "components/Summary";
+import Timeline from "components/Timeline";
+import { useGameName } from "hooks/useGameName";
+import { usePlayersArray } from "hooks/usePlayersArray";
+import type { MapLocation } from "models";
+import React from "react";
+import styles from "styles/Run.module.scss";
 
 const { TabPane } = Tabs;
 
-interface Props extends Run {
+interface Props {
+  id: string;
   allBadges: string[];
   allLocations: MapLocation[];
 }
 
-function RunHome({ id, game, players, allBadges, allLocations }: Props) {
-  const playerArr = oVal(players || []);
+function RunHome({ id, allBadges, allLocations }: Props) {
+  const playerArr = usePlayersArray();
+  const game = useGameName();
 
   return (
     <div className={styles.container}>
-      <h2>{game} Soullocke</h2>
+      <h2 className="capitalize">{game} Soullocke</h2>
       <h3>{playerArr.map((p) => p.name).join(" | ")}</h3>
       <div>codename: {id}</div>
 

@@ -1,5 +1,5 @@
 import PokemonIcon from "components/PokemonIcon";
-import { Pokemon } from "models";
+import { IPokemon } from "models";
 import React from "react";
 
 import Modal from "./Modal";
@@ -9,7 +9,7 @@ export function TimelinePokemon({
   playerId,
   location,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   playerId: string;
   location: string;
 }) {

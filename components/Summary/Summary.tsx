@@ -1,21 +1,19 @@
-import React from "react";
-import Box from "ui-box";
-import cn from "classnames";
-import { RunContext } from "pages/run/[id]";
-import styles from "styles/Summary.module.scss";
+import { usePlayersArray } from "hooks/usePlayersArray";
 import { PokemonLocation } from "models";
-import { oKey, oVal } from "lib/utils";
+import type { IPokemon, Player, Timeline as TL } from "models";
+import React, { useMemo } from "react";
+import styles from "styles/Summary.module.scss";
+import Box from "ui-box";
 
-import BadgeBox from "./BadgeBox";
-import Team from "./Team";
-import Grave from "./Grave";
-import Boxed from "./Box";
+import { BadgeBox } from "./BadgeBox";
+import { Box as Boxed } from "./Box";
+import { Grave } from "./Grave";
+import { Team } from "./Team";
 
-import type { Player, Timeline as TL, Pokemon as PokemonData } from "models";
 export interface Data {
   location: TL;
   players: Player[];
-  pokemon: PokemonData[];
+  pokemon: IPokemon[];
   pokemonLocation: PokemonLocation;
   notes: string;
 }
@@ -24,36 +22,18 @@ export interface Data {
  * Timeline Grid
  */
 function Summary({ allBadges }: { allBadges: string[] }) {
-  const { RUN } = React.useContext(RunContext);
+  const playersArr = usePlayersArray();
+  const teams = useTeam(playersArr);
 
-  //----------------------------------#01F2DF
-  // Data
-  const playerArr = RUN.getPlayersArray();
-  const teamPokemon: { [playerId: string]: PokemonData[] } = {};
-
-  // Sort pokemon per player into categories
-  for (const player of playerArr) {
-    // Initialize arrays
-    teamPokemon[player.id] = [];
-
-    const pokemon = oVal(player.pokemon || {});
-    for (const p of pokemon) {
-      if (!p) continue;
-
-      const l = p.location;
-      if (l === PokemonLocation.team) {
-        teamPokemon[player.id].push(p);
-      }
-    }
-  }
-
-  //----------------------------------#01F2DF
   return (
     <div className={styles.container}>
       <BadgeBox {...{ allBadges }} />
       <Box className={styles.dualContainer} minHeight={97}>
-        {oKey(teamPokemon).map((player, j) => (
-          <Team key={j} {...{ player, j }} />
+        {teams?.map((team, j) => (
+          <Team
+            key={j}
+            {...{ player: team.player, pokemonTeam: team.team, j }}
+          />
         ))}
       </Box>
 
@@ -63,8 +43,8 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         <div className={styles.sectionDivider} />
       </div>
       <Box className={styles.dualContainer} marginTop="-1rem">
-        {playerArr.map((player, j) => (
-          <Grave key={j} {...{ player: player.id, j }} />
+        {teams?.map((team, j) => (
+          <Grave key={j} {...{ grave: team.grave, j }} />
         ))}
       </Box>
 
@@ -74,12 +54,60 @@ function Summary({ allBadges }: { allBadges: string[] }) {
         <div className={styles.sectionDivider} />
       </div>
       <div className={styles.dualContainer}>
-        {playerArr.map((player, j) => (
-          <Boxed key={j} {...{ player: player.id, j }} />
+        {teams?.map((team, j) => (
+          <Boxed key={j} {...{ box: team.box, j }} />
         ))}
       </div>
     </div>
   );
+}
+
+function useTeam(playersArr: Player[]) {
+  const pokemonTeams = useMemo(() => {
+    const playerPokemon: {
+      [playerId: string]: {
+        team: IPokemon[];
+        grave: IPokemon[];
+        box: IPokemon[];
+        player: Player;
+      };
+    } = {};
+
+    // Sort pokemon per player into categories
+    for (const player of playersArr) {
+      // Initialize arrays
+      playerPokemon[player.id] = {
+        team: [],
+        grave: [],
+        box: [],
+        player: player,
+      };
+
+      const team: IPokemon[] = [];
+      const grave: IPokemon[] = [];
+      const box: IPokemon[] = [];
+
+      const pokemon = Object.values(player.pokemon || {});
+      for (const p of pokemon) {
+        if (!p) continue;
+        const l = p.location;
+        if (l === PokemonLocation.team) {
+          team.push(p);
+        } else if (l === PokemonLocation.grave) {
+          grave.push(p);
+        } else if (l === PokemonLocation.box) {
+          box.push(p);
+        }
+      }
+      playerPokemon[player.id].team = team;
+      playerPokemon[player.id].grave = grave;
+      playerPokemon[player.id].box = box;
+    }
+
+    return Object.values(playerPokemon);
+  }, [playersArr]);
+
+  return pokemonTeams;
 }
 
 export default Summary;

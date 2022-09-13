@@ -1,44 +1,48 @@
 import { Button, Input, Modal } from "antd";
-import { cleanName } from "lib/utils";
-import { PlaceName } from "models";
-import { RunContext } from "pages/run/[id]";
-import React from "react";
+import { useLocationNotes } from "hooks/useLocationNotes";
+import React, { useEffect } from "react";
+import { cleanName } from "utils/utils";
 
 function NotesModal({
   visible = false,
-  location,
+  locationKey,
   onCancel,
 }: {
   visible: boolean;
-  location: PlaceName;
+  locationKey: string;
   onCancel: () => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
-  const [notes, setNotes] = React.useState<string | null>(null);
+  const existingNotes = useLocationNotes(locationKey);
+  const [notes, setNotes] = React.useState<string>("");
 
-  const existingNotes = RUN.getLocationNotes(location);
-
-  React.useEffect(() => {
-    setNotes(existingNotes);
-  }, [existingNotes]);
+  useEffect(() => {
+    setNotes(existingNotes?.value ?? "");
+  }, [existingNotes?.value]);
 
   const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (evt) => {
     setNotes(evt.target.value);
   };
 
   const handleSave = () => {
-    RUN.saveLocationNotes(location, notes);
+    existingNotes.set(notes);
+    onCancel?.();
   };
 
   const footer = [
-    <Button onClick={onCancel}>Cancel</Button>,
-    <Button onClick={handleSave} type="primary">
+    <Button key="cancel" onClick={onCancel}>
+      Cancel
+    </Button>,
+    <Button key="save" onClick={handleSave} type="primary">
       Save
     </Button>,
   ];
 
   return (
-    <Modal title={`${cleanName(location)} Notes`} {...{ visible, footer }}>
+    <Modal
+      // FIXME: Use location name instead of key
+      title={`${cleanName(locationKey)} Notes`}
+      {...{ visible, footer, onCancel }}
+    >
       <Input.TextArea
         placeholder="Place notes..."
         value={notes}

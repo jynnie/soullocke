@@ -1,20 +1,25 @@
 import { Button, Modal, Timeline } from "antd";
 import { ModalProps } from "antd/lib/modal";
 import EditEvent from "components/EditEvent";
+import { useEditEvent } from "hooks/useEditEvent";
 import Pokeball from "lib/icons/Pokeball";
-import { cleanName } from "lib/utils";
-import { EventType, Pokemon } from "models";
+import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
-import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Event.module.scss";
+import { cleanName } from "utils/utils";
 
 import {
   EditOutlined,
   FrownOutlined,
   InboxOutlined,
   StarOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
+
+interface ModifiedPokemonEvent extends PokemonEvent {
+  locationName?: string;
+}
 
 function PokemonTimelineEvent({
   event,
@@ -22,31 +27,28 @@ function PokemonTimelineEvent({
   playerId,
   isLatestEvent,
 }: {
-  event: PokemonEvent;
-  pokemon: Pokemon;
+  event: ModifiedPokemonEvent;
+  pokemon: IPokemon;
   playerId: string;
   isLatestEvent?: boolean;
 }) {
-  const { RUN } = React.useContext(RunContext);
-  const place = cleanName(event.location);
+  const place = cleanName(event.locationName || event.location);
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+
+  const { editEvent, deleteEvent } = useEditEvent(
+    playerId,
+    pokemon.origin,
+    event.index,
+  );
 
   async function handleSaveEdits(
     eventType: EventType,
     location: string,
     details: PokemonEvent["details"],
   ) {
-    await RUN.editEvent(
-      playerId,
-      pokemon.origin,
-      event.index,
-      eventType,
-      location,
-      details,
-      isLatestEvent && location === RUN.getLatestLocation(),
-    );
+    await editEvent(eventType, location, details, isLatestEvent);
     setIsEditing(false);
     setIsDeleting(false);
   }
@@ -58,7 +60,7 @@ function PokemonTimelineEvent({
   function handleDelete() {
     setIsEditing(false);
     setIsDeleting(false);
-    return RUN.removeEvent(playerId, pokemon.origin, event.index);
+    return deleteEvent();
   }
 
   function handleCancel() {
@@ -66,15 +68,20 @@ function PokemonTimelineEvent({
     setIsDeleting(false);
   }
 
-  let eventDetails: string = undefined;
-  let eventDot: React.ReactElement = undefined;
-  let eventColor: string = undefined;
+  let eventDetails: string = "";
+  let eventDot: React.ReactElement | undefined = undefined;
+  let eventColor: string = "";
   if (event.type === EventType.catch) {
     eventDot = <Pokeball size={18} />;
     eventDetails = `Caught on ${place}`;
   } else if (event.type === EventType.moved) {
     eventColor = "gray";
-    eventDot = <InboxOutlined />;
+    eventDot =
+      event.details?.location === PokemonLocation.team ? (
+        <TeamOutlined />
+      ) : (
+        <InboxOutlined />
+      );
     eventDetails = `Moved to ${event.details?.location} while at ${place}`;
   } else if (event.type === EventType.missed) {
     eventColor = "red";
@@ -148,8 +155,8 @@ function DeleteEventModal(props: DeleteEventModalProps) {
       {...props}
     >
       <p>
-        This only deletes this event for this Pokémon. Deleting this event won't
-        change this or linked Pokémons' origin, name, or location.
+        This only deletes this event for this Pokémon. Deleting this event won
+        {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
       <div className="flex justifyEnd gap05">
         <Button onClick={props?.onCancel}>Cancel</Button>

@@ -1,10 +1,17 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
-import { cleanName, oVal } from "lib/utils";
-import { EventType, PlaceName, PokemonEvent, PokemonLocation } from "models";
+import { useTimelineLocations } from "hooks/useTimelineLocations";
+import {
+  EVENT_NAME_TO_TYPE,
+  EventType,
+  PokemonEvent,
+  PokemonLocation,
+} from "models";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { getLastItem } from "utils/getLastItem";
+import { cleanName } from "utils/utils";
 
 const { Option } = Select;
 
@@ -18,26 +25,27 @@ function EditEvent({
   event: PokemonEvent;
   onFinish?: (
     eventType: EventType,
-    eventLocation: PlaceName,
+    eventLocationKey: string,
     eventDetails: PokemonEvent["details"],
   ) => void;
   onCancel?: () => void;
   onDelete?: () => void;
   isLatestEvent?: boolean;
 }) {
-  const { RUN, allPokemon } = React.useContext(RunContext);
+  const { allPokemon } = React.useContext(RunContext);
 
   //* States----------------------------#07cf7f
-  const [location, setLocation] = React.useState<string | undefined>(
+  const [locationKey, setLocationKey] = React.useState<string | undefined>(
     event?.location,
   );
   const [eventType, setEventType] = React.useState<EventType | undefined>(
     event?.type,
   );
-  const [pokemonLocation, setPokemonLocation] =
-    React.useState<PokemonLocation | null>(event?.details?.location || null);
-  const [evolution, setEvolution] = React.useState<string | null>(
-    event?.details?.evolution || null,
+  const [pokemonLocation, setPokemonLocation] = React.useState<
+    PokemonLocation | undefined
+  >(event?.details?.location);
+  const [evolution, setEvolution] = React.useState<string | undefined>(
+    event?.details?.evolution,
   );
 
   // FIXME: Just use the form API hook instead of duplicating states
@@ -46,8 +54,8 @@ function EditEvent({
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     form.resetFields();
-    if (onFinish)
-      onFinish(eventType, location, {
+    if (onFinish && eventType && locationKey)
+      onFinish(eventType, locationKey, {
         location: pokemonLocation,
         evolution,
       });
@@ -65,9 +73,9 @@ function EditEvent({
 
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
-  const pokemonLocations = oVal(PokemonLocation);
-  const timelineLocations = RUN.allLocations;
-  const latestLocation = RUN.getLatestLocation();
+  const pokemonLocations = Object.values(PokemonLocation);
+  const timelineLocations = useTimelineLocations();
+  const latestLocation = getLastItem(timelineLocations);
 
   return (
     <Form
@@ -75,7 +83,7 @@ function EditEvent({
       name="addPokemonEvent"
       onFinish={handleFinish}
       initialValues={{
-        location: event?.location || latestLocation,
+        location: event?.location || latestLocation?.key,
         eventType: event?.type,
         pokemonLocation: event?.details?.location,
         evolution: event?.details?.evolution,
@@ -91,14 +99,14 @@ function EditEvent({
       >
         <Select
           className={styles.select}
-          onChange={(value) => setLocation(value)}
-          value={location}
+          onChange={(value) => setLocationKey(value)}
+          value={locationKey}
           placeholder="Select the location of this event"
           showSearch
         >
           {timelineLocations.map((l) => (
-            <Option key={l} value={l} className={styles.option}>
-              {cleanName(l)}
+            <Option key={l.key} value={l.key} className={styles.option}>
+              {cleanName(l.name)}
             </Option>
           ))}
         </Select>
@@ -118,7 +126,11 @@ function EditEvent({
           showSearch
         >
           {eventTypes.map((t) => (
-            <Option key={t} value={EventType[t]} className={styles.option}>
+            <Option
+              key={t}
+              value={EVENT_NAME_TO_TYPE[t]}
+              className={styles.option}
+            >
               {t}
             </Option>
           ))}

@@ -1,7 +1,6 @@
 import { Button, Form, Input, Select } from "antd";
 import runId from "lib/random";
 import REGIONS from "lib/regions";
-import { oVal } from "lib/utils";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import React from "react";
@@ -16,15 +15,16 @@ function NewRunPage() {
   const db = React.useContext(FirebaseContext)?.db;
   const router = useRouter();
 
-  const [region, setRegion] = React.useState<string>(null);
-  const [game, setGame] = React.useState<string>(null);
+  const [region, setRegion] = React.useState<string>("");
+  const [game, setGame] = React.useState<string>("");
   const [players, setPlayers] = React.useState<{
     [key: number]: string;
   }>({});
 
   const [form] = Form.useForm();
 
-  const handleGameChange = (evt) => setGame(evt.target.value);
+  const handleGameChange: React.ChangeEventHandler<HTMLInputElement> = (evt) =>
+    setGame(evt.target.value);
   const handlePlayerChange = (index: number, value: string) => {
     const newPlayers = { ...players, [index]: value };
     setPlayers(newPlayers);
@@ -32,8 +32,8 @@ function NewRunPage() {
 
   const createNewRun = async () => {
     const id = runId();
-    const playersObj = {};
-    const playersArr = oVal(players);
+    const playersObj: Record<string, { id: string; name: string }> = {};
+    const playersArr = Object.values(players);
     playersArr.forEach((p, i) => {
       playersObj[p + i] = {
         id: p + i,

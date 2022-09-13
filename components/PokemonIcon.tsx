@@ -1,7 +1,7 @@
 import { Tooltip } from "antd";
 import LocationBadge from "components/LocationBadge";
 import PokemonImage from "components/PokemonImage";
-import { Pokemon, PokemonLocation } from "models";
+import { IPokemon, PokemonLocation } from "models";
 import React from "react";
 import { usePalette } from "react-palette";
 import styles from "styles/Pokemon.module.scss";
@@ -9,13 +9,13 @@ import Box from "ui-box";
 
 export function PokemonIcon({
   pokemon,
-  onClick = null,
+  onClick,
   showBadge = false,
   width = 40,
   height = 40,
   backgroundColor,
 }: {
-  pokemon: Pokemon;
+  pokemon: IPokemon;
   onClick?: () => void;
   showBadge?: boolean;
   width?: number;
@@ -25,8 +25,8 @@ export function PokemonIcon({
   const pokemonNickname = pokemon?.nickname || "?";
   const pokemonLocation = pokemon?.location || PokemonLocation.grave;
 
-  const [src, setSrc] = React.useState<string | null>(null);
-  const { data } = usePalette(src);
+  const [src, setSrc] = React.useState<string>("");
+  const { data } = usePalette(src || "");
   const avatarStyle = {
     backgroundColor: backgroundColor || data?.vibrant || "var(--tertiary)",
   };

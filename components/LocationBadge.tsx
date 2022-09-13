@@ -1,9 +1,8 @@
-import React from "react";
+import { Badge } from "antd";
 import cn from "classnames";
 import { PokemonLocation } from "models";
-
+import React from "react";
 import styles from "styles/Location.module.scss";
-import { Badge } from "antd";
 
 export function LocationBadge({
   pokemonLocation,

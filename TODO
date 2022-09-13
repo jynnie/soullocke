@@ -1,25 +1,31 @@
 🐛 Bugs
 
-🌶🌶🌶 Would prominently improve experience & usability
+🌶🌶🌶 Super cool
 
-- [x] Search should return evolved forms
+- [x] Better linting & null checks
+  - [x] New pokemon not automatically added to team
+- [x] Enable multiple locations on the timeline
+  - [x] Can create
+  - [x] Can reorder
+  - [x] Can differentiate events
+  - [x] Never see UUIDs
+- [ ] Cooler summary view styles
 
-🌶🌶 Would improve experience in certain scenarios
+🌶🌶 Would improve most experiences or could be cool
 
-- [x] Summary: Badge progress
-- [x] Summary: Team
-  - [x] Improve nametags
-- [x] Summary: Death/miss count
-- [x] Summary: Graveyard
-- [x] Summary: Box
-- [x] Summary: Daycare
-- [ ] Summary: Drag and drop between categories to move
-- [ ] Timeline: Inline editing
+- [ ] Box view? TL location in the bottom
+- [ ] Box: Drag and drop between categories to move
+- [ ] Event view?
+- [ ] Refactor from API -> Hooks
+- [ ] Add in React.memos
+- [ ] Switch off of Ant Design
 
 🌶 Should have, but low value add rn
 
-- [ ] Pokemon: Delete event
+- [ ] Timeline: Inline editing
 - [ ] Pokemon: Delete
+- [ ] Unit tests
+- [ ] Better help center
 
 🧊 Unseasoned thoughts
 

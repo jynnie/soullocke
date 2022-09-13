@@ -1,6 +1,6 @@
-import React from "react";
 import cn from "classnames";
-import { RunContext } from "pages/run/[id]";
+import useEarnedBadges from "hooks/useEarnedBadges";
+import React from "react";
 import styles from "styles/Summary.module.scss";
 
 // import { badgeImages } from "lib/badges";
@@ -8,15 +8,14 @@ import styles from "styles/Summary.module.scss";
 /**
  * Badge Progress Box
  */
-function BadgeBox({ allBadges }: { allBadges: string[] }) {
-  const { RUN } = React.useContext(RunContext);
-
-  const earnedBadges = RUN.getEarnedBadges();
+export function BadgeBox({ allBadges }: { allBadges: string[] }) {
+  const earnedBadges = useEarnedBadges();
 
   return (
     <div className={styles.badgeBox}>
       {allBadges.map((badge) => (
         <img
+          key={badge}
           className={cn({ [styles.earned]: earnedBadges.includes(badge) })}
           src={`https://nuzlocke-generator.herokuapp.com/img/checkpoints/${badge
             .replaceAll("_", "-")
@@ -27,5 +26,3 @@ function BadgeBox({ allBadges }: { allBadges: string[] }) {
     </div>
   );
 }
-
-export default BadgeBox;

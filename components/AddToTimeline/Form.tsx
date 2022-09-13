@@ -1,8 +1,8 @@
 import { Button, Select, Tooltip } from "antd";
-import { cleanName } from "lib/utils";
 import type { MapLocation } from "models";
 import React from "react";
 import styles from "styles/Form.module.scss";
+import { cleanName } from "utils/utils";
 
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 
@@ -19,11 +19,11 @@ function AddToTimelineForm({
   onFinish?: (location: string) => void;
   onCancel?: () => void;
 }) {
-  const [location, setLocation] = React.useState<string>("");
+  const [location, setLocation] = React.useState<string | undefined>(undefined);
 
   const handleFinish = () => {
-    if (onFinish) onFinish(location);
-    setLocation(null);
+    if (location) onFinish?.(location);
+    setLocation(undefined);
   };
 
   const handleChange = (value: string) => {
@@ -32,7 +32,7 @@ function AddToTimelineForm({
 
   const handleCancel = () => {
     if (onCancel) onCancel();
-    setLocation(null);
+    setLocation(undefined);
   };
 
   return (

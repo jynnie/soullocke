@@ -21,24 +21,23 @@ function AddPokemonForm({
   showCaughtCheckbox?: boolean;
 }) {
   const { allPokemon } = React.useContext(RunContext);
-  const [pokemon, setPokemon] = React.useState<string | null>(null);
-  const [nickname, setNickname] = React.useState<string | null>(null);
+  const [pokemon, setPokemon] = React.useState<string | undefined>(
+    defaultValues?.pokemon,
+  );
+  const [nickname, setNickname] = React.useState<string | undefined>(
+    defaultValues?.nickname,
+  );
   const [caught, setCaught] = React.useState(true);
 
   const [form] = Form.useForm();
 
-  // Set default values
-  React.useEffect(() => {
-    if (defaultValues?.pokemon) setPokemon(defaultValues.pokemon);
-    if (defaultValues?.nickname) setNickname(defaultValues.nickname);
-  }, []);
-
   const handleFinish = () => {
+    if (pokemon) onFinish?.(pokemon, nickname || pokemon, caught);
+
     form.resetFields();
-    setPokemon(null);
-    setNickname(null);
+    setPokemon(undefined);
+    setNickname(undefined);
     setCaught(true);
-    if (onFinish) onFinish(pokemon, nickname || pokemon, caught);
   };
 
   const handlePokemonChange = (value: string) => setPokemon(value);
@@ -50,18 +49,22 @@ function AddPokemonForm({
 
   const handleCancel = () => {
     form.resetFields();
-    setPokemon(null);
-    setNickname(null);
+    setPokemon(undefined);
+    setNickname(undefined);
     setCaught(true);
     if (onCancel) onCancel();
   };
 
   return (
-    <Form form={form} name="addPokemon" onFinish={handleFinish}>
+    <Form
+      form={form}
+      name="addPokemon"
+      onFinish={handleFinish}
+      initialValues={defaultValues}
+    >
       <Form.Item
         className={styles.item}
         name="pokemon"
-        initialValue={defaultValues?.pokemon}
         rules={[
           {
             required: caught,
@@ -84,11 +87,7 @@ function AddPokemonForm({
         </Select>
       </Form.Item>
 
-      <Form.Item
-        className={styles.item}
-        name="nickname"
-        initialValue={defaultValues?.nickname}
-      >
+      <Form.Item className={styles.item} name="nickname">
         <Input
           onChange={handleNicknameChange}
           value={nickname}

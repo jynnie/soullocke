@@ -1,11 +1,11 @@
 import { Button, Modal } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
-import { isNullish, oKey, oVal } from "lib/utils";
-import { PlaceName, Pokemon } from "models";
-import { RunContext } from "pages/run/[id]";
+import { useMovePokemonToTeam } from "hooks/useMovePokemon";
+import { PlaceName } from "models";
 import React from "react";
 import styles from "styles/Pokemon.module.scss";
+import { isNullish } from "utils/utils";
 
 /**
  * Prompt for Moving Pokemon to Team
@@ -22,56 +22,37 @@ export function MovePokemonToTeam({
   visible: boolean;
   onCancel?: () => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
+  const {
+    teamGroupedByOrigin,
+    teamLength,
+    pokemonToSwitchIn,
+    isNoSwapsNeeded,
+    numSwapsNeeded,
+    selectGroup,
+    cancel,
+    add,
+    isAddable,
+    pokemonSwappingOut,
+  } = useMovePokemonToTeam(pokemonOrigin, currentLocation, onCancel);
 
-  // Information Getters
-  const teamsByPlayer = RUN.getPokemonOnTeam();
-  const teamLength = oVal(teamsByPlayer)[0]?.length;
-  const noSwapsNeeded = teamLength < 6;
-  const numSwapsNeeded = teamLength - 5;
-  const pokemonToSwitchIn = RUN.getPokemonByOrigin(pokemonOrigin);
   const pokemonToSwitchNames = pokemonToSwitchIn
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const teamArr: Pokemon[] = oVal(teamsByPlayer).reduce(
-    (acc, ps) => acc.concat(...ps),
-    [],
-  );
-  const teamGroupedByOrigin = RUN.groupByOrigin(teamArr);
 
-  // Handlers for actually swapping
-  const [swapOut, setSwapOut] = React.useState<PlaceName[]>([]);
-  const selectGroup = (origin: PlaceName) => {
-    let newVal = [...swapOut];
-    newVal.push(origin);
-    newVal = newVal.slice(-numSwapsNeeded);
-    setSwapOut(newVal);
-  };
-  const handleCancel = () => {
-    setSwapOut([]);
-    if (onCancel) onCancel();
-  };
-  const handleAdd = async () => {
-    await RUN.swapPokemonOnTeam(pokemonOrigin, swapOut, currentLocation);
-    if (onCancel) return onCancel();
-    return true;
-  };
-
-  // Loading stuff
   const loadingRunData = isNullish(teamLength);
   if (loadingRunData) return null;
 
   const footerButtons = [
-    <Button key="cancel" onClick={handleCancel}>
+    <Button key="cancel" onClick={cancel}>
       Cancel
     </Button>,
     <Button
       key="add"
-      disabled={!noSwapsNeeded && swapOut.length !== numSwapsNeeded}
-      onClick={handleAdd}
+      disabled={!isNoSwapsNeeded && !isAddable}
+      onClick={add}
       type="primary"
     >
-      {noSwapsNeeded ? "Add" : "Swap"}
+      {isNoSwapsNeeded ? "Add" : "Swap"}
     </Button>,
   ];
 
@@ -83,23 +64,23 @@ export function MovePokemonToTeam({
     >
       <div className="flex column center">
         <PokemonGroup marginBottom={12}>
-          {pokemonToSwitchIn.map((p, i) => (
-            <PokemonIcon key={i} pokemon={p} />
-          ))}
+          {pokemonToSwitchIn?.map(
+            (p, i) => p && <PokemonIcon key={i} pokemon={p} />,
+          )}
         </PokemonGroup>
 
-        {noSwapsNeeded && <p>No swaps necessary to add</p>}
-        {!noSwapsNeeded && (
+        {isNoSwapsNeeded && <p>No swaps necessary to add</p>}
+        {!isNoSwapsNeeded && (
           <p>Need to swap out {numSwapsNeeded} pair(s) of Pokemon</p>
         )}
-        {!noSwapsNeeded && (
+        {!isNoSwapsNeeded && (
           <div className={styles.party}>
-            {oKey(teamGroupedByOrigin).map((o, i) => (
+            {Object.keys(teamGroupedByOrigin).map((o, i) => (
               <PokemonGroup
                 actionable
                 key={i}
                 onClick={() => selectGroup(o)}
-                selected={swapOut.includes(o)}
+                selected={pokemonSwappingOut.includes(o)}
               >
                 {teamGroupedByOrigin[o].map((p, j) => (
                   <PokemonIcon key={j} pokemon={p} />
