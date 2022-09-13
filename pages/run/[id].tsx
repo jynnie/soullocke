@@ -5,7 +5,6 @@ import { useAllPokemon } from "hooks/useAllPokemon";
 import { useMetrics } from "hooks/useMetrics";
 import { useRegionData } from "hooks/useRegionData";
 import { useRun } from "hooks/useRun";
-import RUN from "lib/run";
 import mixpanel from "mixpanel-browser";
 import { PokemonListApiData as ListPokemon, Run } from "models";
 import Head from "next/head";
@@ -20,7 +19,6 @@ import { SmileOutlined } from "@ant-design/icons";
 //----------------------------------#01F2DF
 //- Run Context
 export const RunContext: React.Context<{
-  RUN?: RUN;
   allPokemon: ListPokemon[];
   id: string;
 }> = React.createContext({ allPokemon: [] as ListPokemon[], id: "" });
