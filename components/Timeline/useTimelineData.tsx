@@ -27,7 +27,7 @@ export function useTimelineData() {
       players: playerArr,
       pokemon: pokemon.filter((p) => !!p) as IPokemon[],
       pokemonNames,
-      pokemonLocation: getPokemonLocationByOrigin(playerArr, l.name),
+      pokemonLocation: getPokemonLocationByOrigin(playerArr, l.key),
       notes: getLocationNotes(l.key),
     };
   });

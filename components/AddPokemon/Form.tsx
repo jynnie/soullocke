@@ -32,11 +32,12 @@ function AddPokemonForm({
   const [form] = Form.useForm();
 
   const handleFinish = () => {
+    if (pokemon) onFinish?.(pokemon, nickname || pokemon, caught);
+
     form.resetFields();
     setPokemon(undefined);
     setNickname(undefined);
     setCaught(true);
-    if (onFinish && pokemon) onFinish(pokemon, nickname || pokemon, caught);
   };
 
   const handlePokemonChange = (value: string) => setPokemon(value);
