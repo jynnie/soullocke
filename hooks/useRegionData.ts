@@ -1,7 +1,9 @@
 import { Region } from "models";
 import { useEffect, useState } from "react";
 
-export function useRegionData(region?: string) {
+import { useFirebase } from "./useFirebase";
+
+export function useRegionData(region?: string | false) {
   const [regionData, setRegionData] = useState<Region | null>(null);
 
   useEffect(() => {
@@ -13,4 +15,12 @@ export function useRegionData(region?: string) {
   }, [region]);
 
   return regionData;
+}
+
+export function useRegion(id?: string) {
+  const { value: region } = useFirebase<string | false>(`${id}/region`, {
+    defaultValue: undefined,
+    fallbackValue: false,
+  });
+  return region;
 }

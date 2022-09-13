@@ -3,7 +3,6 @@ import { pokemonAlternativeNames } from "lib/pokemonAlternativeNames";
 import { EventType, Player, IPokemon as PokemonData } from "models";
 import React from "react";
 import styles from "styles/Summary.module.scss";
-import { oVal } from "utils/utils";
 
 function isFacingRight(teamLength: number, i: number, j: number) {
   if (teamLength % 2 === 0) {
@@ -56,7 +55,7 @@ export function TeamImage({
   [propName: string]: any;
 }) {
   const pokemonName = pokemon?.name || "?";
-  const pokemonEventsArr = oVal(pokemon?.events || []);
+  const pokemonEventsArr = Object.values(pokemon?.events || []);
   const evolutionEvents = pokemonEventsArr.filter(
     (e) => e.type === EventType.evolved,
   );

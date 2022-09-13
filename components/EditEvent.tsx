@@ -11,7 +11,7 @@ import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Form.module.scss";
 import { getLastItem } from "utils/getLastItem";
-import { cleanName, oVal } from "utils/utils";
+import { cleanName } from "utils/utils";
 
 const { Option } = Select;
 
@@ -73,7 +73,7 @@ function EditEvent({
 
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
-  const pokemonLocations = oVal(PokemonLocation);
+  const pokemonLocations = Object.values(PokemonLocation);
   const timelineLocations = useTimelineLocations();
   const latestLocation = getLastItem(timelineLocations);
 

@@ -6,7 +6,6 @@ import { FirebaseContext } from "pages/_app";
 import React from "react";
 import formStyles from "styles/Form.module.scss";
 import styles from "styles/Home.module.css";
-import { oVal } from "utils/utils";
 
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -34,7 +33,7 @@ function NewRunPage() {
   const createNewRun = async () => {
     const id = runId();
     const playersObj: Record<string, { id: string; name: string }> = {};
-    const playersArr = oVal(players);
+    const playersArr = Object.values(players);
     playersArr.forEach((p, i) => {
       playersObj[p + i] = {
         id: p + i,

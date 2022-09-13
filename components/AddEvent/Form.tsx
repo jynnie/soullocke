@@ -13,7 +13,7 @@ import { RunContext } from "pages/run/[id]";
 import React, { useCallback, useEffect } from "react";
 import styles from "styles/Form.module.scss";
 import { getLastItem } from "utils/getLastItem";
-import { cleanName, oVal } from "utils/utils";
+import { cleanName } from "utils/utils";
 
 const { Option } = Select;
 
@@ -77,7 +77,7 @@ function AddEventForm({
 
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
-  const pokemonLocations = oVal(PokemonLocation).filter(
+  const pokemonLocations = Object.values(PokemonLocation).filter(
     (l) => l !== pokemon.location,
   );
 

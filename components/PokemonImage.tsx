@@ -1,7 +1,6 @@
 import { EventType, IPokemon, PokemonApiData } from "models";
 import React from "react";
 import Box from "ui-box";
-import { oVal } from "utils/utils";
 
 export function PokemonImage({
   updateSrc,
@@ -13,7 +12,7 @@ export function PokemonImage({
   [propName: string]: any;
 }) {
   const pokemonName = pokemon?.name || "?";
-  const pokemonEventsArr = oVal(pokemon?.events || []);
+  const pokemonEventsArr = Object.values(pokemon?.events || []);
   const evolutionEvents = pokemonEventsArr.filter(
     (e) => e.type === EventType.evolved,
   );

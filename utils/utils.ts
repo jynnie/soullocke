@@ -1,7 +1,3 @@
-export const oVal = Object.values;
-
-export const oKey = Object.keys;
-
 export function cleanName(name: string = "") {
   return name.replace(/(_|-)/g, " ");
 }
@@ -44,8 +40,6 @@ export function alpha(number: number) {
 }
 
 export const utils = {
-  oVal,
-  oKey,
   cleanName,
   isNullish,
   hashString,
