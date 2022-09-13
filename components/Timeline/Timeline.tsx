@@ -69,10 +69,12 @@ function TimelineGrid({
     const existingPokemon = getPokemonByOrigin({ playerArr, origin }).filter(
       (p) => !!p,
     );
-    return existingPokemon.length === playerArr.length;
+    // WORKAROUND: We'll be one step behind the latest pokemon add
+    // so we add one to the length of pokemon we've added
+    return existingPokemon.length + 1 === playerArr.length;
   }
 
-  function handleFinishAdd(location: PlaceName) {
+  function handleFinishAdd(location: string) {
     return (caught: boolean) => {
       const allPokemonSet = haveAllPlayersGotPokemonAt(location);
       if (caught && allPokemonSet) {
