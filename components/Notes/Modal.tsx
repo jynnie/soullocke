@@ -1,7 +1,7 @@
 import { Button, Input, Modal } from "antd";
+import { useLocationNotes } from "hooks/useLocationNotes";
 import { PlaceName } from "models";
-import { RunContext } from "pages/run/[id]";
-import React from "react";
+import React, { useEffect } from "react";
 import { cleanName } from "utils/utils";
 
 function NotesModal({
@@ -13,21 +13,20 @@ function NotesModal({
   location: PlaceName;
   onCancel: () => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
+  const existingNotes = useLocationNotes(location);
   const [notes, setNotes] = React.useState<string>("");
 
-  const existingNotes = RUN?.DEPRECATED_getLocationNotes(location);
-
-  React.useEffect(() => {
-    setNotes(existingNotes ?? "");
-  }, [existingNotes]);
+  useEffect(() => {
+    setNotes(existingNotes?.value ?? "");
+  }, [existingNotes?.value]);
 
   const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (evt) => {
     setNotes(evt.target.value);
   };
 
   const handleSave = () => {
-    RUN?.saveLocationNotes(location, notes);
+    existingNotes.set(notes);
+    onCancel?.();
   };
 
   const footer = [
@@ -40,7 +39,10 @@ function NotesModal({
   ];
 
   return (
-    <Modal title={`${cleanName(location)} Notes`} {...{ visible, footer }}>
+    <Modal
+      title={`${cleanName(location)} Notes`}
+      {...{ visible, footer, onCancel }}
+    >
       <Input.TextArea
         placeholder="Place notes..."
         value={notes}

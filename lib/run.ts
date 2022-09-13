@@ -47,12 +47,6 @@ export class Run {
     return latestLocation;
   };
 
-  public DEPRECATED_getLocationNotes = (place: PlaceName): string => {
-    if (!this.runData) return "";
-
-    return this.runData.timeline?.[place]?.notes || "";
-  };
-
   //----------------------------------#01F2DF
   //- Organizational Helpers
 
@@ -66,15 +60,6 @@ export class Run {
       result[origin] = allPokemon.filter((p) => p.origin === origin);
     }
     return result;
-  };
-
-  //----------------------------------#01F2DF
-  //- Timeline
-
-  public saveLocationNotes = (place: PlaceName, notes: string) => {
-    if (!this.runData) return;
-
-    return this.runRef.child(`timeline/${place}/notes`).set(notes);
   };
 
   //----------------------------------#01F2DF
