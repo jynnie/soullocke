@@ -1,6 +1,6 @@
 import { Button, Form, Select } from "antd";
 import cn from "classnames";
-import { useTimelineLocationNames } from "hooks/useTimelineLocationNames";
+import { useTimelineLocations } from "hooks/useTimelineLocations";
 import {
   EVENT_NAME_TO_TYPE,
   EventType,
@@ -75,7 +75,7 @@ function EditEvent({
   //* Options---------------------------#07cf7f
   const eventTypes = ["moved", "defeated", "evolved"];
   const pokemonLocations = oVal(PokemonLocation);
-  const timelineLocations = useTimelineLocationNames();
+  const timelineLocations = useTimelineLocations();
   const latestLocation = getLastItem(timelineLocations);
 
   return (

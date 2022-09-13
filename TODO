@@ -4,20 +4,24 @@
 
 - [ ] Better linting & null checks
 - [ ] Enable multiple locations on the timeline
+  - [x] Can create
+  - [x] Can reorder
+  - [x] Can differentiate events
+  - [ ] Never see UUIDs
 - [ ] Cooler summary view styles
 
 🌶🌶 Would improve most experiences or could be cool
 
-- [ ] Summary: Drag and drop between categories to move
-- [ ] Timeline: Inline editing
+- [ ] Box view? TL location in the bottom
+- [ ] Box: Drag and drop between categories to move
 - [ ] Event view?
-- [ ] Box view?
 - [ ] Refactor from API -> Hooks
 - [ ] Add in React.memos
 - [ ] Switch off of Ant Design
 
 🌶 Should have, but low value add rn
 
+- [ ] Timeline: Inline editing
 - [ ] Pokemon: Delete
 - [ ] Unit tests
 

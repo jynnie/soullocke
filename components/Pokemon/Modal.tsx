@@ -3,11 +3,12 @@ import AddEvent from "components/AddEvent";
 import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
+import { useBackfillPokemon } from "hooks/useBackfillPokemon";
+import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
-import { RunContext } from "pages/run/[id]";
 import React from "react";
 import styles from "styles/Pokemon.module.scss";
-import { cleanName, oVal } from "utils/utils";
+import { cleanName } from "utils/utils";
 
 import { EditOutlined } from "@ant-design/icons";
 
@@ -26,21 +27,31 @@ function PokemonModal({
   showModal: boolean;
   onCancel: () => void;
 }) {
-  const { RUN } = React.useContext(RunContext);
   const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
+  const backfillPokemon = useBackfillPokemon(playerId, location);
 
-  const timelineArr = RUN?.DEPRECATED_getTimelineLocationNames() || [];
-  const eventsArr = oVal(pokemon?.events || {}).sort(
-    (a, b) => timelineArr.indexOf(a.location) - timelineArr.indexOf(b.location),
-  );
-  const pokemonIsAlive = pokemon.location !== PokemonLocation.grave;
+  const tlLocations = useTimelineLocations();
+  const tlLocationKeys = tlLocations.map((l) => l.key);
+  const eventsArr = Object.values(pokemon?.events || {})
+    .filter((e) => tlLocationKeys.includes(e.location))
+    .sort(
+      (a, b) =>
+        tlLocationKeys.indexOf(a.location) - tlLocationKeys.indexOf(b.location),
+    )
+    // Map the keys into names of the locations
+    .map((e) => ({
+      ...e,
+      locationName: tlLocations.find((t) => t.key === e.location)?.name,
+    }));
+
+  const isAlive = pokemon.location !== PokemonLocation.grave;
 
   const handleCancelEditing = () => {
     setEditPokemon(false);
   };
 
   const handleFinish = (pokemonName: string, nickname: string): void => {
-    RUN?.backfillPokemon(pokemonName, nickname, playerId, location);
+    backfillPokemon(pokemonName, nickname);
     if (editPokemon) setEditPokemon(false);
   };
 
@@ -94,7 +105,7 @@ function PokemonModal({
             }}
           />
         ))}
-        {pokemonIsAlive && <AddEvent {...{ pokemon }} />}
+        {isAlive && <AddEvent {...{ pokemon }} />}
       </Timeline>
     </Modal>
   );

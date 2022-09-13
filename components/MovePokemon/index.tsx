@@ -2,7 +2,7 @@ import { Button, Form, Modal, Select } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
 import { usePokemonByOrigin } from "hooks/usePokemonByOrigin";
-import { useTimelineLocationNames } from "hooks/useTimelineLocationNames";
+import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { PlaceName, PokemonLocation } from "models";
 import React, { useEffect } from "react";
 import styles from "styles/Form.module.scss";
@@ -26,7 +26,7 @@ export function MovePokemon({
   const pokemonMovingNames = pokemonMoving
     ?.map((p) => p?.nickname || "?")
     .join(" & ");
-  const timelineLocations = useTimelineLocationNames();
+  const timelineLocations = useTimelineLocations();
   const pokemonLocations = Object.values(PokemonLocation).filter(
     (l) => l !== pokemonMoving?.[0]?.location,
   );

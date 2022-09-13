@@ -17,19 +17,23 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 
+interface ModifiedPokemonEvent extends PokemonEvent {
+  locationName?: string;
+}
+
 function PokemonTimelineEvent({
   event,
   pokemon,
   playerId,
   isLatestEvent,
 }: {
-  event: PokemonEvent;
+  event: ModifiedPokemonEvent;
   pokemon: IPokemon;
   playerId: string;
   isLatestEvent?: boolean;
 }) {
   const { RUN } = React.useContext(RunContext);
-  const place = cleanName(event.location);
+  const place = cleanName(event.locationName || event.location);
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
@@ -44,6 +48,7 @@ function PokemonTimelineEvent({
       pokemon.origin,
       event.index,
       eventType,
+      // TODO:?
       location,
       details,
       isLatestEvent && location === RUN.getLatestLocation(),
