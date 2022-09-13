@@ -84,7 +84,7 @@ function EditEvent({
       name="addPokemonEvent"
       onFinish={handleFinish}
       initialValues={{
-        location: event?.location || latestLocation,
+        location: event?.location || latestLocation?.key,
         eventType: event?.type,
         pokemonLocation: event?.details?.location,
         evolution: event?.details?.evolution,
@@ -106,8 +106,8 @@ function EditEvent({
           showSearch
         >
           {timelineLocations.map((l) => (
-            <Option key={l} value={l} className={styles.option}>
-              {cleanName(l)}
+            <Option key={l.key} value={l.key} className={styles.option}>
+              {cleanName(l.name)}
             </Option>
           ))}
         </Select>

@@ -43,8 +43,8 @@ export function MovePokemon({
   // useEffect to wait for the info.
   useEffect(() => {
     const latestLocation = getLastItem(timelineLocations);
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
+    form.setFieldsValue({ location: latestLocation?.key });
+    setLocation(latestLocation?.key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timelineLocations.length]);
 
@@ -90,8 +90,8 @@ export function MovePokemon({
             showSearch
           >
             {timelineLocations?.map((l) => (
-              <Option key={l} value={l} className={styles.option}>
-                {cleanName(l)}
+              <Option key={l.key} value={l.key} className={styles.option}>
+                {cleanName(l.name)}
               </Option>
             ))}
           </Select>

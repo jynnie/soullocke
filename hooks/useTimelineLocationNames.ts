@@ -6,6 +6,6 @@ export function useTimelineLocationNames() {
   const timeline = useRunChild<Run["timeline"]>("timeline", {});
   const timelineArr = Object.values(timeline.value || {})
     .sort((a, b) => a.index - b.index)
-    .map((l) => l.name);
+    .map((l) => ({ name: l.name, key: l.key }));
   return timelineArr;
 }

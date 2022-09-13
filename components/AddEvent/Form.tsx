@@ -49,9 +49,9 @@ function AddEventForm({
 
   const resetFields = useCallback(() => {
     form.resetFields();
-    form.setFieldsValue({ location: latestLocation });
-    setLocation(latestLocation);
-  }, [form, latestLocation]);
+    form.setFieldsValue({ location: latestLocation?.key });
+    setLocation(latestLocation?.key);
+  }, [form, latestLocation?.key]);
 
   // WORKAROUND: We set the initial value to the latest location
   // once that data loads. Since we're dependent on the hook, we
@@ -90,7 +90,7 @@ function AddEventForm({
         rules={[
           { required: true, message: "Please choose where this happened" },
         ]}
-        initialValue={latestLocation}
+        initialValue={latestLocation?.key}
       >
         <Select
           className={styles.select}
@@ -100,8 +100,8 @@ function AddEventForm({
           showSearch
         >
           {timelineLocations.map((l) => (
-            <Option key={l} value={l} className={styles.option}>
-              {cleanName(l)}
+            <Option key={l.key} value={l.key} className={styles.option}>
+              {cleanName(l.name)}
             </Option>
           ))}
         </Select>
