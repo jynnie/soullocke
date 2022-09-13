@@ -14,12 +14,12 @@ export function useTimelineData() {
 
   const playerArr = usePlayersArray();
 
-  function getLocationNotes(location: string): string {
-    return timelineArr.find((l) => l.name === location)?.notes || "";
+  function getLocationNotes(locationKey: string): string {
+    return timelineArr.find((l) => l.key === locationKey)?.notes || "";
   }
 
   const allDataArr: Data[] = timelineArr.map((l) => {
-    const pokemon = getPokemonByOrigin({ playerArr, origin: l.name }) || [];
+    const pokemon = getPokemonByOrigin({ playerArr, origin: l.key }) || [];
     const pokemonNames = pokemon.reduce(makePokemonNameString, "");
 
     return {
@@ -28,7 +28,7 @@ export function useTimelineData() {
       pokemon: pokemon.filter((p) => !!p) as IPokemon[],
       pokemonNames,
       pokemonLocation: getPokemonLocationByOrigin(playerArr, l.name),
-      notes: getLocationNotes(l.name),
+      notes: getLocationNotes(l.key),
     };
   });
 
@@ -36,7 +36,7 @@ export function useTimelineData() {
     const result = newOrder.reduce(
       (acc, t) => ({
         ...acc,
-        [t.name]: t,
+        [t.key]: t,
       }),
       {},
     );
