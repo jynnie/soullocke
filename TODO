@@ -13,6 +13,7 @@
 - [ ] Event view?
 - [ ] Box view?
 - [ ] Refactor from API -> Hooks
+- [ ] Add in React.memos
 - [ ] Switch off of Ant Design
 
 🌶 Should have, but low value add rn

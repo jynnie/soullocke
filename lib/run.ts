@@ -53,7 +53,9 @@ export class Run {
     return oVal(this.runData?.players[id]?.pokemon || []);
   };
 
-  public getPokemonOnTeam = (): { [playerId: string]: IPokemon[] } => {
+  public DEPRECATED_getPokemonOnTeam = (): {
+    [playerId: string]: IPokemon[];
+  } => {
     if (!this.runData || !this.runData.players) return {};
 
     const result: Record<string, IPokemon[]> = {};

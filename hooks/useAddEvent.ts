@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import {
   EventType,
   IPokemon,
@@ -8,6 +7,8 @@ import {
   PokemonLocation,
 } from "models/db.model";
 
+import { useAddEventToFirebase } from "./useAddEventToFirebase";
+import { useMovePokemon } from "./useMovePokemon.1";
 import { useRunChild } from "./useRun";
 
 export function useAddEvent(
@@ -19,45 +20,8 @@ export function useAddEvent(
   },
 ) {
   const players = useRunChild<Record<string, Player>>("players", {});
-
-  async function addEventToFirebase(
-    pokemonRef: firebase.database.Reference,
-    event: Omit<PokemonEvent, "index">,
-  ) {
-    const eventRef = pokemonRef.child("events").push();
-    const finalEvent = {
-      ...event,
-      index: eventRef.key,
-    };
-    await eventRef.set(finalEvent);
-    return event;
-  }
-
-  async function movePokemon(
-    eventLocation: PlaceName,
-    pokemonLocation: PokemonLocation,
-  ) {
-    if (!players.ref) return;
-
-    for (const player of Object.values(players.value || {})) {
-      const pokemonRef = players.ref?.child(
-        `${player.id}/pokemon/${actingPokemonOrigin}`,
-      );
-
-      // Update the pokemon's current information
-      pokemonRef.child("origin").set(actingPokemonOrigin);
-      pokemonRef.child("location").set(pokemonLocation);
-
-      // Add events to both pokemon
-      addEventToFirebase(pokemonRef, {
-        type: EventType.moved,
-        location: eventLocation,
-        details: {
-          location: pokemonLocation,
-        },
-      });
-    }
-  }
+  const addEventToFirebase = useAddEventToFirebase();
+  const movePokemon = useMovePokemon(players);
 
   async function soulDeath(location: PlaceName, missed?: boolean) {
     if (!players.ref) return;
@@ -133,7 +97,7 @@ export function useAddEvent(
       ) {
         config.startMoveToTeam(actingPokemonOrigin, eventLocation);
       } else {
-        await movePokemon(eventLocation, details.location);
+        await movePokemon(actingPokemonOrigin, eventLocation, details.location);
       }
     } else if (type === EventType.defeated) {
       await markAsDefeated(eventLocation);
