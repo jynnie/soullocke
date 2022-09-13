@@ -19,7 +19,9 @@ export function useFirebase<T extends Object>(
       const rawValue = snapshot.val() || fallbackValue;
       setReadValue(rawValue);
     });
-    return () => dbRef?.off();
+    return () => {
+      dbRef?.off();
+    };
   }, [dbRef, fallbackValue]);
 
   function updateValue(newValue: T) {

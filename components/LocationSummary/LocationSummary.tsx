@@ -1,4 +1,3 @@
-import { useToUpdate } from "hooks/useToUpdate";
 import { IPokemon, PokemonLocation } from "models";
 import React from "react";
 import styles from "styles/Location.module.scss";
@@ -12,8 +11,6 @@ export function LocationSummary({
   pokemon: IPokemon[];
   pokemonLocation: PokemonLocation;
 }) {
-  useToUpdate(pokemon && pokemon.length);
-
   const pokemonArr = pokemon.filter((p) => !!p);
   if (pokemonArr.length === 0) return null;
 

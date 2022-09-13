@@ -2,13 +2,12 @@
 
 🌶🌶🌶 Super cool
 
-- [ ] Better linting & null checks
-  - [ ] Check realtime updates (not working after editing event)
-- [ ] Enable multiple locations on the timeline
+- [x] Better linting & null checks
+- [x] Enable multiple locations on the timeline
   - [x] Can create
   - [x] Can reorder
   - [x] Can differentiate events
-  - [ ] Never see UUIDs
+  - [x] Never see UUIDs
 - [ ] Cooler summary view styles
 
 🌶🌶 Would improve most experiences or could be cool
