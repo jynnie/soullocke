@@ -3,6 +3,7 @@
   --text-secondary: #f8fafcca;
   --text-tertiary: #f8fafc9a;
   --text-caption: #f8fafc72;
+  --text-disabled: #f8fafc4b;
 
   --secondary: #113464;
   --tertiary: #0c2951;
@@ -17,6 +18,7 @@
   --pink-border: #ec4899;
   --pink-background: #ec489994;
 
+  --blue30: #38bff830;
   --blue-text: #38bdf8;
   --blue-border: #075985;
   --blue-background: #07598594;
@@ -28,6 +30,9 @@
   --orange-text: #fbbf24;
   --orange-border: #b45309;
   --orange-background: #b4530994;
+
+  --font: "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 body.light {
@@ -64,8 +69,7 @@ body {
   color: var(--text-tertiary);
   padding: 0;
   margin: 0;
-  font-family: Helvetica, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font);
   font-size: unset;
 }
 
@@ -97,7 +101,72 @@ h2 {
   box-sizing: border-box;
 }
 
-//----------------------------------#01F2DF
+button {
+  font-family: var(--font);
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: baseline;
+
+  transition: background 0.2s, border 0.2s, color 0.2s;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  border-radius: 2px;
+  padding: 4px 12px;
+
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--text-caption);
+
+  &:hover:not([aria-disabled="true"]) {
+    color: var(--blue-text);
+    border-color: var(--blue-text);
+  }
+  &:active:not([aria-disabled="true"]),
+  &.active {
+    border-color: var(--blue-text);
+  }
+
+  &:active:not([aria-disabled="true"]) {
+    box-shadow: 0 0 0 2px var(--blue30);
+    outline: none;
+  }
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    background-color: var(--071e3e);
+    border-color: var(--tertiary);
+    color: var(--text-disabled);
+  }
+
+  .button-icon {
+    height: 1rem;
+    width: 1rem;
+    margin-left: -4px;
+    margin-right: 6px;
+  }
+}
+
+.loading-spinner {
+  animation-name: jnpr-loading-spinner;
+  animation-timing-function: linear;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes jnpr-loading-spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+//* ----------------------------------#07cf7f
 
 .capitalize {
   text-transform: capitalize;
@@ -149,7 +218,7 @@ p {
   cursor: pointer;
 }
 
-//----------------------------------#01F2DF
+//* ----------------------------------#07cf7f
 
 .ant-modal-content {
   background-color: var(--background);

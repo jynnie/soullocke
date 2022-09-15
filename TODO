@@ -2,8 +2,9 @@
 
 🌶🌶🌶 Super cool
 
+- [ ] Switch off of Ant Design
+- [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles
-  - [ ] For three people
 
 🌶🌶 Would improve most experiences or could be cool
 
@@ -11,11 +12,9 @@
 - [ ] Box: Drag and drop between categories to move
 - [ ] Event view?
 - [ ] Add in React.memos
-- [ ] Switch off of Ant Design
 
 🌶 Should have, but low value add rn
 
-- [ ] Timeline: Inline editing
 - [ ] Pokemon: Delete
 - [ ] Unit tests
 - [ ] Better help center
