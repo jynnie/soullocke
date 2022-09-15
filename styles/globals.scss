@@ -1,13 +1,13 @@
 :root {
   --text-primary: #f8fafc;
-  --text-secondary: #e2e8f0;
-  --text-tertiary: #cbd5e1;
-  --text-caption: #94a3b8;
+  --text-secondary: #f8fafcca;
+  --text-tertiary: #f8fafc9a;
+  --text-caption: #f8fafc72;
 
-  --secondary: #64748b;
-  --tertiary: #334155;
-  --tertiary50: #33415585;
-  --background: #1e293b;
+  --secondary: #113464;
+  --tertiary: #0c2951;
+  --tertiary50: #0c295185;
+  --background: #071e3e;
 
   --brand: #a8ff78;
   --brand50: #a7ff784b;
@@ -64,8 +64,8 @@ body {
   color: var(--text-tertiary);
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Helvetica, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: unset;
 }
 
