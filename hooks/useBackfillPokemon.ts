@@ -25,7 +25,7 @@ export function useBackfillPokemon(playerId: string, originKey: string) {
       const catchEvent: PokemonEvent = {
         index: "0",
         type: EventType.catch,
-        location: origin,
+        location: originKey,
       };
       await pokemon.ref?.child("events/0").set(catchEvent);
     }
