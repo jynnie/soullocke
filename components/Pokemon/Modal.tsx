@@ -1,16 +1,17 @@
-import { Button, Modal, Timeline } from "antd";
+import { Modal, Timeline } from "antd";
+import cn from "classnames";
 import AddEvent from "components/AddEvent";
 import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
+import { Button } from "components/ui-library/Button";
 import { useBackfillPokemon } from "hooks/useBackfillPokemon";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
 import React from "react";
+import { Edit } from "react-feather";
 import styles from "styles/Pokemon.module.scss";
 import { cleanName } from "utils/utils";
-
-import { EditOutlined } from "@ant-design/icons";
 
 import Event from "./TimelineEvent";
 
@@ -70,13 +71,10 @@ function PokemonModal({
           </div>
 
           <Button
-            className={styles.modalHeaderEdit}
-            type="primary"
-            shape="circle"
+            className={cn("icon", styles.modalHeaderEdit)}
             onClick={() => setEditPokemon(!editPokemon)}
-          >
-            <EditOutlined />
-          </Button>
+            icon={<Edit />}
+          />
         </div>
       )}
 

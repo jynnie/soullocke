@@ -157,6 +157,13 @@ button {
   padding: 4px 12px;
   border: 1px solid transparent;
 
+  .button-icon {
+    height: 1rem;
+    width: 1rem;
+    margin-left: -4px;
+    margin-right: 6px;
+  }
+
   &,
   &.filled {
     border-color: var(--primary);
@@ -180,6 +187,17 @@ button {
       background-color: var(--disabled);
       border-color: var(--disabled);
       color: var(--disabled-text);
+    }
+
+    &.icon {
+      padding: 8px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+
+      .button-icon {
+        margin: 0;
+      }
     }
   }
 
@@ -231,17 +249,10 @@ button {
       border-color: var(--text-disabled);
       color: var(--text-disabled);
     }
-  }
 
-  &.icon {
-    border: 0;
-  }
-
-  .button-icon {
-    height: 1rem;
-    width: 1rem;
-    margin-left: -4px;
-    margin-right: 6px;
+    &.icon {
+      border: 0;
+    }
   }
 }
 

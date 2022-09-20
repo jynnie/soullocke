@@ -24,7 +24,11 @@ export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
 
   return (
     <Timeline.Item dot={<PlusCircle size={16} />}>
-      {!showForm && <Button onClick={toggleForm}>Add Event</Button>}
+      {!showForm && (
+        <Button className="outline" onClick={toggleForm}>
+          Add Event
+        </Button>
+      )}
 
       {showForm && <Form {...{ pokemon, onFinish, onCancel: toggleForm }} />}
     </Timeline.Item>
