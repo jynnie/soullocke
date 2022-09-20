@@ -32,27 +32,16 @@
   margin-top: 2rem;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a:hover {
-  color: var(--purple-primary);
-}
-
 .title,
 .description {
   text-align: left;
 }
 
 .description {
-  line-height: 1.25;
+  line-height: 1.5;
   color: var(--text-caption);
   font-weight: lighter;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-family: var(--code-font);
 }
 
 .title {
