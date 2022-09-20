@@ -158,7 +158,7 @@ function DeleteEventModal(props: DeleteEventModalProps) {
         This only deletes this event for this Pokémon. Deleting this event won
         {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
-      <div className="flex justifyEnd gap05">
+      <div className="flex justifyEnd gap-8">
         <Button onClick={props?.onCancel}>Cancel</Button>
         <Button type="primary" danger onClick={props?.onDelete}>
           Delete

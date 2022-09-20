@@ -224,6 +224,10 @@ button {
     }
   }
 
+  &.icon {
+    border: 0;
+  }
+
   .button-icon {
     height: 1rem;
     width: 1rem;
@@ -270,6 +274,10 @@ button {
     flex-wrap: wrap;
   }
 
+  &.alignCenter {
+    align-items: center;
+  }
+
   &.spaceBetween {
     justify-content: space-between;
   }
@@ -278,8 +286,8 @@ button {
     justify-content: flex-end;
   }
 
-  &.gap05 {
-    gap: 0.5rem;
+  &.gap-8 {
+    gap: 8px;
   }
 }
 

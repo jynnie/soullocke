@@ -1,13 +1,13 @@
-import { Button, Form, Input, Select } from "antd";
+import { Form, Input, Select } from "antd";
+import { Button } from "components/ui-library/Button";
 import runId from "lib/random";
 import REGIONS from "lib/regions";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import React from "react";
+import { MinusCircle, Plus } from "react-feather";
 import formStyles from "styles/Form.module.scss";
 import styles from "styles/Home.module.css";
-
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -102,42 +102,43 @@ function NewRunPage() {
                     required={false}
                     key={field.key}
                   >
-                    <Form.Item
-                      {...field}
-                      validateTrigger={["onChange", "onBlur"]}
-                      rules={[
-                        {
-                          required: true,
-                          whitespace: true,
-                          message:
-                            "Please input player's name or delete this field.",
-                        },
-                      ]}
-                      noStyle
-                    >
-                      <Input
-                        style={{ width: "70%" }}
-                        value={players[index]}
-                        onChange={(evt) =>
-                          handlePlayerChange(index, evt.target.value)
-                        }
-                        placeholder="Name"
-                      />
-                    </Form.Item>
-                    {fields.length > 1 ? (
-                      <MinusCircleOutlined
-                        style={{ marginLeft: "8px" }}
+                    <div className="flex alignCenter gap-8">
+                      <Form.Item
+                        {...field}
+                        validateTrigger={["onChange", "onBlur"]}
+                        rules={[
+                          {
+                            required: true,
+                            whitespace: true,
+                            message:
+                              "Please input player's name or delete this field.",
+                          },
+                        ]}
+                        noStyle
+                      >
+                        <Input
+                          style={{ width: "70%" }}
+                          value={players[index]}
+                          onChange={(evt) =>
+                            handlePlayerChange(index, evt.target.value)
+                          }
+                          placeholder="Name"
+                        />
+                      </Form.Item>
+                      <Button
+                        className="text icon"
+                        disabled={fields.length <= 1}
                         onClick={() => remove(field.name)}
+                        icon={<MinusCircle />}
                       />
-                    ) : null}
+                    </div>
                   </Form.Item>
                 ))}
                 <Form.Item>
                   <Button
-                    type="dashed"
+                    className="outline"
                     onClick={() => add()}
-                    icon={<PlusOutlined />}
-                    className={styles.secondaryButton}
+                    icon={<Plus />}
                   >
                     Add player
                   </Button>
@@ -148,13 +149,7 @@ function NewRunPage() {
           </Form.List>
 
           <Form.Item className={formStyles.itemButtons}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.actionButton}
-            >
-              Create
-            </Button>
+            <Button type="submit">Create</Button>
           </Form.Item>
         </Form>
       </main>
