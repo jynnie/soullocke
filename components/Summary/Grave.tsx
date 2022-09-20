@@ -33,7 +33,7 @@ export function Grave({ grave, j }: { grave: IPokemon[]; j: number }) {
               pokemon,
               width: 32,
               height: 32,
-              backgroundColor: "var(--tertiary)",
+              backgroundColor: "var(--midnight-primary)",
             }}
           />
         ))}

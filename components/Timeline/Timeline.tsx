@@ -200,7 +200,7 @@ function getItemStyle(
 ) {
   return {
     userSelect: "none",
-    background: isDragging ? "var(--tertiary)" : "transparent",
+    background: isDragging ? "var(--midnight-primary)" : "transparent",
     ...draggableStyle,
   } as React.CSSProperties;
 }

@@ -28,7 +28,8 @@ export function PokemonIcon({
   const [src, setSrc] = React.useState<string>("");
   const { data } = usePalette(src || "");
   const avatarStyle = {
-    backgroundColor: backgroundColor || data?.vibrant || "var(--tertiary)",
+    backgroundColor:
+      backgroundColor || data?.vibrant || "var(--midnight-primary)",
   };
 
   return (

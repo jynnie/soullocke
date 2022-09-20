@@ -13,7 +13,7 @@
   width: 100%;
 
   padding: 0.5rem 1rem;
-  background-color: var(--secondary);
+  background-color: var(--midnight-hover);
   border-radius: 0.2rem;
 
   img {
@@ -48,7 +48,7 @@
     z-index: 1;
 
     .nickname {
-      background: var(--tertiary);
+      background: var(--midnight-primary);
       margin-left: -32%;
       padding: 0.1rem 0.4rem 0;
       border-radius: 4px;
@@ -82,7 +82,7 @@
   .playerName {
     position: absolute;
     top: -42%;
-    color: var(--tertiary);
+    color: var(--midnight-primary);
     font-size: 4rem;
     font-weight: bold;
     text-align: center;
@@ -100,7 +100,7 @@
 
   &Divider {
     flex: 1;
-    border-bottom: 1px solid var(--tertiary);
+    border-bottom: 1px solid var(--midnight-primary);
   }
 }
 

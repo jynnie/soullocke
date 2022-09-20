@@ -4,7 +4,7 @@
 
   text-transform: capitalize;
   font-weight: 400;
-  color: var(--text-tertiary);
+  color: var(--text-primary);
 
   [class*="badge"] sup {
     right: -10px;
@@ -37,24 +37,24 @@
 
   &.team {
     font-weight: 500;
-    color: var(--pink-text);
-    border-color: var(--pink-border);
-    background-color: var(--pink-background);
+    color: var(--pink-hover);
+    border-color: var(--pink-primary);
+    background-color: var(--pink-disabled);
   }
   &.box {
-    color: var(--blue-text);
-    border-color: var(--blue-border);
+    color: var(--blue-primary);
+    border-color: var(--blue-hover);
     background-color: var(--blue-background);
   }
   &.grave {
-    color: var(--grey-text);
-    border-color: var(--grey-border);
-    background-color: var(--grey-background);
+    color: var(--grey-hover);
+    border-color: var(--grey-primary);
+    background-color: var(--grey-disabled);
   }
   &.daycare {
-    color: var(--orange-text);
-    border-color: var(--orange-border);
-    background-color: var(--orange-background);
+    color: var(--yellow-primary);
+    border-color: var(--yellow-hover);
+    background-color: var(--yellow-disabled);
   }
 }
 
