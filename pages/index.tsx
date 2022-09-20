@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button } from "components/ui-library/Button";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -18,11 +18,7 @@ function Home() {
         <h1 className={styles.title}>Soullocke</h1>
         <p className={styles.description}>
           A tracker for your{" "}
-          <a
-            href="#whatsASoullocke"
-            className={styles.highlight}
-            onClick={() => setShowRules(!showRules)}
-          >
+          <a href="#whatsASoullocke" onClick={() => setShowRules(!showRules)}>
             soul-linked Pokémon Nuzlocke
           </a>{" "}
           runs. Track Pokémon caught across two (or more) trainers.
@@ -31,9 +27,7 @@ function Home() {
         <div className="flex center">
           {/* <Button children="View" /> */}
           <Link href="/newRun">
-            <Button type="primary" className={styles.actionButton}>
-              Start
-            </Button>
+            <Button>Start</Button>
           </Link>
         </div>
       </main>
@@ -69,7 +63,6 @@ function Home() {
             href="https://github.com/jynnie/soullocke/discussions"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.highlight}
           >
             Github
           </a>
@@ -86,7 +79,6 @@ function Home() {
             href="https://typesmart.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.highlight}
           >
             Typechart
           </a>

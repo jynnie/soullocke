@@ -16,6 +16,10 @@ interface ButtonProps extends BoxProps<"button"> {
   children?: React.ReactElement | string;
 }
 
+/**
+ * Functional handlers for Buttons. Handles disabled, loading, etc.
+ * Use className to apply styles.
+ */
 export function Button({
   className,
   type = "button",

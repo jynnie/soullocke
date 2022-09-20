@@ -55,18 +55,6 @@
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
-.highlight {
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.highlight:hover,
-.highlight:focus,
-.highlight:active {
-  color: var(--text-primary);
-  font-style: italic;
-}
-
 .title {
   background: var(--purple-primary); /* fallback for old browsers */
   background: -webkit-linear-gradient(

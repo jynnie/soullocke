@@ -15,25 +15,39 @@
   --pink-disabled: #ec48994d;
 
   --blue-primary: #38bdf8;
+  --blue-primary-text: var(--text-primary);
   --blue-hover: #89dbff;
+  --blue-hover-text: var(--background);
   --blue-disabled: #38bdf84d;
-  --blue-background: #07598594;
+  --blue-disabled-text: var(--text-primary);
 
   --yellow-primary: #fbbf24;
+  --yellow-primary-text: var(--background);
   --yellow-hover: #ffde8a;
+  --yellow-hover-text: var(--background);
   --yellow-disabled: #fbbf244d;
+  --yellow-disabled-text: var(--text-primary);
 
   --grey-primary: #52525b;
+  --grey-primary-text: var(--text-primary);
   --grey-hover: #a1a1aa;
+  --grey-hover-text: var(--background);
   --grey-disabled: #52525b4d;
+  --grey-disabled-text: var(--text-primary);
 
   --red-primary: #ff2020;
+  --red-primary-text: var(--text-primary);
   --red-hover: #ff8a8a;
+  --red-hover-text: var(--background);
   --red-disabled: #ff20204d;
+  --red-disabled-text: var(--text-primary);
 
   --purple-primary: #c095fa;
+  --purple-primary-text: var(--text-primary);
   --purple-hover: #d8bbff;
+  --purple-hover-text: var(--background);
   --purple-disabled: #ede1fe4d;
+  --purple-disabled-text: var(--text-primary);
 
   --font: "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -50,8 +64,40 @@ body {
 }
 
 a {
-  color: inherit;
+  --primary: var(--purple-primary);
+  --primary-text: var(--purple-primary-text);
+  --hover: var(--purple-hover);
+  --hover-text: var(--purple-hover-text);
+  --disabled: var(--purple-disabled);
+  --disabled-text: var(--purple-disabled-text);
+
   text-decoration: none;
+  color: var(--text-primary);
+  background-color: transparent;
+  transition: background 0.2s, border 0.2s, color 0.2s;
+
+  padding: 0px 2px;
+  border: 0;
+  border-bottom: 1px dashed white;
+  border-radius: 0;
+
+  &:hover:not([aria-disabled="true"]) {
+    background-color: transparent;
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  &:active:not([aria-disabled="true"]),
+  &.active {
+    background-color: transparent;
+    color: var(--hover);
+    border-color: var(--hover);
+    outline: none;
+  }
+  &[aria-disabled="true"] {
+    background-color: transparent;
+    border-color: var(--text-disabled);
+    color: var(--text-disabled);
+  }
 }
 
 h1,
@@ -78,6 +124,13 @@ h2 {
 }
 
 button {
+  --primary: var(--purple-primary);
+  --primary-text: var(--purple-primary-text);
+  --hover: var(--purple-hover);
+  --hover-text: var(--purple-hover-text);
+  --disabled: var(--purple-disabled);
+  --disabled-text: var(--purple-disabled-text);
+
   font-family: var(--font);
   text-overflow: ellipsis;
   text-align: center;
@@ -93,29 +146,82 @@ button {
   overflow: hidden;
   border-radius: 2px;
   padding: 4px 12px;
+  border: 1px solid transparent;
 
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--text-caption);
+  &,
+  &.filled {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: var(--primary-text);
 
-  &:hover:not([aria-disabled="true"]) {
-    color: var(--blue-primary);
-    border-color: var(--blue-primary);
-  }
-  &:active:not([aria-disabled="true"]),
-  &.active {
-    border-color: var(--blue-primary);
+    &:hover:not([aria-disabled="true"]) {
+      background-color: var(--hover);
+      border-color: var(--hover);
+    }
+    &:active:not([aria-disabled="true"]),
+    &.active {
+      box-shadow: 0 0 0 2px var(--disabled);
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-text);
+      box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.12);
+    }
+    &[aria-disabled="true"] {
+      cursor: not-allowed;
+      background-color: var(--disabled);
+      border-color: var(--disabled);
+      color: var(--disabled-text);
+    }
   }
 
-  &:active:not([aria-disabled="true"]) {
-    box-shadow: 0 0 0 2px var(--blue-disabled);
-    outline: none;
+  &.outline {
+    border-color: var(--grey-hover);
+    background-color: transparent;
+    color: var(--text-primary);
+
+    &:hover:not([aria-disabled="true"]) {
+      background-color: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    &:active:not([aria-disabled="true"]),
+    &.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--disabled);
+      outline: none;
+    }
+    &[aria-disabled="true"] {
+      border-color: var(--grey-primary);
+      color: var(--grey-primary);
+    }
   }
-  &[aria-disabled="true"] {
-    cursor: not-allowed;
-    background-color: var(--071e3e);
-    border-color: var(--midnight-primary);
-    color: var(--text-disabled);
+
+  &.text {
+    color: var(--text-primary);
+    background-color: transparent;
+
+    padding: 0px 2px;
+    border: 0;
+    border-bottom: 1px dashed white;
+    border-radius: 0;
+
+    &:hover:not([aria-disabled="true"]) {
+      background-color: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    &:active:not([aria-disabled="true"]),
+    &.active {
+      background-color: transparent;
+      color: var(--hover);
+      border-color: var(--hover);
+      outline: none;
+    }
+    &[aria-disabled="true"] {
+      background-color: transparent;
+      border-color: var(--text-disabled);
+      color: var(--text-disabled);
+    }
   }
 
   .button-icon {
@@ -283,7 +389,7 @@ p {
   }
 
   &.ant-btn-primary {
-    border-color: var(--blue-background);
+    border-color: var(--blue-disabled);
     &:hover,
     &:focus {
       color: var(--text-primary);
