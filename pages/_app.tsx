@@ -1,7 +1,7 @@
 import "antd/dist/antd.dark.css";
 
-// import "antd/dist/antd.css";
 import "../styles/globals.scss";
+import "../styles/juniper.scss";
 
 import firebase from "firebase";
 import firebaseConfig from "firebaseConfig";

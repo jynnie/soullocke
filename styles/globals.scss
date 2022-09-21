@@ -55,6 +55,11 @@
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
+* {
+  box-sizing: border-box;
+  transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
 html,
 body {
   background-color: var(--background);
@@ -63,10 +68,6 @@ body {
   margin: 0;
   font-family: var(--font);
   font-size: 16px;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 h1,
@@ -91,8 +92,20 @@ h3 {
   font-size: 28px;
 }
 
-p.large {
-  font-size: 20px;
+p {
+  &.large {
+    font-size: 20px;
+  }
+  &.caption {
+    color: var(--text-caption);
+    font-size: 0.8rem;
+  }
+  &.warning {
+    color: var(--yellow-primary);
+  }
+  &.alignRight {
+    text-align: right;
+  }
 }
 
 a {
@@ -106,7 +119,6 @@ a {
   text-decoration: none;
   color: var(--text-primary);
   background-color: transparent;
-  transition: background 0.2s, border 0.2s, color 0.2s;
 
   padding: 0px 2px;
   border: 0;
@@ -145,7 +157,6 @@ button {
   text-align: center;
   vertical-align: baseline;
 
-  transition: background 0.2s, border 0.2s, color 0.2s;
   cursor: pointer;
 
   display: flex;
@@ -256,6 +267,28 @@ button {
   }
 }
 
+input {
+  background: transparent;
+  padding: 4px 8px;
+  border: 1px solid var(--grey-hover);
+  border-radius: 4px;
+
+  &:focus,
+  &:focus-within {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 0 2px var(--purple-disabled);
+  }
+
+  &[aria-disabled="true"],
+  &.disabled {
+    border-color: var(--grey-primary);
+    color: var(--grey-primary);
+  }
+}
+
+//* ----------------------------------#07cf7f
+
 .loading-spinner {
   animation-name: jnpr-loading-spinner;
   animation-timing-function: linear;
@@ -306,26 +339,35 @@ button {
     justify-content: flex-end;
   }
 
-  &.gap-8 {
-    gap: 8px;
+  &.gap {
+    &-4 {
+      gap: 4px;
+    }
+    &-8 {
+      gap: 8px;
+    }
+    &-16 {
+      gap: 16px;
+    }
   }
 }
 
-p {
-  &.caption {
-    color: var(--text-caption);
-    font-size: 0.8rem;
-  }
-  &.warning {
-    color: var(--yellow-primary);
-  }
-  &.alignRight {
-    text-align: right;
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+.grow {
+  &-1 {
+    flex-grow: 1;
   }
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.color-purple {
+  color: var(--purple-primary);
 }
 
 //* ----------------------------------#07cf7f
