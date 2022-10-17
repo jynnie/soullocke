@@ -35,7 +35,7 @@ export function AddToTimeline({
         visible={showForm}
         onVisibleChange={(v) => setShowForm(v)}
       >
-        <Tooltip title="Add Location" placement="right">
+        <Tooltip title="Add Location/Badge" placement="right">
           <Button
             shape="circle"
             icon={<PlusOutlined />}

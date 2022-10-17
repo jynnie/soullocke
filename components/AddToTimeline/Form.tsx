@@ -42,7 +42,7 @@ function AddToTimelineForm({
         showSearch
         value={location}
         onChange={handleChange}
-        placeholder="Select Location"
+        placeholder="Add Location or Badge"
       >
         <Option value="starter" className={styles.option}>
           Starter
