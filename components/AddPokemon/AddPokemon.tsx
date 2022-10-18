@@ -1,10 +1,9 @@
-import { Button, Popover, Tooltip } from "antd";
+import { Popover, Tooltip } from "antd";
+import { Button } from "components/ui-library/Button";
 import { useAddEvent } from "hooks/useAddEvent";
 import { PlaceName } from "models";
 import React from "react";
-import styles from "styles/Home.module.css";
-
-import { PlusOutlined } from "@ant-design/icons";
+import { Plus } from "react-feather";
 
 import Form from "./Form";
 
@@ -41,12 +40,7 @@ export function AddPokemon({
       onVisibleChange={(v) => setShowForm(v)}
     >
       <Tooltip title="Add Pokemon">
-        <Button
-          type="dashed"
-          shape="circle"
-          icon={<PlusOutlined />}
-          className={styles.secondaryButton}
-        />
+        <Button className="subtle outline icon" icon={<Plus />} />
       </Tooltip>
     </Popover>
   );
