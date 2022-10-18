@@ -203,7 +203,7 @@ function EditEvent({
           Cancel
         </Button>
 
-        <Button className="outline" onClick={handleDelete}>
+        <Button className="outline danger" onClick={handleDelete}>
           Delete
         </Button>
 

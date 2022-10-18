@@ -1,12 +1,15 @@
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { ModalProps } from "antd/lib/modal";
+import cn from "classnames";
 import EditEvent from "components/EditEvent";
+import { Button } from "components/ui-library/Button";
 import { TimelineBullet } from "components/ui-library/TimelineBullet";
 import { useEditEvent } from "hooks/useEditEvent";
 import Pokeball from "lib/icons/Pokeball";
 import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
 import React from "react";
+import { Edit } from "react-feather";
 import styles from "styles/Event.module.scss";
 import { cleanName } from "utils/utils";
 
@@ -134,9 +137,8 @@ function PokemonTimelineEvent({
       <div className={styles.container}>
         <span>{eventDetails}</span>
         <Button
-          className={styles.action}
-          type="text"
-          icon={<EditOutlined size={18} />}
+          className={cn(styles.action, "icon outline")}
+          icon={<Edit size={18} />}
           onClick={() => setIsEditing(true)}
         />
       </div>
@@ -160,8 +162,11 @@ function DeleteEventModal(props: DeleteEventModalProps) {
         {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
       <div className="flex justifyEnd gap-8">
-        <Button onClick={props?.onCancel}>Cancel</Button>
-        <Button type="primary" danger onClick={props?.onDelete}>
+        {/* FIXME: */}
+        <Button className="outline" onClick={props?.onCancel as any}>
+          Cancel
+        </Button>
+        <Button className="danger" onClick={props?.onDelete}>
           Delete
         </Button>
       </div>

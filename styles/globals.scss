@@ -271,6 +271,15 @@ button {
       border: 0;
     }
   }
+
+  &.danger {
+    --primary: var(--red-primary);
+    --primary-text: var(--red-primary-text);
+    --hover: var(--red-hover);
+    --hover-text: var(--red-hover-text);
+    --disabled: var(--red-disabled);
+    --disabled-text: var(--red-disabled-text);
+  }
 }
 
 input {
