@@ -1,6 +1,7 @@
-import { Button, Modal, Timeline } from "antd";
+import { Button, Modal } from "antd";
 import { ModalProps } from "antd/lib/modal";
 import EditEvent from "components/EditEvent";
+import { TimelineBullet } from "components/ui-library/TimelineBullet";
 import { useEditEvent } from "hooks/useEditEvent";
 import Pokeball from "lib/icons/Pokeball";
 import { EventType, IPokemon, PokemonLocation } from "models";
@@ -129,7 +130,7 @@ function PokemonTimelineEvent({
   }
 
   return (
-    <Timeline.Item color={eventColor} dot={eventDot}>
+    <TimelineBullet color={eventColor} dot={eventDot}>
       <div className={styles.container}>
         <span>{eventDetails}</span>
         <Button
@@ -139,7 +140,7 @@ function PokemonTimelineEvent({
           onClick={() => setIsEditing(true)}
         />
       </div>
-    </Timeline.Item>
+    </TimelineBullet>
   );
 }
 

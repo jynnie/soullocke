@@ -218,6 +218,10 @@ button {
     border-color: var(--grey-hover);
     background-color: transparent;
     color: var(--text-primary);
+    &.subtle {
+      border-color: var(--grey-primary);
+      color: var(--text-caption);
+    }
 
     &:hover:not([aria-disabled="true"]) {
       background-color: transparent;
@@ -290,6 +294,30 @@ input {
 }
 
 //* ----------------------------------#07cf7f
+
+.timelineItem {
+  --tail-height: 12px;
+  position: relative;
+
+  .timelineItem-dot {
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+  }
+
+  & + & {
+    margin-top: calc(var(--tail-height) + 4px);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: calc(0px - var(--tail-height));
+      left: 7px;
+      height: var(--tail-height);
+      border-left: 1px solid var(--grey-primary);
+    }
+  }
+}
 
 .loading-spinner {
   animation-name: jnpr-loading-spinner;
