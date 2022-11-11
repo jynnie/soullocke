@@ -13,7 +13,7 @@ export function useAllPokemon() {
       .then((res) => res.json())
       .then((data) => {
         const basePokemon = (data.results as PokemonListApiData[]).filter(
-          (p: { name: string }) => !/(mega|gmax)/gi.test(p.name),
+          (p: { name: string }) => !/((?<!yan)mega(?!nium)|gmax)/gi.test(p.name),
         );
         setAllPokemon(basePokemon);
       });
