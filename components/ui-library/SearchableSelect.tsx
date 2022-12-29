@@ -1,15 +1,9 @@
 import cn from "classnames";
-import { usePopper, useUUID } from "lib/juniper-hooks";
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import ReactDOM from "react-dom";
+import { useUUID } from "lib/juniper-hooks";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, X } from "react-feather";
-import Box from "ui-box";
+
+import Tippy from "@tippyjs/react";
 
 interface Option {
   value: any;
@@ -38,8 +32,7 @@ export function SearchableSelect({
   isNotClearable,
   required,
 }: SearchableSelectProps) {
-  const { setReferenceElement, setPopperElement, styles, attributes, update } =
-    usePopper();
+  const [isMounted, setIsMounted] = useState(false);
   const uuid = useUUID(4);
 
   const {
@@ -58,111 +51,105 @@ export function SearchableSelect({
     handleClear,
   } = useSearchableSelect(options ?? [], value, onChange);
 
-  // WORKAROUND: On dismount, automatically blur
   useEffect(() => {
-    return () => {
-      handleBlur();
-      update?.();
-    };
+    setIsMounted(true);
+    return () => setIsMounted(false);
   }, []);
-  // WORKAROUND: If the element is not mounted at the beginning
-  // it's important to update the location.
-  useLayoutEffect(() => {
-    update?.();
-  }, [!!update]);
 
   return (
-    <Box
-      className={cn(className, "jnpr-searchableSelect", {
-        disabled: !!disabled,
-      })}
-      ref={setReferenceElement}
+    <Tippy
+      content={
+        <ul
+          className={cn("jnpr-searchableSelect-optionContainer", {
+            visible: isMounted && isFocused,
+          })}
+          id={`combobox-list-:${uuid}:`}
+          role="listbox"
+        >
+          {filteredOptions.map((option, i) => {
+            const isSelected = option.value === value;
+            const isFocused = focusedOptionIdx === i;
+            return (
+              <li
+                key={i}
+                id={`combobox-option-${i}`}
+                role="option"
+                aria-selected={isSelected}
+                data-highlighted={isFocused}
+                className={cn("jnpr-searchableSelect-singleOption", {
+                  selected: isSelected,
+                  focused: isFocused,
+                })}
+                onClick={handleSelect(option)}
+              >
+                <span className="jnpr-searchableSelect-optionText">
+                  {option.label}
+                </span>
+                {isSelected && <Check width={16} />}
+              </li>
+            );
+          })}
+          {filteredOptions.length === 0 && (
+            <p className="jnpr-searchableSelect-noResults">No Results</p>
+          )}
+        </ul>
+      }
+      placement="bottom"
+      visible={isFocused && isMounted}
+      interactive
+      onClickOutside={handleBlur}
     >
-      <input
-        ref={inputRef}
-        type="text"
-        role="combobox"
-        aria-controls={`combobox-list-:${uuid}:`}
-        aria-expanded={isFocused}
-        aria-autocomplete="both"
-        aria-owns="results"
-        aria-activedescendant={
-          !selectedOption ? undefined : `combobox-option-${selectedOptionIdx}`
-        }
-        placeholder={placeholder || "Search..."}
-        disabled={disabled}
-        value={searchValue === null ? selectedOption?.label || "" : searchValue}
-        onChange={handleInputChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
-        required={required}
-      />
+      <div
+        className={cn(className, "jnpr-searchableSelect", {
+          disabled: !!disabled,
+        })}
+      >
+        <input
+          ref={inputRef}
+          type="text"
+          role="combobox"
+          aria-controls={`combobox-list-:${uuid}:`}
+          aria-expanded={isFocused}
+          aria-autocomplete="both"
+          aria-owns="results"
+          aria-activedescendant={
+            !selectedOption ? undefined : `combobox-option-${selectedOptionIdx}`
+          }
+          placeholder={placeholder || "Search..."}
+          disabled={disabled}
+          value={
+            searchValue === null ? selectedOption?.label || "" : searchValue
+          }
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          required={required}
+        />
 
-      <div className="flex center gap-2">
-        {!isNotClearable && value !== undefined && (
+        <div className="flex center gap-2">
+          {!isNotClearable && value !== undefined && (
+            <button
+              className="jnpr-searchableSelect-iconButton"
+              disabled={disabled}
+              onClick={handleClear}
+            >
+              <X width={16} />
+            </button>
+          )}
           <button
             className="jnpr-searchableSelect-iconButton"
             disabled={disabled}
-            onClick={handleClear}
+            tabIndex={-1}
           >
-            <X width={16} />
+            <ChevronDown
+              className="jnpr-searchableSelect-chevronIcon"
+              width={16}
+            />
           </button>
-        )}
-        <button
-          className="jnpr-searchableSelect-iconButton"
-          disabled={disabled}
-          tabIndex={-1}
-        >
-          <ChevronDown
-            className="jnpr-searchableSelect-chevronIcon"
-            width={16}
-          />
-        </button>
+        </div>
       </div>
-
-      {typeof window !== "undefined" &&
-        ReactDOM.createPortal(
-          <ul
-            ref={setPopperElement}
-            style={styles.popper}
-            {...attributes.popper}
-            className={cn("jnpr-searchableSelect-optionContainer", {
-              visible: isFocused,
-            })}
-            id={`combobox-list-:${uuid}:`}
-            role="listbox"
-          >
-            {filteredOptions.map((option, i) => {
-              const isSelected = option.value === value;
-              const isFocused = focusedOptionIdx === i;
-              return (
-                <li
-                  key={i}
-                  id={`combobox-option-${i}`}
-                  role="option"
-                  aria-selected={isSelected}
-                  data-highlighted={isFocused}
-                  className={cn("jnpr-searchableSelect-singleOption", {
-                    selected: isSelected,
-                    focused: isFocused,
-                  })}
-                  onClick={handleSelect(option)}
-                >
-                  <span className="jnpr-searchableSelect-optionText">
-                    {option.label}
-                  </span>
-                  {isSelected && <Check width={16} />}
-                </li>
-              );
-            })}
-            {filteredOptions.length === 0 && (
-              <p className="jnpr-searchableSelect-noResults">No Results</p>
-            )}
-          </ul>,
-          document.body,
-        )}
-    </Box>
+    </Tippy>
   );
 }
 

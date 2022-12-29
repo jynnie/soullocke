@@ -5,7 +5,7 @@ import { PlaceName } from "models";
 import React from "react";
 import { Plus } from "react-feather";
 
-import Tooltip from "@tippyjs/react";
+import Tippy from "@tippyjs/react";
 
 import Form from "./Form";
 
@@ -34,10 +34,8 @@ export function AddPokemon({
   };
   const onCancel = () => toggleForm();
 
-  // FIXME: Something about this tooltip is still seriously messed up...
-  // Maybe this is the one place I should keep ant?
   return (
-    <Tooltip
+    <Tippy
       content={
         <TooltipContent>
           <Form {...{ onFinish: handleFinish, onCancel }} />
@@ -49,7 +47,7 @@ export function AddPokemon({
       onClickOutside={() => setShowForm(false)}
     >
       <div>
-        <Tooltip content={<TooltipContent content="Add Pokemon" />}>
+        <Tippy content={<TooltipContent content="Add Pokemon" />}>
           <div>
             <Button
               className="subtle outline icon"
@@ -57,9 +55,9 @@ export function AddPokemon({
               onClick={() => setShowForm(true)}
             />
           </div>
-        </Tooltip>
+        </Tippy>
       </div>
-    </Tooltip>
+    </Tippy>
   );
 }
 

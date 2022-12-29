@@ -32,7 +32,7 @@ export function usePopper() {
     null,
   );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
-  const { styles, attributes, update, forceUpdate } = useRawPopper(
+  const { styles, attributes, forceUpdate } = useRawPopper(
     referenceElement,
     popperElement,
     {
