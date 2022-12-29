@@ -146,3 +146,10 @@
     }
   }
 }
+
+.jnpr-tooltip {
+  display: none;
+  &.visible {
+    display: block;
+  }
+}

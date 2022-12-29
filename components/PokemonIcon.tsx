@@ -1,10 +1,13 @@
-import { Tooltip } from "antd";
 import PokemonImage from "components/PokemonImage";
 import type { IPokemon } from "models";
 import React from "react";
 import { usePalette } from "react-palette";
 import styles from "styles/Pokemon.module.scss";
 import Box from "ui-box";
+
+import Tooltip from "@tippyjs/react";
+
+import { TooltipContent } from "./ui-library/TooltipContent";
 
 export function PokemonIcon({
   pokemon,
@@ -29,19 +32,24 @@ export function PokemonIcon({
   };
 
   return (
-    <Tooltip title={`${pokemonNickname}`} placement="right">
-      <Box position="relative" onClick={onClick} width="max-content">
-        <div>
-          <Box
-            className={styles.iconAvatar}
-            width={width || 40}
-            height={height || 40}
-            {...avatarStyle}
-          >
-            <PokemonImage pokemon={pokemon} updateSrc={setSrc} />
-          </Box>
-        </div>
-      </Box>
+    <Tooltip
+      content={<TooltipContent content={`${pokemonNickname}`} />}
+      placement="top"
+    >
+      <div>
+        <Box position="relative" onClick={onClick} width="max-content">
+          <div>
+            <Box
+              className={styles.iconAvatar}
+              width={width || 40}
+              height={height || 40}
+              {...avatarStyle}
+            >
+              <PokemonImage pokemon={pokemon} updateSrc={setSrc} />
+            </Box>
+          </div>
+        </Box>
+      </div>
     </Tooltip>
   );
 }

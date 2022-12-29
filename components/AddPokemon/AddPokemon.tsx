@@ -1,9 +1,11 @@
-import { Popover, Tooltip } from "antd";
 import { Button } from "components/ui-library/Button";
+import { TooltipContent } from "components/ui-library/TooltipContent";
 import { useAddEvent } from "hooks/useAddEvent";
 import { PlaceName } from "models";
 import React from "react";
 import { Plus } from "react-feather";
+
+import Tooltip from "@tippyjs/react";
 
 import Form from "./Form";
 
@@ -33,16 +35,23 @@ export function AddPokemon({
   const onCancel = () => toggleForm();
 
   return (
-    <Popover
-      content={<Form {...{ onFinish: handleFinish, onCancel }} />}
+    <Tooltip
+      content={
+        <TooltipContent>
+          <Form {...{ onFinish: handleFinish, onCancel }} />
+        </TooltipContent>
+      }
       trigger="click"
-      visible={showForm}
-      onVisibleChange={(v) => setShowForm(v)}
+      interactive
     >
-      <Tooltip title="Add Pokemon">
-        <Button className="subtle outline icon" icon={<Plus />} />
-      </Tooltip>
-    </Popover>
+      <div>
+        <Tooltip content={<TooltipContent content="Add Pokemon" />}>
+          <div>
+            <Button className="subtle outline icon" icon={<Plus />} />
+          </div>
+        </Tooltip>
+      </div>
+    </Tooltip>
   );
 }
 

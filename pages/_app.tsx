@@ -1,5 +1,3 @@
-import "antd/dist/antd.dark.css";
-
 import "../styles/globals.scss";
 import "../styles/juniper.scss";
 
