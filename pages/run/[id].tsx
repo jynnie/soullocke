@@ -1,5 +1,5 @@
-import { Tooltip } from "antd";
 import RunHome from "components/RunHome";
+import { TooltipContent } from "components/ui-library/TooltipContent";
 import { useAllBadges } from "hooks/useAllBadges";
 import { useAllPokemon } from "hooks/useAllPokemon";
 import { useMetrics } from "hooks/useMetrics";
@@ -13,6 +13,7 @@ import React from "react";
 import styles from "styles/Run.module.scss";
 
 import { SmileOutlined } from "@ant-design/icons";
+import Tippy from "@tippyjs/react";
 
 export const RunContext: React.Context<{
   allPokemon: ListPokemon[];
@@ -49,9 +50,14 @@ function RunPage() {
         <main className={styles.main}>
           <RunHome {...{ id, allBadges, allLocations }} />
 
-          <Tooltip
-            title="Hi there! Thanks for checking out Soullocke. If you have feedback or issues, click me."
-            placement="topRight"
+          <Tippy
+            content={
+              <TooltipContent className={styles.tippy}>
+                Hi there! Thanks for checking out Soullocke. If you have
+                feedback or issues, click me.
+              </TooltipContent>
+            }
+            placement="top-end"
           >
             <div className={styles.affix}>
               <a
@@ -63,7 +69,7 @@ function RunPage() {
                 <SmileOutlined />
               </a>
             </div>
-          </Tooltip>
+          </Tippy>
         </main>
       </div>
     </RunContext.Provider>

@@ -55,4 +55,10 @@
 
 .affix a {
   color: unset;
+  border: 0;
+}
+
+.tippy {
+  @apply p-2;
+  width: 240px;
 }

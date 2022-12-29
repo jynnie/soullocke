@@ -33,28 +33,48 @@
 }
 
 .tag {
+  @apply flex gap-2 items-center;
   text-transform: uppercase;
+
+  sup {
+    width: 6px;
+    height: 6px;
+    text-transform: uppercase;
+    outline: solid 5px transparent;
+    border-radius: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  &.team sup {
+    background-color: var(--pink-primary);
+    outline-color: var(--pink-disabled);
+  }
+  &.box sup {
+    background-color: var(--blue-primary);
+    outline-color: var(--blue-disabled);
+  }
+  &.grave sup {
+    background-color: var(--grey-primary);
+    outline-color: var(--grey-disabled);
+  }
+  &.daycare sup {
+    background-color: var(--yellow-primary);
+    outline-color: var(--yellow-disabled);
+  }
 
   &.team {
     font-weight: 500;
     color: var(--pink-hover);
-    border-color: var(--pink-primary);
-    background-color: var(--pink-disabled);
   }
   &.box {
     color: var(--blue-primary);
-    border-color: var(--blue-hover);
-    background-color: var(--blue-disabled);
   }
   &.grave {
     color: var(--grey-hover);
-    border-color: var(--grey-primary);
-    background-color: var(--grey-disabled);
   }
   &.daycare {
     color: var(--yellow-primary);
-    border-color: var(--yellow-hover);
-    background-color: var(--yellow-disabled);
   }
 }
 

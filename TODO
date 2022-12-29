@@ -3,6 +3,22 @@
 🌶🌶🌶 Super cool
 
 - [ ] Switch off of Ant Design
+  - [ ] RunHome
+  - [ ] AddToTimeline
+  - [ ] Form
+  - [ ] Delete
+  - [ ] Move
+  - [x] PLTag
+  - [ ] MovePokemon/index
+  - [ ] MovePokemonToTeam
+  - [x] Notes/Button
+  - [ ] Notes/Modal
+  - [ ] Pokemon/Modal
+  - [ ] TimelineEvent
+  - [x] BadgeBox
+  - [x] Filters
+  - [ ] Timeline
+  - [x] [id].tsx
 - [ ] New design!
 - [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles

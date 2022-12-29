@@ -17,6 +17,7 @@ export function useFilters(allDataArr: Data[]) {
       }
     }
 
+    // TODO: Also allow you to search by location name
     if (!!filters.searchTerm) {
       const newFiltered = allDataArr.filter((d) =>
         matchesPokemonName(d, filters),

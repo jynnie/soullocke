@@ -1,11 +1,13 @@
-import { Tooltip } from "antd";
 import cn from "classnames";
+import { TooltipContent } from "components/ui-library/TooltipContent";
 import { useAddNewLocation } from "hooks/useAddNewLocation";
 import { useDeleteLocation } from "hooks/useDeleteLocation";
 import useEarnedBadges from "hooks/useEarnedBadges";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import React from "react";
 import styles from "styles/Summary.module.scss";
+
+import Tippy from "@tippyjs/react";
 
 // import { badgeImages } from "lib/badges";
 
@@ -47,7 +49,11 @@ function SingleBadge({
   }
 
   return (
-    <Tooltip key={badge} title="Double click to toggle badge">
+    <Tippy
+      content={<TooltipContent>Double click to toggle badge</TooltipContent>}
+      delay={[500, 0]}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={cn({ [styles.earned]: isEarned }, "pointer")}
         src={`https://nuzlocke-generator.herokuapp.com/img/checkpoints/${badge
@@ -56,7 +62,7 @@ function SingleBadge({
         alt={badge}
         onDoubleClick={addBadge(badge)}
       />
-    </Tooltip>
+    </Tippy>
   );
 }
 
