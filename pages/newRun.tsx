@@ -63,8 +63,8 @@ function NewRunPage() {
       <main>
         <h2>New Run</h2>
 
-        <form className="flex column gap-16" method="dialog">
-          <div className="flex column gap-4">
+        <form className="flex column gap-8" method="dialog">
+          <div className="flex column gap-2">
             <label className={formStyles.width76}>
               Game <span className="color-purple">*</span>
             </label>
@@ -78,7 +78,7 @@ function NewRunPage() {
             />
           </div>
 
-          <div className="flex column gap-4">
+          <div className="flex column gap-2">
             <label className={formStyles.width76}>
               Region <span className="color-purple">*</span>
             </label>
@@ -93,7 +93,7 @@ function NewRunPage() {
             />
           </div>
 
-          <div className="flex column gap-4">
+          <div className="flex column gap-2">
             <div className="flex alignCenter spaceBetween">
               <label>Players</label>
               <Button
@@ -103,7 +103,7 @@ function NewRunPage() {
               />
             </div>
             {players.map((player, index) => (
-              <div className="flex alignCenter gap-8" key={index}>
+              <div className="flex alignCenter gap-4" key={index}>
                 <label className={cn(formStyles.width76, "shrink-0")}>
                   Player {index + 1}{" "}
                   {index === 0 && <span className="color-purple">*</span>}

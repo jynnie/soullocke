@@ -12,6 +12,7 @@
     padding: 4px 8px 4px 12px;
     font-size: 1rem;
     font-family: var(--font);
+    color: var(--text-primary);
 
     outline: none;
     border: none;
@@ -22,7 +23,7 @@
     text-overflow: ellipsis;
 
     &::placeholder {
-      color: var(--text-color);
+      color: var(--text-primary);
     }
 
     &:hover,
@@ -144,12 +145,5 @@
     input {
       cursor: not-allowed;
     }
-  }
-}
-
-.jnpr-tooltip {
-  display: none;
-  &.visible {
-    display: block;
   }
 }

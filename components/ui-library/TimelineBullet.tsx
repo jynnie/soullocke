@@ -10,7 +10,7 @@ export function TimelineBullet({
   color?: string;
 }) {
   return (
-    <li className="timelineItem flex gap-8">
+    <li className="timelineItem flex gap-4">
       <div className="timelineItem-dot flex center" style={{ color }}>
         {dot}
       </div>

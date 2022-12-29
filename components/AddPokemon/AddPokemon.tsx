@@ -34,6 +34,8 @@ export function AddPokemon({
   };
   const onCancel = () => toggleForm();
 
+  // FIXME: Something about this tooltip is still seriously messed up...
+  // Maybe this is the one place I should keep ant?
   return (
     <Tooltip
       content={
@@ -41,13 +43,17 @@ export function AddPokemon({
           <Form {...{ onFinish: handleFinish, onCancel }} />
         </TooltipContent>
       }
-      trigger="click"
+      visible={showForm}
       interactive
     >
       <div>
         <Tooltip content={<TooltipContent content="Add Pokemon" />}>
           <div>
-            <Button className="subtle outline icon" icon={<Plus />} />
+            <Button
+              className="subtle outline icon"
+              icon={<Plus />}
+              onClick={() => setShowForm(true)}
+            />
           </div>
         </Tooltip>
       </div>

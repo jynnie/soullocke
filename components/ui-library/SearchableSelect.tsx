@@ -32,8 +32,13 @@ export function SearchableSelect({
   isNotClearable,
   required,
 }: SearchableSelectProps) {
-  const { setReferenceElement, setPopperElement, styles, attributes } =
-    usePopper();
+  const {
+    referenceElement,
+    setReferenceElement,
+    setPopperElement,
+    styles,
+    attributes,
+  } = usePopper();
   const uuid = useUUID(4);
 
   const {
@@ -80,7 +85,7 @@ export function SearchableSelect({
         required={required}
       />
 
-      <div className="flex center gap-4">
+      <div className="flex center gap-2">
         {!isNotClearable && value !== undefined && (
           <button
             className="jnpr-searchableSelect-iconButton"
@@ -190,6 +195,7 @@ export function useSearchableSelect(
   const handleSelect = (option: Option) => () => {
     onChange?.(option.value);
     setSearchValue(null);
+    setIsFocused(false);
   };
 
   function handleClear() {

@@ -1,3 +1,5 @@
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Teko:wght@300&family=Roboto:wght@400,600&display=swap");
 
 :root {
@@ -214,10 +216,13 @@ button {
     }
   }
 
+  // FIXME: Collides with TailwindCSS
   &.outline {
     border-color: var(--grey-hover);
     background-color: transparent;
     color: var(--text-primary);
+    outline-color: transparent;
+
     &.subtle {
       border-color: var(--grey-primary);
       color: var(--text-caption);
@@ -287,6 +292,12 @@ input {
   padding: 4px 8px;
   border: 1px solid var(--grey-hover);
   border-radius: 4px;
+  font-size: 1rem;
+  color: var(--text-primary);
+
+  &::placeholder {
+    color: var(--text-primary);
+  }
 
   &:focus,
   &:focus-within {
@@ -359,6 +370,7 @@ input {
   text-transform: capitalize;
 }
 
+// TODO: Replace with Tailwind
 .flex {
   display: flex;
 
@@ -385,18 +397,6 @@ input {
 
   &.justifyEnd {
     justify-content: flex-end;
-  }
-
-  &.gap {
-    &-4 {
-      gap: 4px;
-    }
-    &-8 {
-      gap: 8px;
-    }
-    &-16 {
-      gap: 16px;
-    }
   }
 }
 

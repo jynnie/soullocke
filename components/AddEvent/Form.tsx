@@ -85,7 +85,7 @@ function AddEventForm({
   return (
     <form className="flex column" name="addPokemonEvent" method="dialog">
       <div
-        className={cn(styles.item, "flex gap-4 alignCenter")}
+        className={cn(styles.item, "flex gap-2 alignCenter")}
         // rules={[
         //   { required: true, message: "Please choose where this happened" },
         // ]}
@@ -106,7 +106,7 @@ function AddEventForm({
       </div>
 
       <div
-        className={cn(styles.item, "flex gap-4 alignCenter")}
+        className={cn(styles.item, "flex gap-2 alignCenter")}
         // rules={[{ required: true, message: "Please choose event type" }]}
       >
         <label>
@@ -126,7 +126,7 @@ function AddEventForm({
 
       {eventType === EventType.moved && (
         <div
-          className={cn(styles.item, "flex gap-4 alignCenter")}
+          className={cn(styles.item, "flex gap-2 alignCenter")}
           // rules={[
           //   {
           //     required: eventType === EventType.moved,
@@ -152,7 +152,7 @@ function AddEventForm({
 
       {eventType === EventType.evolved && (
         <div
-          className={cn(styles.item, "flex gap-4 alignCenter")}
+          className={cn(styles.item, "flex gap-2 alignCenter")}
           // rules={[
           //   {
           //     required: eventType === EventType.evolved,
@@ -176,7 +176,7 @@ function AddEventForm({
         </div>
       )}
 
-      <div className={"flex gap-4 justifyEnd"}>
+      <div className={"flex gap-2 justifyEnd"}>
         <Button onClick={handleCancel}>Cancel</Button>
 
         <Button onClick={handleFinish}>Add</Button>

@@ -36,5 +36,10 @@ export function usePopper() {
     placement: "bottom-start",
     modifiers: [OFFSET, SAME_WIDTH],
   });
-  return { setReferenceElement, setPopperElement, styles, attributes };
+  return {
+    setReferenceElement,
+    setPopperElement,
+    styles,
+    attributes,
+  };
 }
