@@ -17,7 +17,7 @@
   - [ ] TimelineEvent
   - [x] BadgeBox
   - [x] Filters
-  - [ ] Timeline
+  - [x] Timeline
   - [x] [id].tsx
 - [ ] New design!
 - [ ] Timeline: Inline editing

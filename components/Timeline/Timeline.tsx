@@ -1,4 +1,3 @@
-import { message } from "antd";
 import cn from "classnames";
 import AddToTimeline from "components/AddToTimeline";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
@@ -17,6 +16,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
+import { toast } from "react-toastify";
 import styles from "styles/Timeline.module.scss";
 import Box from "ui-box";
 import { getPokemonByOrigin } from "utils/getPokemonByOrigin";
@@ -93,7 +93,12 @@ function TimelineGrid({
     );
 
     const data = await setTimelineOrder(items);
-    message.success("Timeline order change saved");
+    toast("Timeline order change saved", {
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      theme: "dark",
+    });
     return data;
   }
 

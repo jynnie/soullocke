@@ -10,6 +10,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Error from "pages/_error";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 import styles from "styles/Run.module.scss";
 
 import { SmileOutlined } from "@ant-design/icons";
@@ -72,6 +73,7 @@ function RunPage() {
           </Tippy>
         </main>
       </div>
+      <ToastContainer pauseOnFocusLoss={false} />
     </RunContext.Provider>
   );
 }
