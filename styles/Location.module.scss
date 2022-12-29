@@ -58,16 +58,6 @@
 }
 
 .listing {
-  &DeleteButton {
-    color: var(--text-caption);
-    border-color: transparent;
-    background: transparent;
-
-    &:hover {
-      color: #ef4444;
-    }
-  }
-
   &MoveButton {
     color: var(--text-caption);
     border-color: transparent;
@@ -91,5 +81,4 @@
 
 .deleteConfirm {
   max-width: 260px;
-  margin: 0;
 }

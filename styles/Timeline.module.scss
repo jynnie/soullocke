@@ -34,7 +34,8 @@
 
       border-bottom: 1px solid var(--midnight-primary);
 
-      text-transform: capitalize;
+      // FIXME: Applying it here applies to too much
+      // text-transform: capitalize;
     }
   }
 }

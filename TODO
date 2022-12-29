@@ -6,8 +6,8 @@
   - [x] RunHome
   - [x] AddToTimeline
   - [x] Form
-  - [ ] Delete
-  - [ ] Move
+  - [x] Delete
+  - [x] Move
   - [x] PLTag
   - [ ] MovePokemon/index
   - [ ] MovePokemonToTeam
