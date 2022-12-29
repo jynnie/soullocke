@@ -58,6 +58,8 @@
 }
 
 .listing {
+  @apply capitalize;
+
   &MoveButton {
     color: var(--text-caption);
     border-color: transparent;
