@@ -12,6 +12,14 @@
   }
 }
 
+.tab {
+  @apply cursor-pointer;
+
+  &.selectedTab {
+    color: var(--yellow-primary);
+  }
+}
+
 .tabs {
   width: 100%;
 }

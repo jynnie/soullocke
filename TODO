@@ -3,9 +3,9 @@
 🌶🌶🌶 Super cool
 
 - [ ] Switch off of Ant Design
-  - [ ] RunHome
-  - [ ] AddToTimeline
-  - [ ] Form
+  - [x] RunHome
+  - [x] AddToTimeline
+  - [x] Form
   - [ ] Delete
   - [ ] Move
   - [x] PLTag

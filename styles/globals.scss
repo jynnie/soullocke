@@ -213,6 +213,12 @@ button {
       .button-icon {
         margin: 0;
       }
+
+      &.small {
+        padding: 4px;
+        width: 32px;
+        height: 32px;
+      }
     }
   }
 

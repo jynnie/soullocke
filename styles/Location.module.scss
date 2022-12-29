@@ -5,31 +5,10 @@
   text-transform: capitalize;
   font-weight: 400;
   color: var(--text-primary);
-
-  [class*="badge"] sup {
-    right: -10px;
-  }
 }
 
 .badge {
   text-transform: uppercase;
-
-  &.team sup {
-    color: #fce7f3;
-    background-color: #ec4899;
-  }
-  &.box sup {
-    color: #38bdf8;
-    background-color: #075985;
-  }
-  &.grave sup {
-    color: #a1a1aa;
-    background-color: #52525b;
-  }
-  &.daycare sup {
-    color: #fbbf24;
-    background-color: #b45309;
-  }
 }
 
 .tag {
@@ -63,19 +42,19 @@
     outline-color: var(--yellow-disabled);
   }
 
-  &.team {
-    font-weight: 500;
-    color: var(--pink-hover);
-  }
-  &.box {
-    color: var(--blue-primary);
-  }
-  &.grave {
-    color: var(--grey-hover);
-  }
-  &.daycare {
-    color: var(--yellow-primary);
-  }
+  // &.team {
+  //   font-weight: 500;
+  //   color: var(--pink-hover);
+  // }
+  // &.box {
+  //   color: var(--blue-primary);
+  // }
+  // &.grave {
+  //   color: var(--grey-hover);
+  // }
+  // &.daycare {
+  //   color: var(--yellow-primary);
+  // }
 }
 
 .listing {

@@ -146,4 +146,13 @@
       cursor: not-allowed;
     }
   }
+
+  //* Styles
+
+  &.subtle {
+    border-color: transparent;
+    .jnpr-searchableSelect-iconButton {
+      padding: 4px;
+    }
+  }
 }
