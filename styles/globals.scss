@@ -366,17 +366,10 @@ input {
 
 //* ----------------------------------#07cf7f
 
-// TODO: Replace with Tailwind
 .flex {
-  display: flex;
-
   &.center {
     justify-content: center;
     align-items: center;
-  }
-
-  &.wrap {
-    flex-wrap: wrap;
   }
 }
 
