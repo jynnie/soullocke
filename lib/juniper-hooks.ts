@@ -32,14 +32,19 @@ export function usePopper() {
     null,
   );
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
-  const { styles, attributes } = useRawPopper(referenceElement, popperElement, {
-    placement: "bottom-start",
-    modifiers: [OFFSET, SAME_WIDTH],
-  });
+  const { styles, attributes, update, forceUpdate } = useRawPopper(
+    referenceElement,
+    popperElement,
+    {
+      placement: "bottom-start",
+      modifiers: [OFFSET, SAME_WIDTH],
+    },
+  );
   return {
     setReferenceElement,
     setPopperElement,
     styles,
     attributes,
+    update: forceUpdate,
   };
 }

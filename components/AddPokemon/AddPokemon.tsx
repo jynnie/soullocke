@@ -45,6 +45,8 @@ export function AddPokemon({
       }
       visible={showForm}
       interactive
+      interactiveBorder={10}
+      onClickOutside={() => setShowForm(false)}
     >
       <div>
         <Tooltip content={<TooltipContent content="Add Pokemon" />}>

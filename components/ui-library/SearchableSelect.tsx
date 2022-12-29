@@ -1,6 +1,12 @@
 import cn from "classnames";
 import { usePopper, useUUID } from "lib/juniper-hooks";
-import React, { useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ReactDOM from "react-dom";
 import { Check, ChevronDown, X } from "react-feather";
 import Box from "ui-box";
@@ -32,13 +38,8 @@ export function SearchableSelect({
   isNotClearable,
   required,
 }: SearchableSelectProps) {
-  const {
-    referenceElement,
-    setReferenceElement,
-    setPopperElement,
-    styles,
-    attributes,
-  } = usePopper();
+  const { setReferenceElement, setPopperElement, styles, attributes, update } =
+    usePopper();
   const uuid = useUUID(4);
 
   const {
@@ -56,6 +57,19 @@ export function SearchableSelect({
     handleSelect,
     handleClear,
   } = useSearchableSelect(options ?? [], value, onChange);
+
+  // WORKAROUND: On dismount, automatically blur
+  useEffect(() => {
+    return () => {
+      handleBlur();
+      update?.();
+    };
+  }, []);
+  // WORKAROUND: If the element is not mounted at the beginning
+  // it's important to update the location.
+  useLayoutEffect(() => {
+    update?.();
+  }, [!!update]);
 
   return (
     <Box
