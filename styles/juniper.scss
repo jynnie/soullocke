@@ -156,3 +156,55 @@
     }
   }
 }
+
+.jnpr-modal {
+  &Container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    z-index: 999;
+    background-color: #0000006b;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    opacity: 1;
+    transition: opacity 0.4s;
+
+    &:not(.visible) {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+  }
+  &Bgd {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+  }
+  &Content {
+    @apply rounded;
+
+    position: relative;
+    z-index: 1;
+    margin: 10vh auto;
+    max-width: 600px;
+
+    padding: 2rem 1rem;
+    background-color: var(--midnight-primary);
+  }
+  &-cancel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 999;
+  }
+}

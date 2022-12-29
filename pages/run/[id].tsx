@@ -10,10 +10,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Error from "pages/_error";
 import React from "react";
+import { Smile } from "react-feather";
 import { ToastContainer } from "react-toastify";
 import styles from "styles/Run.module.scss";
 
-import { SmileOutlined } from "@ant-design/icons";
 import Tippy from "@tippyjs/react";
 
 export const RunContext: React.Context<{
@@ -67,7 +67,7 @@ function RunPage() {
                 rel="noopener noreferrer"
                 onClick={() => mixpanel.track("Feedback button")}
               >
-                <SmileOutlined />
+                <Smile />
               </a>
             </div>
           </Tippy>

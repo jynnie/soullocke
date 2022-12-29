@@ -9,17 +9,9 @@ import Pokeball from "lib/icons/Pokeball";
 import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
 import React from "react";
-import { Edit } from "react-feather";
+import { Edit, Frown, Inbox, Star, Users } from "react-feather";
 import styles from "styles/Event.module.scss";
 import { cleanName } from "utils/utils";
-
-import {
-  EditOutlined,
-  FrownOutlined,
-  InboxOutlined,
-  StarOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
 
 interface ModifiedPokemonEvent extends PokemonEvent {
   locationName?: string;
@@ -81,31 +73,27 @@ function PokemonTimelineEvent({
   } else if (event.type === EventType.moved) {
     eventColor = "gray";
     eventDot =
-      event.details?.location === PokemonLocation.team ? (
-        <TeamOutlined />
-      ) : (
-        <InboxOutlined />
-      );
+      event.details?.location === PokemonLocation.team ? <Users /> : <Inbox />;
     eventDetails = `Moved to ${event.details?.location} while at ${place}`;
   } else if (event.type === EventType.missed) {
     eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventDot = <Frown />;
     eventDetails = `Missed on ${place}`;
   } else if (event.type === EventType.defeated) {
     eventColor = "red";
     eventDetails = `Defeated at ${place}`;
-    eventDot = <FrownOutlined />;
+    eventDot = <Frown />;
   } else if (event.type === EventType.soulDeath) {
     eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventDot = <Frown />;
     eventDetails = `Soul died at ${place}`;
   } else if (event.type === EventType.soulMiss) {
     eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventDot = <Frown />;
     eventDetails = `Soul missed at ${place}`;
   } else if (event.type === EventType.evolved) {
     eventColor = "blue";
-    eventDot = <StarOutlined />;
+    eventDot = <Star />;
     eventDetails = `Evolved into ${
       event.details?.evolution || "?"
     } at ${place}`;

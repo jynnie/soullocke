@@ -1,10 +1,11 @@
-import { Modal, Timeline } from "antd";
+import { Timeline } from "antd";
 import cn from "classnames";
 import AddEvent from "components/AddEvent";
 import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
 import { Button } from "components/ui-library/Button";
+import { Modal } from "components/ui-library/Modal";
 import { useBackfillPokemon } from "hooks/useBackfillPokemon";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
@@ -57,7 +58,7 @@ function PokemonModal({
   };
 
   return (
-    <Modal visible={!!showModal} onCancel={onCancel} footer={null}>
+    <Modal visible={!!showModal} onCancel={onCancel}>
       {!editPokemon && (
         <div className={styles.modalHeader}>
           <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
