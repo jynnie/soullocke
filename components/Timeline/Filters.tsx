@@ -60,7 +60,7 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
   };
 
   return (
-    <Box className="flex spaceBetween" width="100%" marginBottom={8}>
+    <Box className="flex justify-between" width="100%" marginBottom={8}>
       <div>
         <Input placeholder="Search" value={inputVal} onChange={handleSearch} />
       </div>

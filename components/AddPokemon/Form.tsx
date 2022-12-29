@@ -82,7 +82,7 @@ function AddPokemonForm({
         </div>
       )}
 
-      <div className={cn("flex justifyEnd gap-1 pointer")}>
+      <div className={cn("flex justify-end gap-1 pointer")}>
         {onCancel && (
           <Button className="outline" onClick={handleCancel}>
             Cancel

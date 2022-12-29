@@ -90,7 +90,7 @@ function EditEvent({
   return (
     <form
       name="addPokemonEvent"
-      className="flex column"
+      className="flex flex-col"
       method="dialog"
       // initialValues={{
       //   location: event?.location || latestLocation?.key,
@@ -100,7 +100,7 @@ function EditEvent({
       // }}
     >
       <div
-        className={cn(styles.item, "flex gap-2 alignCenter")}
+        className={cn(styles.item, "flex gap-2 items-center")}
         // rules={[
         //   { required: true, message: "Please choose where this happened" },
         // ]}
@@ -121,7 +121,7 @@ function EditEvent({
       </div>
 
       <div
-        className={cn(styles.item, "flex gap-2 alignCenter")}
+        className={cn(styles.item, "flex gap-2 items-center")}
         // rules={[{ required: true, message: "Please choose event type" }]}
       >
         <label>
@@ -141,7 +141,7 @@ function EditEvent({
 
       {eventType === EventType.moved && (
         <div
-          className={cn(styles.item, "flex gap-2 alignCenter")}
+          className={cn(styles.item, "flex gap-2 items-center")}
           // rules={[
           //   {
           //     required: eventType === EventType.moved,
@@ -167,7 +167,7 @@ function EditEvent({
 
       {eventType === EventType.evolved && (
         <div
-          className={cn(styles.item, "flex gap-2 alignCenter")}
+          className={cn(styles.item, "flex gap-2 items-center")}
           // rules={[
           //   {
           //     required: eventType === EventType.evolved,
@@ -198,7 +198,7 @@ function EditEvent({
           "Nor will it automatically update current Pokémon location."}
       </p>
 
-      <div className={"flex gap-2 justifyEnd"}>
+      <div className={"flex gap-2 justify-end"}>
         <Button className="outline" onClick={handleCancel}>
           Cancel
         </Button>

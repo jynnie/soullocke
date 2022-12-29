@@ -62,7 +62,7 @@ export function MovePokemonToTeam({
       footer={footerButtons}
       {...{ visible, onCancel }}
     >
-      <div className="flex column center">
+      <div className="flex flex-col center">
         <PokemonGroup marginBottom={12}>
           {pokemonToSwitchIn?.map(
             (p, i) => p && <PokemonIcon key={i} pokemon={p} />,

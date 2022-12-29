@@ -65,7 +65,7 @@ export function MovePokemon({
       footer={null}
       {...{ visible, onCancel }}
     >
-      <div className="flex column center">
+      <div className="flex flex-col center">
         <PokemonGroup marginBottom={12}>
           {pokemonMoving?.map(
             (p, i) => p && <PokemonIcon key={i} pokemon={p} />,

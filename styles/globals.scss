@@ -366,17 +366,9 @@ input {
 
 //* ----------------------------------#07cf7f
 
-.capitalize {
-  text-transform: capitalize;
-}
-
 // TODO: Replace with Tailwind
 .flex {
   display: flex;
-
-  &.column {
-    flex-direction: column;
-  }
 
   &.center {
     justify-content: center;
@@ -385,18 +377,6 @@ input {
 
   &.wrap {
     flex-wrap: wrap;
-  }
-
-  &.alignCenter {
-    align-items: center;
-  }
-
-  &.spaceBetween {
-    justify-content: space-between;
-  }
-
-  &.justifyEnd {
-    justify-content: flex-end;
   }
 }
 
