@@ -294,12 +294,14 @@ button {
   }
 }
 
-input {
+input,
+textarea {
   background: transparent;
   padding: 4px 8px;
   border: 1px solid var(--grey-hover);
   border-radius: 4px;
   font-size: 1rem;
+  font-family: var(--font);
   color: var(--text-primary);
 
   &::placeholder {

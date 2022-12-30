@@ -1,6 +1,7 @@
-import { Button, Modal } from "antd";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
+import { Button } from "components/ui-library/Button";
+import { Modal } from "components/ui-library/Modal";
 import { useMovePokemonToTeam } from "hooks/useMovePokemon";
 import { PlaceName } from "models";
 import React from "react";
@@ -42,26 +43,10 @@ export function MovePokemonToTeam({
   const loadingRunData = isNullish(teamLength);
   if (loadingRunData) return null;
 
-  const footerButtons = [
-    <Button key="cancel" onClick={cancel}>
-      Cancel
-    </Button>,
-    <Button
-      key="add"
-      disabled={!isNoSwapsNeeded && !isAddable}
-      onClick={add}
-      type="primary"
-    >
-      {isNoSwapsNeeded ? "Add" : "Swap"}
-    </Button>,
-  ];
-
   return (
-    <Modal
-      title={`Add ${pokemonToSwitchNames} to your teams?`}
-      footer={footerButtons}
-      {...{ visible, onCancel }}
-    >
+    <Modal {...{ visible, onCancel }}>
+      <p className="text-lg mt-0">Add {pokemonToSwitchNames} to your teams?</p>
+
       <div className="flex flex-col center">
         <PokemonGroup marginBottom={12}>
           {pokemonToSwitchIn?.map(
@@ -89,6 +74,19 @@ export function MovePokemonToTeam({
             ))}
           </div>
         )}
+      </div>
+
+      <div className="flex gap-2 justify-end items-center">
+        <Button key="cancel" className="outline" onClick={cancel}>
+          Cancel
+        </Button>
+        <Button
+          key="add"
+          disabled={!isNoSwapsNeeded && !isAddable}
+          onClick={add}
+        >
+          {isNoSwapsNeeded ? "Add" : "Swap"}
+        </Button>
       </div>
     </Modal>
   );

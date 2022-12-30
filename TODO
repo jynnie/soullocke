@@ -9,12 +9,12 @@
   - [x] Delete
   - [x] Move
   - [x] PLTag
-  - [ ] MovePokemon/index
-  - [ ] MovePokemonToTeam
+  - [x] MovePokemon/index
+  - [x] MovePokemonToTeam
   - [x] Notes/Button
-  - [ ] Notes/Modal
-  - [ ] Pokemon/Modal
-  - [ ] TimelineEvent
+  - [x] Notes/Modal
+  - [x] Pokemon/Modal
+  - [x] TimelineEvent
   - [x] BadgeBox
   - [x] Filters
   - [x] Timeline

@@ -1,4 +1,3 @@
-import { Timeline } from "antd";
 import cn from "classnames";
 import AddEvent from "components/AddEvent";
 import PokemonForm from "components/AddPokemon/Form";
@@ -74,7 +73,7 @@ function PokemonModal({
           <Button
             className={cn("icon", styles.modalHeaderEdit)}
             onClick={() => setEditPokemon(!editPokemon)}
-            icon={<Edit />}
+            icon={<Edit size="1.5em" />}
           />
         </div>
       )}
@@ -92,7 +91,7 @@ function PokemonModal({
         />
       )}
 
-      <Timeline>
+      <div style={{ maxWidth: 480 }}>
         {eventsArr?.map((event, i) => (
           <Event
             key={i}
@@ -105,7 +104,7 @@ function PokemonModal({
           />
         ))}
         {isAlive && <AddEvent {...{ pokemon }} />}
-      </Timeline>
+      </div>
     </Modal>
   );
 }

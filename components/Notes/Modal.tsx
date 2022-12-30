@@ -1,4 +1,5 @@
-import { Button, Input, Modal } from "antd";
+import { Button } from "components/ui-library/Button";
+import { Modal } from "components/ui-library/Modal";
 import { useLocationNotes } from "hooks/useLocationNotes";
 import React, { useEffect } from "react";
 import { cleanName } from "utils/utils";
@@ -12,7 +13,7 @@ function NotesModal({
   locationKey: string;
   onCancel: () => void;
 }) {
-  const existingNotes = useLocationNotes(locationKey);
+  const { notes: existingNotes, name } = useLocationNotes(locationKey);
   const [notes, setNotes] = React.useState<string>("");
 
   useEffect(() => {
@@ -28,26 +29,24 @@ function NotesModal({
     onCancel?.();
   };
 
-  const footer = [
-    <Button key="cancel" onClick={onCancel}>
-      Cancel
-    </Button>,
-    <Button key="save" onClick={handleSave} type="primary">
-      Save
-    </Button>,
-  ];
-
   return (
-    <Modal
-      // FIXME: Use location name instead of key
-      title={`${cleanName(locationKey)} Notes`}
-      {...{ visible, footer, onCancel }}
-    >
-      <Input.TextArea
+    <Modal {...{ visible, onCancel }}>
+      <p className="mt-0 text-lg capitalize">{cleanName(name.value)} Notes</p>
+      <textarea
+        className="w-full"
         placeholder="Place notes..."
         value={notes}
         onChange={handleChange}
       />
+
+      <div className="mt-4 flex gap-2 justify-end items-center">
+        <Button className="outline" key="cancel" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button key="save" onClick={handleSave}>
+          Save
+        </Button>
+      </div>
     </Modal>
   );
 }

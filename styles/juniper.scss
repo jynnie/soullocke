@@ -196,9 +196,11 @@
     position: relative;
     z-index: 1;
     margin: 10vh auto;
-    max-width: 600px;
+    width: max-content;
+    max-width: calc(100vw - 4rem);
+    min-width: 520px;
 
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
     background-color: var(--midnight-primary);
   }
   &-cancel {

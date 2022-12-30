@@ -4,15 +4,13 @@ import { X } from "react-feather";
 
 import { Button } from "./Button";
 
-export function Modal({
-  onCancel,
-  visible,
-  children,
-}: {
+export interface ModalProps {
   onCancel?: () => void;
   visible?: boolean;
-  children: JSX.Element | (JSX.Element | false)[];
-}) {
+  children?: JSX.Element | (JSX.Element | false)[];
+}
+
+export function Modal({ onCancel, visible, children }: ModalProps) {
   return (
     <>
       {ReactDOM.createPortal(
