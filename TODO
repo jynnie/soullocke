@@ -3,28 +3,16 @@
 🌶🌶🌶 Super cool
 
 - [x] Switch off of Ant Design
-  - [x] RunHome
-  - [x] AddToTimeline
-  - [x] Form
-  - [x] Delete
-  - [x] Move
-  - [x] PLTag
-  - [x] MovePokemon/index
-  - [x] MovePokemonToTeam
-  - [x] Notes/Button
-  - [x] Notes/Modal
-  - [x] Pokemon/Modal
-  - [x] TimelineEvent
-  - [x] BadgeBox
-  - [x] Filters
-  - [x] Timeline
-  - [x] [id].tsx
 - [ ] New design!
+  - [ ] New fonts
+  - [ ] Static background
+  - [ ] New format for timeline
 - [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles
 
 🌶🌶 Would improve most experiences or could be cool
 
+- [ ] Skeletons while loading
 - [ ] Box view? TL location in the bottom
 - [ ] Box: Drag and drop between categories to move
 - [ ] Event view?
@@ -32,7 +20,6 @@
 
 🌶 Should have, but low value add rn
 
-- [ ] Pokemon: Delete
 - [ ] Unit tests
 - [ ] Better help center
 
