@@ -31,11 +31,11 @@
   --yellow-disabled: #fbbf244d;
   --yellow-disabled-text: var(--text-primary);
 
-  --grey-primary: #52525b;
+  --grey-primary: theme(colors.slate.400);
   --grey-primary-text: var(--text-primary);
-  --grey-hover: #a1a1aa;
+  --grey-hover: theme(colors.slate.500);
   --grey-hover-text: var(--background);
-  --grey-disabled: #52525b4d;
+  --grey-disabled: theme(colors.slate.400 / 30%);
   --grey-disabled-text: var(--text-primary);
 
   --red-primary: #ff2020;

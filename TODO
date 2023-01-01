@@ -3,14 +3,14 @@
 🌶🌶🌶 Super cool
 
 - [x] Switch off of Ant Design
-- [ ] New design!
-- [x] New fonts
+- [x] New design!
+  - [x] New fonts
   - [x] Static background
   - [x] New page background & header
   - [x] New format for timeline
   - [x] Region specific backgrounds
   - [x] New timeline filters + search input
-  - [ ] New pokemon modal
+  - [x] New pokemon modal
   - [x] Fix turning off Grave turns off Badges
 - [ ] New region!
 - [ ] Timeline: Inline editing

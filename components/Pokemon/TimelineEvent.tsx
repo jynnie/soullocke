@@ -139,14 +139,13 @@ interface DeleteEventModalProps extends ModalProps {
 
 function DeleteEventModal(props: DeleteEventModalProps) {
   return (
-    <Modal {...props}>
+    <Modal className={styles.modal} {...props}>
       <p className="text-lg m-0">Are you sure you want to delete this event?</p>
       <p className="my-2">
         This only deletes this event for this Pokémon. Deleting this event won
         {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
       <div className="flex justify-end gap-4">
-        {/* FIXME: */}
         <Button className="outline" onClick={props?.onCancel as any}>
           Cancel
         </Button>

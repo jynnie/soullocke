@@ -61,19 +61,21 @@ function PokemonModal({
       {!editPokemon && (
         <div className={styles.modalHeader}>
           <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
-          <h3>{cleanName(pokemon?.nickname)}</h3>
-          <div className="flex center">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-end gap-2">
+              <h3 className="capitalize">{cleanName(pokemon?.nickname)}</h3>
+              <h4 className="pb-2">({cleanName(pokemon?.name)})</h4>
+            </div>
             <PLTag
               className={styles.modalHeaderTag}
               pokemonLocation={pokemon?.location}
             />
-            <h4>{cleanName(pokemon?.name)}</h4>
           </div>
 
           <Button
             className={cn("icon", styles.modalHeaderEdit)}
             onClick={() => setEditPokemon(!editPokemon)}
-            icon={<Edit size="1.5em" />}
+            icon={<Edit size="1.1em" />}
           />
         </div>
       )}
@@ -91,7 +93,7 @@ function PokemonModal({
         />
       )}
 
-      <div style={{ maxWidth: 480 }}>
+      <div className="m-4" style={{ maxWidth: 480 }}>
         {eventsArr?.map((event, i) => (
           <Event
             key={i}

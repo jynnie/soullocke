@@ -43,15 +43,17 @@
 
 .modal {
   &Header {
+    @apply gap-4;
+
     position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 
     &Img {
-      margin-top: -24px;
-      margin-bottom: -6px;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+      margin-right: -16px;
     }
 
     h4,
@@ -66,14 +68,14 @@
     }
 
     &Tag {
-      font-size: 0.6rem;
+      font-size: 0.8rem;
       line-height: 1rem;
     }
 
     &Edit {
-      position: absolute;
+      // position: absolute;
       display: none;
-      top: 24px;
+      // top: 24px;
     }
 
     &:hover &Edit {
