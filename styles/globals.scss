@@ -1,7 +1,5 @@
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Teko:wght@300&family=Roboto:wght@400,600&display=swap");
-
 :root {
   --text-primary: #ffffff;
   --text-caption: #f8fafc9a;
@@ -400,8 +398,6 @@ textarea {
   color: var(--purple-primary);
 }
 
-//* ----------------------------------#07cf7f
-
-.jnpr-searchableSelect-optionContainer {
-  z-index: 999999999;
+.teko {
+  font-family: "Teko";
 }
