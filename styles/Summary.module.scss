@@ -61,7 +61,7 @@
   img {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    width: 162%;
+    width: 200%;
     margin-left: -32%;
   }
 
@@ -82,7 +82,7 @@
   .playerName {
     position: absolute;
     top: -42%;
-    color: var(--midnight-primary);
+    color: var(--midnight-hover);
     font-size: 4rem;
     font-weight: bold;
     text-align: center;
@@ -105,6 +105,8 @@
 }
 
 .dualContainer {
+  @apply mt-6;
+
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -132,7 +134,7 @@
   }
 
   &Count {
-    color: var(--text-caption);
+    color: var(--text-disabled);
     padding: 0 0.2rem;
     margin-bottom: 0.4rem;
   }

@@ -89,6 +89,8 @@
     border-radius: 4px;
     cursor: pointer;
 
+    user-select: none;
+
     &:hover,
     &.focused {
       background: var(--midnight-hover);

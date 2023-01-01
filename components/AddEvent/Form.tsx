@@ -177,7 +177,9 @@ function AddEventForm({
       )}
 
       <div className={"flex gap-2 justify-end"}>
-        <Button onClick={handleCancel}>Cancel</Button>
+        <Button className="outline" onClick={handleCancel}>
+          Cancel
+        </Button>
 
         <Button onClick={handleFinish}>Add</Button>
       </div>

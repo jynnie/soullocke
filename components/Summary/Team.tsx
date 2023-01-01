@@ -54,6 +54,8 @@ export function TeamImage({
   pokemon: PokemonData;
   [propName: string]: any;
 }) {
+  if (!pokemon?.name) return null;
+
   const pokemonName = pokemon?.name || "?";
   const pokemonEventsArr = Object.values(pokemon?.events || []);
   const evolutionEvents = pokemonEventsArr.filter(
@@ -65,5 +67,6 @@ export function TeamImage({
   if (alternativePokemon) searchPokemon = alternativePokemon;
   const src = `https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/${searchPokemon}.png`;
 
+  // eslint-disable-next-line @next/next/no-img-element
   return <img alt={pokemonName} src={src} {...props} />;
 }

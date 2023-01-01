@@ -195,8 +195,6 @@ export function useSearchableSelect(
 
   const handleSelect = (option: Option) => () => {
     onChange?.(option.value);
-    setSearchValue(null);
-    setIsFocused(false);
   };
 
   function handleClear() {
@@ -216,8 +214,12 @@ export function useSearchableSelect(
   }
 
   function handleBlur() {
-    setIsFocused(false);
-    setSearchValue(null);
+    // WORKAROUND: We WAIT to blur in case the reason for blurring
+    // is you clicking on one of the options in the Tippy!
+    setTimeout(() => {
+      setIsFocused(false);
+      setSearchValue(null);
+    }, 100);
   }
 
   function handleKeyDown(ev: React.KeyboardEvent) {
@@ -242,7 +244,9 @@ export function useSearchableSelect(
     } else if (ev.key === "Enter") {
       const option = filteredOptions[focusedOptionIdx || 0];
       if (!!option) handleSelect(option)();
-      handleFocus();
+      inputRef.current?.select();
+      setIsFocused(true);
+      ev.preventDefault();
     } else if (ev.key === "Escape") {
       handleFocus();
       // Special case where we want to hide the suggestions
