@@ -342,11 +342,11 @@ textarea {
 .timelineItem {
   --tail-height: 12px;
   position: relative;
+  margin-top: 4px;
 
   .timelineItem-dot {
     width: 16px;
     height: 16px;
-    margin-top: 4px;
   }
 
   & + & {
@@ -355,7 +355,7 @@ textarea {
     &::before {
       content: "";
       position: absolute;
-      top: calc(0px - var(--tail-height));
+      top: calc(-2px - var(--tail-height));
       left: 7px;
       height: var(--tail-height);
       border-left: 1px solid var(--grey-primary);

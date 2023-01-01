@@ -110,7 +110,7 @@ function EditableText({
   value?: string;
   onChange: (text: string) => void;
 }) {
-  const [editValue, setEditValue] = useState<string>(value ?? "");
+  const [editValue, setEditValue] = useState<string | undefined>(value);
   const [isEditing, setIsEditing] = useState(false);
 
   if (!isEditing)
@@ -123,10 +123,18 @@ function EditableText({
         onChange={(evt) => setEditValue(evt.target.value)}
       />
       <Button
+        icon={<X />}
+        className="text icon subtle"
+        onClick={() => {
+          setEditValue(value);
+          setIsEditing(false);
+        }}
+      />
+      <Button
         icon={<Check />}
         className="text icon"
         onClick={() => {
-          onChange?.(editValue);
+          onChange?.(editValue ?? "");
           setIsEditing(false);
         }}
       />
@@ -161,7 +169,7 @@ function EditablePokemon({
       />
       <Button
         icon={<X />}
-        className="text icon"
+        className="text icon subtle"
         onClick={() => {
           setEditValue(value);
           setIsEditing(false);

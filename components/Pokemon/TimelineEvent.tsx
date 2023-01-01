@@ -121,7 +121,10 @@ function PokemonTimelineEvent({
 
   return (
     <TimelineBullet color={eventColor} dot={eventDot}>
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        onDoubleClick={() => setIsEditing(true)}
+      >
         <span>{eventDetails}</span>
         <Button
           className={cn(styles.action, "icon text")}
