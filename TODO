@@ -11,6 +11,7 @@
   - [x] Region specific backgrounds
   - [ ] New timeline filters + search input
   - [ ] New pokemon modal
+  - [x] Fix turning off Grave turns off Badges
 - [ ] New region!
 - [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles

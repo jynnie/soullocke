@@ -181,7 +181,7 @@ export default TimelineGrid;
 function getClassNames(data: Data): string {
   const classnames = [];
 
-  if (data.location.name.includes("Badge")) classnames.push(styles.badge);
+  if (data.location.name.includes("Badge")) return styles.badge;
   else classnames.push(styles.location);
   if (data.pokemonLocation) classnames.push(styles[data.pokemonLocation]);
 
