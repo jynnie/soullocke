@@ -12,16 +12,23 @@ interface Props {
   id: string;
   allBadges: string[];
   allLocations: MapLocation[];
+  region: string | false | undefined;
 }
 
-function RunHome({ id, allBadges, allLocations }: Props) {
+function RunHome({ id, region, allBadges, allLocations }: Props) {
   const playerArr = usePlayersArray();
   const game = useGameName();
 
   const [viewingTab, setViewingTab] = useState(0);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{
+        backgroundImage: `linear-gradient(#071e3e7c, #071e3e 300px),
+    url("/${!!region ? region : "hoenn"}.png")`,
+      }}
+    >
       <span className={styles.pokeball}>
         <Image src="/Pokeball.svg" alt="" width={150} height={150} />
       </span>

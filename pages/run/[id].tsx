@@ -49,7 +49,7 @@ function RunPage() {
         </Head>
 
         <main>
-          <RunHome {...{ id, allBadges, allLocations }} />
+          <RunHome {...{ id, region, allBadges, allLocations }} />
 
           <Tippy
             content={
