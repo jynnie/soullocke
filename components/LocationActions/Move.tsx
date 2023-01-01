@@ -35,7 +35,7 @@ export function Move({
         pokemonOrigin={origin}
       />
       <Button
-        className={classNames("text", styles.listingMoveButton)}
+        className={classNames("text no-underline", styles.listingMoveButton)}
         onClick={() => setShowModal(true)}
       >
         Move

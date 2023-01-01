@@ -1,41 +1,37 @@
 .table {
+  @apply mt-6;
+
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0;
+  border-spacing: 0 0.4rem;
 
   thead tr {
     th {
       padding: 8px 12px;
 
-      border-top: 1px solid var(--midnight-hover);
-      border-bottom: 1px solid var(--midnight-hover);
-      background: var(--midnight-disabled);
-
+      font-family: "Teko";
       font-weight: 400;
-      font-size: 0.75rem;
+      font-size: 1.1rem;
       text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    th:first-of-type {
-      border-radius: 4px 0 0 4px;
-      border-left: 1px solid var(--midnight-hover);
-    }
-
-    th:last-of-type {
-      border-radius: 0 4px 4px 0;
-      border-right: 1px solid var(--midnight-hover);
+      letter-spacing: 0.04rem;
     }
   }
 
   tbody {
+    tr {
+      height: 42px;
+    }
     tr td {
       padding: 8px 12px;
-
-      border-bottom: 1px solid var(--midnight-primary);
-
-      // FIXME: Applying it here applies to too much
-      // text-transform: capitalize;
+    }
+    tr td:first-of-type {
+      padding-left: 12px;
+    }
+    tr td:last-of-type {
+      padding-right: 12px;
+    }
+    tr:hover td {
+      background-color: var(--midnight-hover);
     }
   }
 }
@@ -74,14 +70,18 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+.actions {
+  opacity: 0;
+  pointer-events: none;
+}
+.table tr:hover .actions {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media only screen and (max-width: 632px) {
   .table tr td:last-of-type,
   .table tr th:last-of-type {
     display: none;
-  }
-
-  .table thead tr th:nth-last-child(2) {
-    border-radius: 0 4px 4px 0;
-    border-right: 1px solid var(--midnight-hover);
   }
 }

@@ -6,7 +6,7 @@ import styles from "styles/Location.module.scss";
 function NotesButton({ onClick }: { onClick?: () => void }) {
   return (
     <Button
-      className={classNames(styles.listingNotesButton, "text")}
+      className={classNames(styles.listingNotesButton, "text no-underline")}
       {...{ onClick }}
     >
       Notes

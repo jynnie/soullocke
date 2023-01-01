@@ -53,7 +53,7 @@ export function DeleteLocation({ locationKey }: { locationKey: string }) {
       interactive
     >
       <span>
-        <Button className={cn("text danger")} onClick={show}>
+        <Button className={cn("text danger no-underline")} onClick={show}>
           Delete
         </Button>
       </span>

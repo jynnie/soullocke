@@ -12,10 +12,11 @@
 }
 
 .tag {
-  @apply flex gap-2 items-center;
+  @apply flex gap-3 items-center;
   text-transform: uppercase;
 
   sup {
+    margin-left: 5px;
     width: 6px;
     height: 6px;
     text-transform: uppercase;
@@ -41,24 +42,16 @@
     background-color: var(--yellow-primary);
     outline-color: var(--yellow-disabled);
   }
-
-  // &.team {
-  //   font-weight: 500;
-  //   color: var(--pink-hover);
-  // }
-  // &.box {
-  //   color: var(--blue-primary);
-  // }
-  // &.grave {
-  //   color: var(--grey-hover);
-  // }
-  // &.daycare {
-  //   color: var(--yellow-primary);
-  // }
 }
 
 .listing {
   @apply capitalize;
+
+  .badgeImg {
+    width: 28px;
+    margin-left: -28px;
+    filter: drop-shadow(0px 0px 9px rgba(255, 255, 255, 0.54));
+  }
 
   &MoveButton {
     color: var(--text-caption);

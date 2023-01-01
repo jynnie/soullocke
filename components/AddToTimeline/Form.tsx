@@ -46,7 +46,7 @@ function AddToTimelineForm({
       />
 
       <Button
-        className={classNames("icon small", { text: !location })}
+        className={classNames("icon", { text: !location })}
         icon={<Plus />}
         onClick={handleFinish}
         disabled={!location}

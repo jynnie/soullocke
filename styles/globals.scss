@@ -70,7 +70,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 13px;
 }
 
 h1,
@@ -205,23 +205,16 @@ button {
 
     &.icon {
       padding: 8px;
-      width: 42px;
-      height: 42px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
 
       .button-icon {
         margin: 0;
       }
-
-      &.small {
-        padding: 4px;
-        width: 32px;
-        height: 32px;
-      }
     }
   }
 
-  // FIXME: Collides with TailwindCSS
   &.outline {
     border-color: var(--grey-hover);
     background-color: transparent;
@@ -275,6 +268,9 @@ button {
       background-color: transparent;
       border-color: var(--text-disabled);
       color: var(--text-disabled);
+    }
+    &.no-underline {
+      border-bottom: 0;
     }
 
     &.icon {

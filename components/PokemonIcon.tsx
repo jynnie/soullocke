@@ -12,8 +12,8 @@ import { TooltipContent } from "./ui-library/TooltipContent";
 export function PokemonIcon({
   pokemon,
   onClick,
-  width = 40,
-  height = 40,
+  width = 32,
+  height = 32,
   backgroundColor,
 }: {
   pokemon: IPokemon;
@@ -36,18 +36,17 @@ export function PokemonIcon({
       content={<TooltipContent content={`${pokemonNickname}`} />}
       placement="top"
     >
-      <div>
-        <Box position="relative" onClick={onClick} width="max-content">
-          <div>
-            <Box
-              className={styles.iconAvatar}
-              width={width || 40}
-              height={height || 40}
-              {...avatarStyle}
-            >
-              <PokemonImage pokemon={pokemon} updateSrc={setSrc} />
-            </Box>
-          </div>
+      <div
+        className="flex justify-center m-auto relative w-max"
+        onClick={onClick}
+      >
+        <Box
+          className={styles.iconAvatar}
+          width={width || 40}
+          height={height || 40}
+          {...avatarStyle}
+        >
+          <PokemonImage pokemon={pokemon} updateSrc={setSrc} />
         </Box>
       </div>
     </Tooltip>

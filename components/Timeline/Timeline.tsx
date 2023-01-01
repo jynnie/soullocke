@@ -110,12 +110,13 @@ function TimelineGrid({
         <Box is="table" className={styles.table}>
           <thead>
             <tr>
-              <th>Location</th>
+              <th className="text-left">Origin</th>
               {playerArr?.map((p) => (
                 <th key={p.id}>{p.name}</th>
               ))}
-              <th>Summary</th>
-              <th>Actions</th>
+              <th className="text-left">Nicknames</th>
+              <th className="text-left">Location</th>
+              <th></th>
             </tr>
           </thead>
 

@@ -51,7 +51,7 @@ export function AddPokemon({
           <div>
             <Button
               className="subtle outline icon"
-              icon={<Plus />}
+              icon={<Plus size="1.5rem" />}
               onClick={() => setShowForm(true)}
             />
           </div>
