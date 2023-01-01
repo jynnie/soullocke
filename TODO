@@ -2,25 +2,15 @@
 
 🌶🌶🌶 Super cool
 
-- [x] Switch off of Ant Design
-- [x] New design!
-  - [x] New fonts
-  - [x] Static background
-  - [x] New page background & header
-  - [x] New format for timeline
-  - [x] Region specific backgrounds
-  - [x] New timeline filters + search input
-  - [x] New pokemon modal
-  - [x] Fix turning off Grave turns off Badges
 - [ ] New region!
 - [ ] Timeline: Inline editing
-- [ ] Cooler summary view styles
+- [ ] Box view? TL location in the bottom
+- [ ] Box: Drag and drop between categories to move
 
 🌶🌶 Would improve most experiences or could be cool
 
 - [ ] Skeletons while loading
-- [ ] Box view? TL location in the bottom
-- [ ] Box: Drag and drop between categories to move
+- [ ] Cooler summary view styles
 
 🌶 Should have, but low value add rn
 
