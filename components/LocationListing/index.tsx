@@ -20,6 +20,7 @@ export default LocationListing;
 
 function SingleBadge({ badge }: { badge: string }) {
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={styles.badgeImg}
       src={`https://nuzlocke-generator.herokuapp.com/img/checkpoints/${badge

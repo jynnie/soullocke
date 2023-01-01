@@ -15,7 +15,7 @@ interface Props {
   region: string | false | undefined;
 }
 
-function RunHome({ id, region, allBadges, allLocations }: Props) {
+function RunHome({ region, allBadges, allLocations }: Props) {
   const playerArr = usePlayersArray();
   const game = useGameName();
 
