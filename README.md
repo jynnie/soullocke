@@ -2,6 +2,8 @@
 
 **Soullocke** ([soullocke.vercel.app](https://soullocke.vercel.app)) is a tracker built specifically for tracking [soul-linked Nuzlocke](https://pastebin.com/Fg6hfDma) runs. Unlike other Nuzlocke trackers, Soullocke tracks the pokemon across two trainers with quality of life features to help track which Pokémon are soul-linked.
 
+![preview](/public/Preview.png)
+
 ## ✨ Features
 
 Overview of main features. Currently used as a checklist while the project is in development.
@@ -10,7 +12,7 @@ Overview of main features. Currently used as a checklist while the project is in
 - Timeline view of soul-linked trainers' teams and catches.
 - Filter and search tracked Pokémon.
 
-Future features include password locked edit mode. Please leave feature requests as an [issue](https://github.com/jynnie/soullocke/issues).
+Future features include password lock. Please leave feature requests as an [issue](https://github.com/jynnie/soullocke/issues).
 
 ### Open Questions
 
