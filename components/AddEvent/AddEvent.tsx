@@ -1,9 +1,9 @@
-import { Button, Timeline } from "antd";
+import { Button } from "components/ui-library/Button";
+import { TimelineBullet } from "components/ui-library/TimelineBullet";
 import { useAddEvent } from "hooks/useAddEvent";
 import { EventType, IPokemon, PlaceName, PokemonEvent } from "models";
 import React, { useState } from "react";
-
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircle } from "react-feather";
 
 import Form from "./Form";
 
@@ -23,11 +23,15 @@ export function AddEvent({ pokemon }: { pokemon: IPokemon }) {
   };
 
   return (
-    <Timeline.Item dot={<PlusCircleOutlined size={18} />}>
-      {!showForm && <Button onClick={toggleForm}>Add Event</Button>}
+    <TimelineBullet dot={<PlusCircle size={16} />}>
+      {!showForm && (
+        <Button className="outline" onClick={toggleForm}>
+          Add Event
+        </Button>
+      )}
 
       {showForm && <Form {...{ pokemon, onFinish, onCancel: toggleForm }} />}
-    </Timeline.Item>
+    </TimelineBullet>
   );
 }
 

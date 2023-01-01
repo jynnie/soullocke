@@ -4,5 +4,6 @@ import { useRunChild } from "./useRun";
 
 export function useLocationNotes(place: PlaceName) {
   const notes = useRunChild<string>(`timeline/${place}/notes`);
-  return notes;
+  const name = useRunChild<string>(`timeline/${place}/name`);
+  return { notes, name };
 }

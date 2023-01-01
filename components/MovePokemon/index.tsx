@@ -1,6 +1,9 @@
-import { Button, Form, Modal, Select } from "antd";
+import classNames from "classnames";
 import PokemonGroup from "components/PokemonGroup";
 import PokemonIcon from "components/PokemonIcon";
+import { Button } from "components/ui-library/Button";
+import { Modal } from "components/ui-library/Modal";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import { usePokemonByOrigin } from "hooks/usePokemonByOrigin";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { PlaceName, PokemonLocation } from "models";
@@ -8,8 +11,6 @@ import React, { useEffect } from "react";
 import styles from "styles/Form.module.scss";
 import { getLastItem } from "utils/getLastItem";
 import { cleanName } from "utils/utils";
-
-const { Option } = Select;
 
 export function MovePokemon({
   pokemonOrigin,
@@ -36,36 +37,30 @@ export function MovePokemon({
   const [pokemonLocation, setPokemonLocation] = React.useState<
     PokemonLocation | undefined
   >(undefined);
-  const [form] = Form.useForm();
 
   // WORKAROUND: We set the initial value to the latest location
   // once that data loads. Since we're dependent on the hook, we
   // useEffect to wait for the info.
   useEffect(() => {
     const latestLocation = getLastItem(timelineLocations);
-    form.setFieldsValue({ location: latestLocation?.key });
     setLocation(latestLocation?.key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timelineLocations.length]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
-    form.resetFields();
     if (onFinish && pokemonLocation) onFinish(location, pokemonLocation);
   };
 
   const handleCancel = async () => {
-    form.resetFields();
     if (onCancel) onCancel();
   };
 
   return (
-    <Modal
-      title={`Move ${pokemonMovingNames}?`}
-      footer={null}
-      {...{ visible, onCancel }}
-    >
-      <div className="flex column center">
+    <Modal {...{ visible, onCancel }}>
+      <p className="text-lg mt-0 capitalize">Move {pokemonMovingNames}?</p>
+
+      <div className="flex flex-col center">
         <PokemonGroup marginBottom={12}>
           {pokemonMoving?.map(
             (p, i) => p && <PokemonIcon key={i} pokemon={p} />,
@@ -73,64 +68,62 @@ export function MovePokemon({
         </PokemonGroup>
       </div>
 
-      <Form form={form} name="movePokemon" onFinish={handleFinish}>
-        <Form.Item
-          className={styles.item}
-          label="At"
-          name="location"
-          rules={[
-            { required: true, message: "Please choose where this happened" },
-          ]}
+      <form className="mt-2" method="dialog">
+        <div
+          className={classNames(styles.item, "flex gap-2 items-center")}
+          // rules={[
+          //   { required: true, message: "Please choose where this happened" },
+          // ]}
         >
-          <Select
-            className={styles.select}
+          <label>
+            <span className="color-purple">*</span> At
+          </label>
+          <SearchableSelect
             onChange={(value) => setLocation(value)}
             value={location}
             placeholder="Select the location of this event"
-            showSearch
-          >
-            {timelineLocations?.map((l) => (
-              <Option key={l.key} value={l.key} className={styles.option}>
-                {cleanName(l.name)}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            options={timelineLocations?.map((l) => ({
+              label: cleanName(l.name),
+              value: l.key,
+            }))}
+          />
+        </div>
 
-        <Form.Item
-          className={styles.item}
-          label="to"
-          name="pokemonLocation"
-          rules={[
-            {
-              required: true,
-              message: "Please choose where your Pokémon was moved to",
-            },
-          ]}
+        <div
+          className={classNames(styles.item, "flex gap-2 items-center")}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please choose where your Pokémon was moved to",
+          //   },
+          // ]}
         >
-          <Select
-            className={styles.select}
+          <label>
+            <span className="color-purple">*</span> To
+          </label>
+          <SearchableSelect
             onChange={(value) => setPokemonLocation(value)}
             value={pokemonLocation}
             placeholder="Select new location"
-            showSearch
-          >
-            {pokemonLocations.map((l) => (
-              <Option key={l} value={l} className={styles.option}>
-                {l}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            options={pokemonLocations.map((l) => ({
+              label: cleanName(l),
+              value: l,
+            }))}
+          />
+        </div>
 
-        <Form.Item className={styles.itemButtons}>
-          <Button onClick={handleCancel}>Cancel</Button>
-
-          <Button type="primary" htmlType="submit">
-            Move
+        <div
+          className={classNames(
+            "flex items-center justify-end gap-2",
+            styles.itemButtons,
+          )}
+        >
+          <Button className="outline" onClick={handleCancel}>
+            Cancel
           </Button>
-        </Form.Item>
-      </Form>
+          <Button onClick={handleFinish}>Move</Button>
+        </div>
+      </form>
     </Modal>
   );
 }

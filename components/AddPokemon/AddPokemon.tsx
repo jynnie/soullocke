@@ -1,10 +1,11 @@
-import { Button, Popover, Tooltip } from "antd";
+import { Button } from "components/ui-library/Button";
+import { TooltipContent } from "components/ui-library/TooltipContent";
 import { useAddEvent } from "hooks/useAddEvent";
 import { PlaceName } from "models";
 import React from "react";
-import styles from "styles/Home.module.css";
+import { Plus } from "react-feather";
 
-import { PlusOutlined } from "@ant-design/icons";
+import Tippy from "@tippyjs/react";
 
 import Form from "./Form";
 
@@ -34,21 +35,29 @@ export function AddPokemon({
   const onCancel = () => toggleForm();
 
   return (
-    <Popover
-      content={<Form {...{ onFinish: handleFinish, onCancel }} />}
-      trigger="click"
+    <Tippy
+      content={
+        <TooltipContent>
+          <Form {...{ onFinish: handleFinish, onCancel }} />
+        </TooltipContent>
+      }
       visible={showForm}
-      onVisibleChange={(v) => setShowForm(v)}
+      interactive
+      interactiveBorder={10}
+      onClickOutside={() => setShowForm(false)}
     >
-      <Tooltip title="Add Pokemon">
-        <Button
-          type="dashed"
-          shape="circle"
-          icon={<PlusOutlined />}
-          className={styles.secondaryButton}
-        />
-      </Tooltip>
-    </Popover>
+      <div>
+        <Tippy content={<TooltipContent content="Add Pokemon" />}>
+          <div>
+            <Button
+              className="subtle outline icon"
+              icon={<Plus size="1.5rem" />}
+              onClick={() => setShowForm(true)}
+            />
+          </div>
+        </Tippy>
+      </div>
+    </Tippy>
   );
 }
 

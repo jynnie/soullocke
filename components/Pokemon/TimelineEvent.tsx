@@ -1,21 +1,16 @@
-import { Button, Modal, Timeline } from "antd";
-import { ModalProps } from "antd/lib/modal";
+import cn from "classnames";
 import EditEvent from "components/EditEvent";
+import { Button } from "components/ui-library/Button";
+import { Modal, ModalProps } from "components/ui-library/Modal";
+import { TimelineBullet } from "components/ui-library/TimelineBullet";
 import { useEditEvent } from "hooks/useEditEvent";
 import Pokeball from "lib/icons/Pokeball";
 import { EventType, IPokemon, PokemonLocation } from "models";
 import type { PokemonEvent } from "models";
 import React from "react";
+import { Edit, Frown, Inbox, Star, Users } from "react-feather";
 import styles from "styles/Event.module.scss";
 import { cleanName } from "utils/utils";
-
-import {
-  EditOutlined,
-  FrownOutlined,
-  InboxOutlined,
-  StarOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
 
 interface ModifiedPokemonEvent extends PokemonEvent {
   locationName?: string;
@@ -75,33 +70,29 @@ function PokemonTimelineEvent({
     eventDot = <Pokeball size={18} />;
     eventDetails = `Caught on ${place}`;
   } else if (event.type === EventType.moved) {
-    eventColor = "gray";
+    eventColor = "var(--text-caption)";
     eventDot =
-      event.details?.location === PokemonLocation.team ? (
-        <TeamOutlined />
-      ) : (
-        <InboxOutlined />
-      );
+      event.details?.location === PokemonLocation.team ? <Users /> : <Inbox />;
     eventDetails = `Moved to ${event.details?.location} while at ${place}`;
   } else if (event.type === EventType.missed) {
-    eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventColor = "var(--red-primary)";
+    eventDot = <Frown />;
     eventDetails = `Missed on ${place}`;
   } else if (event.type === EventType.defeated) {
-    eventColor = "red";
+    eventColor = "var(--red-primary)";
     eventDetails = `Defeated at ${place}`;
-    eventDot = <FrownOutlined />;
+    eventDot = <Frown />;
   } else if (event.type === EventType.soulDeath) {
-    eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventColor = "var(--red-primary)";
+    eventDot = <Frown />;
     eventDetails = `Soul died at ${place}`;
   } else if (event.type === EventType.soulMiss) {
-    eventColor = "red";
-    eventDot = <FrownOutlined />;
+    eventColor = "var(--red-primary)";
+    eventDot = <Frown />;
     eventDetails = `Soul missed at ${place}`;
   } else if (event.type === EventType.evolved) {
-    eventColor = "blue";
-    eventDot = <StarOutlined />;
+    eventColor = "var(--blue-primary)";
+    eventDot = <Star />;
     eventDetails = `Evolved into ${
       event.details?.evolution || "?"
     } at ${place}`;
@@ -109,7 +100,7 @@ function PokemonTimelineEvent({
 
   if (isEditing) {
     return (
-      <>
+      <div className="py-4">
         <EditEvent
           {...{
             event,
@@ -124,22 +115,24 @@ function PokemonTimelineEvent({
           visible={isDeleting}
           onDelete={handleDelete}
         />
-      </>
+      </div>
     );
   }
 
   return (
-    <Timeline.Item color={eventColor} dot={eventDot}>
-      <div className={styles.container}>
+    <TimelineBullet color={eventColor} dot={eventDot}>
+      <div
+        className={styles.container}
+        onDoubleClick={() => setIsEditing(true)}
+      >
         <span>{eventDetails}</span>
         <Button
-          className={styles.action}
-          type="text"
-          icon={<EditOutlined size={18} />}
+          className={cn(styles.action, "icon text")}
+          icon={<Edit size="1em" />}
           onClick={() => setIsEditing(true)}
         />
       </div>
-    </Timeline.Item>
+    </TimelineBullet>
   );
 }
 
@@ -149,18 +142,17 @@ interface DeleteEventModalProps extends ModalProps {
 
 function DeleteEventModal(props: DeleteEventModalProps) {
   return (
-    <Modal
-      title={"Are you sure you want to delete this event?"}
-      footer={null}
-      {...props}
-    >
-      <p>
+    <Modal className={styles.modal} {...props}>
+      <p className="text-lg m-0">Are you sure you want to delete this event?</p>
+      <p className="my-2">
         This only deletes this event for this Pokémon. Deleting this event won
         {"'"}t change this or linked Pokémons{"'"} origin, name, or location.
       </p>
-      <div className="flex justifyEnd gap05">
-        <Button onClick={props?.onCancel}>Cancel</Button>
-        <Button type="primary" danger onClick={props?.onDelete}>
+      <div className="flex justify-end gap-4">
+        <Button className="outline" onClick={props?.onCancel as any}>
+          Cancel
+        </Button>
+        <Button className="danger" onClick={props?.onDelete}>
           Delete
         </Button>
       </div>

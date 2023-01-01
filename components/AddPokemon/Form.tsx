@@ -1,11 +1,9 @@
-import { Button, Checkbox, Form, Input, Select } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import classNames from "classnames";
 import cn from "classnames";
+import { Button } from "components/ui-library/Button";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import { RunContext } from "pages/run/[id]";
 import React from "react";
-import styles from "styles/Form.module.scss";
-
-const { Option } = Select;
 
 function AddPokemonForm({
   defaultValues,
@@ -29,12 +27,9 @@ function AddPokemonForm({
   );
   const [caught, setCaught] = React.useState(true);
 
-  const [form] = Form.useForm();
-
   const handleFinish = () => {
     if (pokemon) onFinish?.(pokemon, nickname || pokemon, caught);
 
-    form.resetFields();
     setPokemon(undefined);
     setNickname(undefined);
     setCaught(true);
@@ -44,11 +39,9 @@ function AddPokemonForm({
   const handleNicknameChange: React.ChangeEventHandler<HTMLInputElement> = (
     evt,
   ) => setNickname(evt.target.value);
-  const handleCaughtChange = (evt: CheckboxChangeEvent) =>
-    setCaught(evt.target.checked);
+  const handleCaughtChange = () => setCaught((c) => !c);
 
   const handleCancel = () => {
-    form.resetFields();
     setPokemon(undefined);
     setNickname(undefined);
     setCaught(true);
@@ -56,61 +49,49 @@ function AddPokemonForm({
   };
 
   return (
-    <Form
-      form={form}
+    <form
+      className="flex flex-col gap-2 my-2"
       name="addPokemon"
-      onFinish={handleFinish}
-      initialValues={defaultValues}
+      method="dialog"
     >
-      <Form.Item
-        className={styles.item}
-        name="pokemon"
-        rules={[
-          {
-            required: caught,
-            message: "Please choose what Pokémon was caught",
-          },
-        ]}
-      >
-        <Select
-          className={styles.select}
-          onChange={handlePokemonChange}
-          value={pokemon}
-          placeholder="Select a Pokémon"
-          showSearch
-        >
-          {allPokemon?.map((p) => (
-            <Option key={p.name} value={p.name} className={styles.option}>
-              {p.name}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+      <SearchableSelect
+        onChange={handlePokemonChange}
+        value={pokemon}
+        placeholder="Select a Pokémon"
+        options={allPokemon.map((p) => ({ value: p.name, label: p.name }))}
+      />
 
-      <Form.Item className={styles.item} name="nickname">
-        <Input
+      <div className="w-full">
+        <input
+          className="w-full"
+          type="text"
           onChange={handleNicknameChange}
           value={nickname}
           placeholder="Nickname"
         />
-      </Form.Item>
+      </div>
 
       {showCaughtCheckbox && (
-        <Form.Item className={styles.item} name="caught" initialValue={true}>
-          <Checkbox onChange={handleCaughtChange} checked={caught}>
-            Caught
-          </Checkbox>
-        </Form.Item>
+        <div className={classNames("flex gap-1")}>
+          <input
+            type="checkbox"
+            checked={caught}
+            onChange={(evt) => setCaught(evt.target.checked)}
+          />
+          <label onClick={handleCaughtChange}>Caught</label>
+        </div>
       )}
 
-      <Form.Item className={cn(styles.itemButtons, "formButtons")}>
-        {onCancel && <Button onClick={handleCancel}>Cancel</Button>}
+      <div className={cn("flex justify-end gap-1 pointer")}>
+        {onCancel && (
+          <Button className="outline" onClick={handleCancel}>
+            Cancel
+          </Button>
+        )}
 
-        <Button type="primary" htmlType="submit">
-          {finishText}
-        </Button>
-      </Form.Item>
-    </Form>
+        <Button onClick={handleFinish}>{finishText}</Button>
+      </div>
+    </form>
   );
 }
 

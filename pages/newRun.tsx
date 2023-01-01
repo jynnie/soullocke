@@ -1,15 +1,14 @@
-import { Button, Form, Input, Select } from "antd";
+import cn from "classnames";
+import { Button } from "components/ui-library/Button";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import runId from "lib/random";
 import REGIONS from "lib/regions";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import React from "react";
+import { MinusCircle, Plus } from "react-feather";
 import formStyles from "styles/Form.module.scss";
 import styles from "styles/Home.module.css";
-
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
 
 function NewRunPage() {
   const db = React.useContext(FirebaseContext)?.db;
@@ -17,20 +16,27 @@ function NewRunPage() {
 
   const [region, setRegion] = React.useState<string>("");
   const [game, setGame] = React.useState<string>("");
-  const [players, setPlayers] = React.useState<{
-    [key: number]: string;
-  }>({});
+  const [players, setPlayers] = React.useState<string[]>([""]);
 
-  const [form] = Form.useForm();
+  const isDisabled = !region || !game || players.filter((p) => !!p).length <= 0;
 
   const handleGameChange: React.ChangeEventHandler<HTMLInputElement> = (evt) =>
     setGame(evt.target.value);
+
   const handlePlayerChange = (index: number, value: string) => {
-    const newPlayers = { ...players, [index]: value };
+    const newPlayers = [...players];
+    newPlayers[index] = value;
+    setPlayers(newPlayers);
+  };
+
+  const removePlayer = (index: number) => {
+    const newPlayers = players.filter((_, i) => i !== index);
     setPlayers(newPlayers);
   };
 
   const createNewRun = async () => {
+    if (!!isDisabled) return;
+
     const id = runId();
     const playersObj: Record<string, { id: string; name: string }> = {};
     const playersArr = Object.values(players);
@@ -57,106 +63,75 @@ function NewRunPage() {
       <main>
         <h2>New Run</h2>
 
-        <Form form={form} onFinish={createNewRun}>
-          <Form.Item label="Game" required={true}>
-            <Input
+        <form className="flex flex-col gap-8" method="dialog">
+          <div className="flex flex-col gap-2">
+            <label className={formStyles.width76}>
+              Game <span className="color-purple">*</span>
+            </label>
+            <input
+              name="game"
+              type="text"
+              className="grow-1"
               value={game}
               onChange={handleGameChange}
               placeholder="i.e. Emerald"
             />
-          </Form.Item>
+          </div>
 
-          <Form.Item label="Region" required={true}>
-            <Select
-              className={formStyles.select}
-              onChange={(value) => setRegion(value)}
-              value={region}
+          <div className="flex flex-col gap-2">
+            <label className={formStyles.width76}>
+              Region <span className="color-purple">*</span>
+            </label>
+            <SearchableSelect
               placeholder="i.e. Hoenn"
-              showSearch
-            >
-              {REGIONS.map((r) => (
-                <Option key={r} value={r} className={formStyles.option}>
-                  {r}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+              onChange={(value: string) => setRegion(value)}
+              options={REGIONS.map((r) => ({
+                value: r,
+                label: r[0].toUpperCase() + r.slice(1),
+              }))}
+              value={region}
+            />
+          </div>
 
-          <Form.List
-            name="players"
-            rules={[
-              {
-                validator: async (_, players) => {
-                  if (!players || players.length < 1) {
-                    return Promise.reject(new Error("Add at least 1 player"));
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <label>Players</label>
+              <Button
+                className="text icon"
+                onClick={() => setPlayers([...players, ""])}
+                icon={<Plus />}
+              />
+            </div>
+            {players.map((player, index) => (
+              <div className="flex items-center gap-4" key={index}>
+                <label className={cn(formStyles.width76, "shrink-0")}>
+                  Player {index + 1}{" "}
+                  {index === 0 && <span className="color-purple">*</span>}
+                </label>
+                <input
+                  name={`player ${index + 1}`}
+                  type="text"
+                  className="grow-1"
+                  value={player}
+                  onChange={(evt) =>
+                    handlePlayerChange(index, evt.target.value)
                   }
-                },
-              },
-            ]}
-          >
-            {(fields, { add, remove }, { errors }) => (
-              <>
-                {fields.map((field, index) => (
-                  <Form.Item
-                    label={`Player ${index + 1}`}
-                    required={false}
-                    key={field.key}
-                  >
-                    <Form.Item
-                      {...field}
-                      validateTrigger={["onChange", "onBlur"]}
-                      rules={[
-                        {
-                          required: true,
-                          whitespace: true,
-                          message:
-                            "Please input player's name or delete this field.",
-                        },
-                      ]}
-                      noStyle
-                    >
-                      <Input
-                        style={{ width: "70%" }}
-                        value={players[index]}
-                        onChange={(evt) =>
-                          handlePlayerChange(index, evt.target.value)
-                        }
-                        placeholder="Name"
-                      />
-                    </Form.Item>
-                    {fields.length > 1 ? (
-                      <MinusCircleOutlined
-                        style={{ marginLeft: "8px" }}
-                        onClick={() => remove(field.name)}
-                      />
-                    ) : null}
-                  </Form.Item>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    icon={<PlusOutlined />}
-                    className={styles.secondaryButton}
-                  >
-                    Add player
-                  </Button>
-                  <Form.ErrorList errors={errors} />
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
+                  placeholder="Name"
+                />
+                <Button
+                  className="text icon"
+                  disabled={players.length <= 1}
+                  onClick={() => removePlayer(index)}
+                  icon={<MinusCircle />}
+                />
+              </div>
+            ))}
+          </div>
 
-          <Form.Item className={formStyles.itemButtons}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className={styles.actionButton}
-            >
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
+          <Button disabled={isDisabled} onClick={createNewRun}>
+            Create
+          </Button>
+        </form>
       </main>
     </div>
   );

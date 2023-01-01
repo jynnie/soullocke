@@ -2,7 +2,7 @@ import PokemonIcon from "components/PokemonIcon";
 import { IPokemon } from "models";
 import React from "react";
 
-import Modal from "./Modal";
+import PokemonModal from "./PokemonModal";
 
 export function TimelinePokemon({
   pokemon,
@@ -20,7 +20,7 @@ export function TimelinePokemon({
 
   return (
     <>
-      <Modal
+      <PokemonModal
         {...{
           pokemon,
           location,

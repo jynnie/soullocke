@@ -1,8 +1,7 @@
-import { Button, Modal, Timeline } from "antd";
 import AddEvent from "components/AddEvent";
-import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
+import { Modal } from "components/ui-library/Modal";
 import { useBackfillPokemon } from "hooks/useBackfillPokemon";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
@@ -10,8 +9,8 @@ import React from "react";
 import styles from "styles/Pokemon.module.scss";
 import { cleanName } from "utils/utils";
 
-import { EditOutlined } from "@ant-design/icons";
-
+import { EditablePokemon } from "../ui-library/EditablePokemon";
+import { EditableText } from "../ui-library/EditableText";
 import Event from "./TimelineEvent";
 
 function PokemonModal({
@@ -27,7 +26,6 @@ function PokemonModal({
   showModal: boolean;
   onCancel: () => void;
 }) {
-  const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
   const backfillPokemon = useBackfillPokemon(playerId, location);
 
   const tlLocations = useTimelineLocations();
@@ -46,54 +44,42 @@ function PokemonModal({
 
   const isAlive = pokemon.location !== PokemonLocation.grave;
 
-  const handleCancelEditing = () => {
-    setEditPokemon(false);
-  };
-
   const handleFinish = (pokemonName: string, nickname: string): void => {
     backfillPokemon(pokemonName, nickname);
-    if (editPokemon) setEditPokemon(false);
   };
 
   return (
-    <Modal visible={!!showModal} onCancel={onCancel} footer={null}>
-      {!editPokemon && (
-        <div className={styles.modalHeader}>
-          <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
-          <h3>{cleanName(pokemon?.nickname)}</h3>
-          <div className="flex center">
-            <PLTag
-              className={styles.modalHeaderTag}
-              pokemonLocation={pokemon?.location}
-            />
-            <h4>{cleanName(pokemon?.name)}</h4>
-          </div>
+    <Modal
+      className={styles.modalBgd}
+      visible={!!showModal}
+      onCancel={onCancel}
+    >
+      <div className={styles.modalHeader}>
+        <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
 
-          <Button
-            className={styles.modalHeaderEdit}
-            type="primary"
-            shape="circle"
-            onClick={() => setEditPokemon(!editPokemon)}
-          >
-            <EditOutlined />
-          </Button>
+        <div className="flex flex-col gap-1">
+          <PLTag
+            className={styles.modalHeaderTag}
+            pokemonLocation={pokemon?.location}
+          />
+          <EditableText
+            display={
+              <h3 className="capitalize">{cleanName(pokemon?.nickname)}</h3>
+            }
+            value={cleanName(pokemon?.nickname)}
+            onChange={(name: string) => handleFinish(pokemon.name, name)}
+          />
+          <EditablePokemon
+            display={<h4 className="pb-2">{cleanName(pokemon?.name)}</h4>}
+            value={cleanName(pokemon?.name)}
+            onChange={(name?: string) =>
+              name && handleFinish(name, pokemon?.nickname)
+            }
+          />
         </div>
-      )}
+      </div>
 
-      {(!pokemon.name || editPokemon) && (
-        <PokemonForm
-          showCaughtCheckbox={false}
-          onCancel={editPokemon ? handleCancelEditing : undefined}
-          onFinish={handleFinish}
-          finishText={editPokemon ? "Save" : "Add"}
-          defaultValues={{
-            pokemon: pokemon?.name,
-            nickname: pokemon?.nickname,
-          }}
-        />
-      )}
-
-      <Timeline>
+      <div className="mx-4" style={{ maxWidth: 480 }}>
         {eventsArr?.map((event, i) => (
           <Event
             key={i}
@@ -106,7 +92,7 @@ function PokemonModal({
           />
         ))}
         {isAlive && <AddEvent {...{ pokemon }} />}
-      </Timeline>
+      </div>
     </Modal>
   );
 }

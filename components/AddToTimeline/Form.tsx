@@ -1,23 +1,19 @@
-import { Button, Select, Tooltip } from "antd";
+import classNames from "classnames";
+import { Button } from "components/ui-library/Button";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import type { MapLocation } from "models";
 import React from "react";
-import styles from "styles/Form.module.scss";
+import { Plus } from "react-feather";
 import { cleanName } from "utils/utils";
-
-import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
 
 function AddToTimelineForm({
   allLocations,
   allBadges,
   onFinish,
-  onCancel,
 }: {
   allLocations: MapLocation[];
   allBadges: string[];
   onFinish?: (location: string) => void;
-  onCancel?: () => void;
 }) {
   const [location, setLocation] = React.useState<string | undefined>(undefined);
 
@@ -30,52 +26,32 @@ function AddToTimelineForm({
     setLocation(value);
   };
 
-  const handleCancel = () => {
-    if (onCancel) onCancel();
-    setLocation(undefined);
-  };
-
   return (
-    <div>
-      <Select
-        className={styles.select}
-        showSearch
+    <form className="flex gap-2 my-4 items-center">
+      <SearchableSelect
+        className="subtle"
+        options={[
+          ...allLocations?.map((l) => ({
+            value: l.name,
+            label: cleanName(l.name),
+          })),
+          ...allBadges?.map((b) => ({
+            value: b,
+            label: cleanName(b),
+          })),
+        ]}
         value={location}
         onChange={handleChange}
         placeholder="Add Location or Badge"
-      >
-        <Option value="starter" className={styles.option}>
-          Starter
-        </Option>
-        {allLocations?.map((l) => (
-          <Option key={l.name} value={l.name} className={styles.option}>
-            {cleanName(l.name)}
-          </Option>
-        ))}
-        {allBadges?.map((b) => (
-          <Option key={b} value={b} className={styles.option}>
-            {cleanName(b)}
-          </Option>
-        ))}
-      </Select>
+      />
 
-      <Tooltip title="Cancel">
-        <Button
-          shape="circle"
-          icon={<CloseOutlined />}
-          onClick={handleCancel}
-        />
-      </Tooltip>
-
-      <Tooltip title="Submit">
-        <Button
-          type="primary"
-          shape="circle"
-          icon={<CheckOutlined />}
-          onClick={handleFinish}
-        />
-      </Tooltip>
-    </div>
+      <Button
+        className={classNames("icon", { text: !location })}
+        icon={<Plus />}
+        onClick={handleFinish}
+        disabled={!location}
+      />
+    </form>
   );
 }
 

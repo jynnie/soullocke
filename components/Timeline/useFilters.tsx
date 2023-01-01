@@ -18,8 +18,9 @@ export function useFilters(allDataArr: Data[]) {
     }
 
     if (!!filters.searchTerm) {
-      const newFiltered = allDataArr.filter((d) =>
-        matchesPokemonName(d, filters),
+      const newFiltered = allDataArr.filter(
+        (d) =>
+          matchesPokemonName(d, filters) || matchesLocationName(d, filters),
       );
       setFilteredData(newFiltered);
     } else {
@@ -35,4 +36,9 @@ export function useFilters(allDataArr: Data[]) {
 function matchesPokemonName(d: Data, filters: Filter): boolean {
   const searchTerm = filters.searchTerm?.toLowerCase();
   return d.pokemonNames?.toLowerCase().includes(searchTerm);
+}
+
+function matchesLocationName(d: Data, filters: Filter): boolean {
+  const searchTerm = filters.searchTerm?.toLowerCase();
+  return d.location.name?.toLowerCase().includes(searchTerm);
 }

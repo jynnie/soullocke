@@ -4,6 +4,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  background-image: linear-gradient(#071e3e7c, #071e3e 300px),
+    url("/sootopolis.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 1000px) {
+  .container {
+    background-size: 100% auto;
+  }
 }
 
 .main,
@@ -14,7 +25,7 @@
 }
 
 .main {
-  padding: 16rem 1rem 5rem;
+  padding: 12rem 1rem 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,22 +35,12 @@
 .footer {
   width: 100%;
   height: 100px;
-  background: var(--tertiary50);
+  background: var(--midnight-disabled);
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--text-caption);
   margin-top: 2rem;
-}
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a:hover {
-  color: var(--brand);
 }
 
 .title,
@@ -48,36 +49,24 @@
 }
 
 .description {
-  line-height: 1.25;
+  line-height: 1.5;
+  font-size: 1.1rem;
   color: var(--text-caption);
   font-weight: lighter;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.highlight {
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.highlight:hover,
-.highlight:focus,
-.highlight:active {
-  color: var(--text-secondary);
-  font-style: italic;
+  font-family: var(--code-font);
 }
 
 .title {
-  background: var(--brand); /* fallback for old browsers */
+  background: var(--purple-primary); /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right bottom,
-    var(--brand),
-    var(--brand-secondary)
+    var(--purple-primary),
+    var(--yellow-primary)
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right bottom,
-    var(--brand),
-    var(--brand-secondary)
+    var(--purple-primary),
+    var(--yellow-primary)
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   background-clip: text;
@@ -87,48 +76,4 @@
   line-height: 1;
   font-size: 4.2rem;
   margin-bottom: 1rem;
-}
-
-/* //* Buttons */
-
-.actionButton {
-  background: var(--brand); /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right bottom,
-    var(--brand) 10%,
-    var(--brand-secondary)
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right bottom,
-    var(--brand) 10%,
-    var(--brand-secondary)
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-color: none;
-
-  color: var(--background);
-  font-weight: bold;
-}
-
-.actionButton:hover,
-.actionButton:focus,
-.actionButton:active {
-  background: var(--brand); /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right bottom,
-    var(--brand),
-    var(--brand-secondary) 60%
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right bottom,
-    var(--brand),
-    var(--brand-secondary) 60%
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  color: var(--background) !important;
-}
-
-.secondaryButton:hover,
-.secondaryButton:focus,
-.secondaryButton:active {
-  border-color: var(--brand50);
-  color: var(--brand);
 }

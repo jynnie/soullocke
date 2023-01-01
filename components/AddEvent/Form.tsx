@@ -1,5 +1,6 @@
-import { Button, Form, Select } from "antd";
 import cn from "classnames";
+import { Button } from "components/ui-library/Button";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import {
   EVENT_NAME_TO_TYPE,
@@ -14,8 +15,6 @@ import React, { useCallback, useEffect } from "react";
 import styles from "styles/Form.module.scss";
 import { getLastItem } from "utils/getLastItem";
 import { cleanName } from "utils/utils";
-
-const { Option } = Select;
 
 function AddEventForm({
   pokemon,
@@ -35,7 +34,9 @@ function AddEventForm({
   const latestLocation = getLastItem(timelineLocations);
 
   //* States----------------------------#07cf7f
-  const [location, setLocation] = React.useState<string | undefined>(undefined);
+  const [location, setLocation] = React.useState<string | undefined>(
+    latestLocation?.key,
+  );
   const [eventType, setEventType] = React.useState<EventType | undefined>(
     undefined,
   );
@@ -45,26 +46,26 @@ function AddEventForm({
   const [evolution, setEvolution] = React.useState<string | undefined>(
     undefined,
   );
-  const [form] = Form.useForm();
 
   const resetFields = useCallback(() => {
-    form.resetFields();
-    form.setFieldsValue({ location: latestLocation?.key });
     setLocation(latestLocation?.key);
-  }, [form, latestLocation?.key]);
+    setEventType(undefined);
+    setPokemonLocation(undefined);
+    setEvolution(undefined);
+  }, [latestLocation?.key]);
 
   // WORKAROUND: We set the initial value to the latest location
   // once that data loads. Since we're dependent on the hook, we
   // useEffect to wait for the info.
   useEffect(() => {
-    resetFields();
-  }, [resetFields]);
+    setLocation(latestLocation?.key);
+  }, [latestLocation?.key]);
 
   //* Handlers--------------------------#07cf7f
   const handleFinish = async () => {
     resetFields();
-    if (onFinish && eventType && location)
-      onFinish(eventType, location, {
+    if (eventType && location)
+      onFinish?.(eventType, location, {
         location: pokemonLocation,
         evolution,
       });
@@ -82,120 +83,107 @@ function AddEventForm({
   );
 
   return (
-    <Form form={form} name="addPokemonEvent" onFinish={handleFinish}>
-      <Form.Item
-        className={styles.item}
-        label="At"
-        name="location"
-        rules={[
-          { required: true, message: "Please choose where this happened" },
-        ]}
-        initialValue={latestLocation?.key}
+    <form className="flex flex-col" name="addPokemonEvent" method="dialog">
+      <div
+        className={cn(styles.item, "flex gap-2 items-center")}
+        // rules={[
+        //   { required: true, message: "Please choose where this happened" },
+        // ]}
       >
-        <Select
-          className={styles.select}
+        <label>
+          <span className="color-purple">*</span> At:
+        </label>
+        <SearchableSelect
+          className="grow-1"
           onChange={(value) => setLocation(value)}
           value={location}
           placeholder="Select the location of this event"
-          showSearch
-        >
-          {timelineLocations.map((l) => (
-            <Option key={l.key} value={l.key} className={styles.option}>
-              {cleanName(l.name)}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+          options={timelineLocations.map((l) => ({
+            value: l.key,
+            label: cleanName(l.name),
+          }))}
+        />
+      </div>
 
-      <Form.Item
-        className={styles.item}
-        label="We"
-        name="eventType"
-        rules={[{ required: true, message: "Please choose event type" }]}
+      <div
+        className={cn(styles.item, "flex gap-2 items-center")}
+        // rules={[{ required: true, message: "Please choose event type" }]}
       >
-        <Select
-          className={styles.select}
+        <label>
+          <span className="color-purple">*</span> We:
+        </label>
+        <SearchableSelect
+          className="grow-1"
           onChange={(value) => setEventType(value)}
           value={eventType}
           placeholder="Select an Event Type"
-          showSearch
-        >
-          {eventTypes.map((t) => (
-            <Option
-              key={t}
-              value={EVENT_NAME_TO_TYPE[t]}
-              className={styles.option}
-            >
-              {t}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+          options={eventTypes.map((t) => ({
+            value: EVENT_NAME_TO_TYPE[t],
+            label: t,
+          }))}
+        />
+      </div>
 
       {eventType === EventType.moved && (
-        <Form.Item
-          className={styles.item}
-          label="to"
-          name="pokemonLocation"
-          rules={[
-            {
-              required: eventType === EventType.moved,
-              message: "Please choose where your Pokémon was moved to",
-            },
-          ]}
+        <div
+          className={cn(styles.item, "flex gap-2 items-center")}
+          // rules={[
+          //   {
+          //     required: eventType === EventType.moved,
+          //     message: "Please choose where your Pokémon was moved to",
+          //   },
+          // ]}
         >
-          <Select
-            className={styles.select}
+          <label>
+            <span className="color-purple">*</span> To:
+          </label>
+          <SearchableSelect
+            className="grow-1"
             onChange={(value) => setPokemonLocation(value)}
             value={pokemonLocation}
             placeholder="Select new location"
-            showSearch
-          >
-            {pokemonLocations.map((l) => (
-              <Option key={l} value={l} className={styles.option}>
-                {l}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            options={pokemonLocations.map((l) => ({
+              label: l,
+              value: l,
+            }))}
+          />
+        </div>
       )}
 
       {eventType === EventType.evolved && (
-        <Form.Item
-          className={styles.item}
-          label="into"
-          name="evolution"
-          rules={[
-            {
-              required: eventType === EventType.evolved,
-              message: "Please choose the evolution",
-            },
-          ]}
+        <div
+          className={cn(styles.item, "flex gap-2 items-center")}
+          // rules={[
+          //   {
+          //     required: eventType === EventType.evolved,
+          //     message: "Please choose the evolution",
+          //   },
+          // ]}
         >
-          <Select
-            className={styles.select}
+          <label>
+            <span className="color-purple">*</span> Into:
+          </label>
+          <SearchableSelect
+            className="grow-1"
             onChange={(value) => setEvolution(value)}
             value={evolution}
             placeholder="Select evolution"
-            showSearch
-          >
-            {allPokemon?.map((p) => (
-              <Option key={p.name} value={p.name} className={styles.option}>
-                {p.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            options={allPokemon?.map((p) => ({
+              label: p.name,
+              value: p.name,
+            }))}
+          />
+        </div>
       )}
 
-      <Form.Item className={cn(styles.itemButtons, "formButtons")}>
-        <Button onClick={handleCancel}>Cancel</Button>
-
-        <Button type="primary" htmlType="submit">
-          Add
+      <div className={"flex gap-2 justify-end"}>
+        <Button className="outline" onClick={handleCancel}>
+          Cancel
         </Button>
-      </Form.Item>
-    </Form>
+
+        <Button onClick={handleFinish}>Add</Button>
+      </div>
+    </form>
   );
 }
 

@@ -1,7 +1,7 @@
-import "antd/dist/antd.dark.css";
+import "react-toastify/dist/ReactToastify.css";
 
-// import "antd/dist/antd.css";
 import "../styles/globals.scss";
+import "../styles/juniper.scss";
 
 import firebase from "firebase";
 import firebaseConfig from "firebaseConfig";
@@ -9,6 +9,8 @@ import mixpanel from "mixpanel-browser";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
+
+import { Analytics } from "@vercel/analytics/react";
 
 //- Firebase Setup
 let db: firebase.database.Database;
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps | any) {
       <FirebaseContext.Provider value={{ db }}>
         <Component {...pageProps} />
       </FirebaseContext.Provider>
+      <Analytics />
     </>
   );
 }

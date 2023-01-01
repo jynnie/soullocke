@@ -1,6 +1,6 @@
 import AddPokemon from "components/AddPokemon";
 import LocationActions from "components/LocationActions";
-import LocationSummary from "components/LocationSummary";
+import Tag from "components/LocationSummary/PLTag";
 import Pokemon from "components/Pokemon";
 import React from "react";
 
@@ -16,6 +16,8 @@ function TimelineRow({
   handleFinishAdd: (locationKey: string) => (caught: boolean) => void;
   moveToTeam: (origin: string, location: string) => void;
 }) {
+  const isBadge = /badge/gi.test(data.location.name);
+
   return (
     <>
       <LocationListing location={data.location.name} />
@@ -23,7 +25,6 @@ function TimelineRow({
       {data.players?.map((p) => {
         const key = data.location.key + p.name;
         const playerPokemon = p.pokemon?.[data.location.key];
-        const isBadge = /badge/gi.test(data.location.name);
         const props = {
           playerId: p.id,
           location: data.location.key,
@@ -32,19 +33,28 @@ function TimelineRow({
         };
 
         let display: any = <AddPokemon {...props} />;
-        if (isBadge) display = "-";
+        if (isBadge) display = "";
         if (playerPokemon) display = <Pokemon {...props} />;
         return <td key={key}>{display}</td>;
       })}
 
-      <td>
-        <LocationSummary
-          pokemon={data.pokemon}
-          pokemonLocation={data.pokemonLocation}
-        />
+      <td className="capitalize">
+        {data.pokemon
+          .map((p) => p?.nickname)
+          .filter((p) => !!p)
+          .join(" & ")}
       </td>
 
-      <LocationActions locationKey={data.location.key} {...{ moveToTeam }} />
+      <td>
+        {data.pokemon.length > 0 && (
+          <Tag pokemonLocation={data.pokemonLocation} />
+        )}
+      </td>
+
+      <LocationActions
+        locationKey={data.location.key}
+        {...{ moveToTeam, isBadge }}
+      />
     </>
   );
 }

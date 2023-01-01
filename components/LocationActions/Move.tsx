@@ -1,5 +1,6 @@
-import { Button } from "antd";
+import classNames from "classnames";
 import MovePokemon from "components/MovePokemon";
+import { Button } from "components/ui-library/Button";
 import { useAddEvent } from "hooks/useAddEvent";
 import { EventType, PokemonLocation } from "models";
 import React from "react";
@@ -34,10 +35,8 @@ export function Move({
         pokemonOrigin={origin}
       />
       <Button
-        className={styles.listingMoveButton}
+        className={classNames("text no-underline", styles.listingMoveButton)}
         onClick={() => setShowModal(true)}
-        type="text"
-        size="small"
       >
         Move
       </Button>

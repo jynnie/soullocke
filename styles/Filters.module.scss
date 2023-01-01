@@ -1,0 +1,81 @@
+.checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  border: none;
+
+  &::after {
+    content: "";
+    display: block;
+    margin-left: 5px;
+    width: 6px;
+    height: 6px;
+    background-color: var(--body);
+    outline: solid 5px transparent;
+    border-radius: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    transition: outline 0.2s;
+  }
+
+  &:checked::after {
+    outline-color: var(--outline);
+  }
+}
+
+.badge {
+  --body: #a8ff78;
+  --outline: rgba(168, 255, 120, 0.3);
+}
+.team {
+  --body: var(--pink-primary);
+  --outline: var(--pink-disabled);
+}
+.box {
+  --body: var(--blue-primary);
+  --outline: var(--blue-disabled);
+}
+.daycare {
+  --body: var(--yellow-primary);
+  --outline: var(--yellow-disabled);
+}
+.grave {
+  --body: var(--grey-primary);
+  --outline: var(--grey-disabled);
+}
+
+.checkbox:not(:checked) ~ label {
+  opacity: 0.4;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+
+  background: transparent;
+  border: 1px solid var(--grey-hover);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: var(--font);
+  color: var(--text-primary);
+
+  input {
+    border: none;
+    box-shadow: none;
+  }
+
+  &:focus,
+  &:focus-within {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 0 2px var(--purple-disabled);
+  }
+
+  &[aria-disabled="true"],
+  &.disabled {
+    border-color: var(--grey-primary);
+    color: var(--grey-primary);
+  }
+}

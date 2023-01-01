@@ -1,4 +1,3 @@
-import { message } from "antd";
 import cn from "classnames";
 import AddToTimeline from "components/AddToTimeline";
 import MovePokemonToTeam from "components/MovePokemonToTeam";
@@ -17,6 +16,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
+import { toast } from "react-toastify";
 import styles from "styles/Timeline.module.scss";
 import Box from "ui-box";
 import { getPokemonByOrigin } from "utils/getPokemonByOrigin";
@@ -93,7 +93,12 @@ function TimelineGrid({
     );
 
     const data = await setTimelineOrder(items);
-    message.success("Timeline order change saved");
+    toast("Timeline order change saved", {
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      theme: "dark",
+    });
     return data;
   }
 
@@ -105,12 +110,13 @@ function TimelineGrid({
         <Box is="table" className={styles.table}>
           <thead>
             <tr>
-              <th>Location</th>
+              <th className="text-left">Origin</th>
               {playerArr?.map((p) => (
                 <th key={p.id}>{p.name}</th>
               ))}
-              <th>Summary</th>
-              <th>Actions</th>
+              <th className="text-left">Nicknames</th>
+              <th className="text-left">Location</th>
+              <th></th>
             </tr>
           </thead>
 
@@ -175,7 +181,7 @@ export default TimelineGrid;
 function getClassNames(data: Data): string {
   const classnames = [];
 
-  if (data.location.name.includes("Badge")) classnames.push(styles.badge);
+  if (data.location.name.includes("Badge")) return styles.badge;
   else classnames.push(styles.location);
   if (data.pokemonLocation) classnames.push(styles[data.pokemonLocation]);
 
@@ -200,7 +206,7 @@ function getItemStyle(
 ) {
   return {
     userSelect: "none",
-    background: isDragging ? "var(--tertiary)" : "transparent",
+    background: isDragging ? "var(--midnight-primary)" : "transparent",
     ...draggableStyle,
   } as React.CSSProperties;
 }

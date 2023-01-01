@@ -4,69 +4,53 @@
 
   text-transform: capitalize;
   font-weight: 400;
-  color: var(--text-tertiary);
-
-  [class*="badge"] sup {
-    right: -10px;
-  }
+  color: var(--text-primary);
 }
 
 .badge {
   text-transform: uppercase;
-
-  &.team sup {
-    color: #fce7f3;
-    background-color: #ec4899;
-  }
-  &.box sup {
-    color: #38bdf8;
-    background-color: #075985;
-  }
-  &.grave sup {
-    color: #a1a1aa;
-    background-color: #52525b;
-  }
-  &.daycare sup {
-    color: #fbbf24;
-    background-color: #b45309;
-  }
 }
 
 .tag {
+  @apply flex gap-3 items-center;
   text-transform: uppercase;
 
-  &.team {
-    font-weight: 500;
-    color: var(--pink-text);
-    border-color: var(--pink-border);
-    background-color: var(--pink-background);
+  sup {
+    margin-left: 5px;
+    width: 6px;
+    height: 6px;
+    text-transform: uppercase;
+    outline: solid 5px transparent;
+    border-radius: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
-  &.box {
-    color: var(--blue-text);
-    border-color: var(--blue-border);
-    background-color: var(--blue-background);
+
+  &.team sup {
+    background-color: var(--pink-primary);
+    outline-color: var(--pink-disabled);
   }
-  &.grave {
-    color: var(--grey-text);
-    border-color: var(--grey-border);
-    background-color: var(--grey-background);
+  &.box sup {
+    background-color: var(--blue-primary);
+    outline-color: var(--blue-disabled);
   }
-  &.daycare {
-    color: var(--orange-text);
-    border-color: var(--orange-border);
-    background-color: var(--orange-background);
+  &.grave sup {
+    background-color: var(--grey-primary);
+    outline-color: var(--grey-disabled);
+  }
+  &.daycare sup {
+    background-color: var(--yellow-primary);
+    outline-color: var(--yellow-disabled);
   }
 }
 
 .listing {
-  &DeleteButton {
-    color: var(--text-caption);
-    border-color: transparent;
-    background: transparent;
+  @apply capitalize;
 
-    &:hover {
-      color: #ef4444;
-    }
+  .badgeImg {
+    width: 28px;
+    margin-left: -28px;
+    filter: drop-shadow(0px 0px 9px rgba(255, 255, 255, 0.54));
   }
 
   &MoveButton {
@@ -92,5 +76,4 @@
 
 .deleteConfirm {
   max-width: 260px;
-  margin: 0;
 }

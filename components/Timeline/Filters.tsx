@@ -1,6 +1,7 @@
-import { Checkbox, Input } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import classNames from "classnames";
 import React from "react";
+import { Search } from "react-feather";
+import styles from "styles/Filters.module.scss";
 import Box from "ui-box";
 
 export interface Filter {
@@ -38,62 +39,118 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
       });
   };
 
-  const handleBadge = (e: CheckboxChangeEvent) => {
-    setHideBadge(!e.target.checked);
-    handleChange({ hideBadge: !e.target.checked });
+  const handleBadge = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const newVal = !!e ? !e.target.checked : !hideBadge;
+    setHideBadge(newVal);
+    handleChange({ hideBadge: newVal });
   };
-  const handleTeam = (e: CheckboxChangeEvent) => {
-    setHideTeam(!e.target.checked);
-    handleChange({ hideTeam: !e.target.checked });
+  const handleTeam = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const newVal = !!e ? !e.target.checked : !hideTeam;
+    setHideTeam(newVal);
+    handleChange({ hideTeam: newVal });
   };
-  const handleBox = (e: CheckboxChangeEvent) => {
-    setHideBox(!e.target.checked);
-    handleChange({ hideBox: !e.target.checked });
+  const handleBox = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const newVal = !!e ? !e.target.checked : !hideBox;
+    setHideBox(newVal);
+    handleChange({ hideBox: newVal });
   };
-  const handleDaycare = (e: CheckboxChangeEvent) => {
-    setHideDaycare(!e.target.checked);
-    handleChange({ hideDaycare: !e.target.checked });
+  const handleDaycare = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const newVal = !!e ? !e.target.checked : !hideDaycare;
+    setHideDaycare(newVal);
+    handleChange({ hideDaycare: newVal });
   };
-  const handleGrave = (e: CheckboxChangeEvent) => {
-    setHideGrave(!e.target.checked);
-    handleChange({ hideGrave: !e.target.checked });
+  const handleGrave = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const newVal = !!e ? !e.target.checked : !hideGrave;
+    setHideGrave(newVal);
+    handleChange({ hideGrave: newVal });
   };
 
   return (
-    <Box className="flex spaceBetween" width="100%" marginBottom={8}>
-      <div>
-        <Input placeholder="Search" value={inputVal} onChange={handleSearch} />
+    <Box className="flex justify-between" width="100%" marginBottom={8}>
+      <div className={styles.search}>
+        <Search size="1rem" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={inputVal}
+          onChange={handleSearch}
+        />
       </div>
 
-      <div className="flex">
-        <div className="flex center">
-          <Checkbox checked={!hideBadge} onChange={handleBadge}>
+      <div className="flex gap-2">
+        <div className="flex center gap-1">
+          <input
+            className={classNames(styles.checkbox, styles.badge)}
+            type="checkbox"
+            checked={!hideBadge}
+            onChange={handleBadge}
+          />
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleBadge()}
+          >
             Badge
-          </Checkbox>
+          </label>
         </div>
 
-        <div className="flex center">
-          <Checkbox checked={!hideTeam} onChange={handleTeam}>
+        <div className="flex center gap-1">
+          <input
+            className={classNames(styles.checkbox, styles.team)}
+            type="checkbox"
+            checked={!hideTeam}
+            onChange={handleTeam}
+          />
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleTeam()}
+          >
             Team
-          </Checkbox>
+          </label>
         </div>
 
-        <div className="flex center">
-          <Checkbox checked={!hideBox} onChange={handleBox}>
+        <div className="flex center gap-1">
+          <input
+            className={classNames(styles.checkbox, styles.box)}
+            type="checkbox"
+            checked={!hideBox}
+            onChange={handleBox}
+          />
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleBox()}
+          >
             Box
-          </Checkbox>
+          </label>
         </div>
 
-        <div className="flex center">
-          <Checkbox checked={!hideDaycare} onChange={handleDaycare}>
+        <div className="flex center gap-1">
+          <input
+            className={classNames(styles.checkbox, styles.daycare)}
+            type="checkbox"
+            checked={!hideDaycare}
+            onChange={handleDaycare}
+          />
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleDaycare()}
+          >
             Daycare
-          </Checkbox>
+          </label>
         </div>
 
-        <div className="flex center">
-          <Checkbox checked={!hideGrave} onChange={handleGrave}>
+        <div className="flex center gap-1">
+          <input
+            className={classNames(styles.checkbox, styles.grave)}
+            type="checkbox"
+            checked={!hideGrave}
+            onChange={handleGrave}
+          />
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleGrave()}
+          >
             Grave
-          </Checkbox>
+          </label>
         </div>
       </div>
     </Box>
