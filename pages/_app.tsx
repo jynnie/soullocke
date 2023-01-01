@@ -10,6 +10,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 
+import { Analytics } from "@vercel/analytics/react";
+
 //- Firebase Setup
 let db: firebase.database.Database;
 try {
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps | any) {
       <FirebaseContext.Provider value={{ db }}>
         <Component {...pageProps} />
       </FirebaseContext.Provider>
+      <Analytics />
     </>
   );
 }
