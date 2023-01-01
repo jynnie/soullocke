@@ -99,3 +99,9 @@
   @apply p-2;
   width: 240px;
 }
+
+@media only screen and (min-width: 1000px) {
+  .container {
+    background-size: 100% auto;
+  }
+}

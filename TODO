@@ -7,7 +7,9 @@
 - [x] New fonts
   - [x] Static background
   - [x] New page background & header
-  - [ ] New format for timeline
+  - [x] New format for timeline
+  - [ ] New timeline filters + search input
+  - [ ] New pokemon modal
 - [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles
 
