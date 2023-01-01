@@ -1,4 +1,7 @@
+import classNames from "classnames";
 import React from "react";
+import { Search } from "react-feather";
+import styles from "styles/Filters.module.scss";
 import Box from "ui-box";
 
 export interface Filter {
@@ -64,7 +67,8 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
 
   return (
     <Box className="flex justify-between" width="100%" marginBottom={8}>
-      <div>
+      <div className={styles.search}>
+        <Search size="1rem" />
         <input
           type="text"
           placeholder="Search"
@@ -76,60 +80,75 @@ function TimelineFilters({ onChange }: { onChange: (val: any) => void }) {
       <div className="flex gap-2">
         <div className="flex center gap-1">
           <input
-            className="cursor-pointer"
+            className={classNames(styles.checkbox, styles.badge)}
             type="checkbox"
             checked={!hideBadge}
             onChange={handleBadge}
           />
-          <label className="cursor-pointer" onClick={() => handleBadge()}>
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleBadge()}
+          >
             Badge
           </label>
         </div>
 
         <div className="flex center gap-1">
           <input
-            className="cursor-pointer"
+            className={classNames(styles.checkbox, styles.team)}
             type="checkbox"
             checked={!hideTeam}
             onChange={handleTeam}
           />
-          <label className="cursor-pointer" onClick={() => handleTeam()}>
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleTeam()}
+          >
             Team
           </label>
         </div>
 
         <div className="flex center gap-1">
           <input
-            className="cursor-pointer"
+            className={classNames(styles.checkbox, styles.box)}
             type="checkbox"
             checked={!hideBox}
             onChange={handleBox}
           />
-          <label className="cursor-pointer" onClick={() => handleBox()}>
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleBox()}
+          >
             Box
           </label>
         </div>
 
         <div className="flex center gap-1">
           <input
-            className="cursor-pointer"
+            className={classNames(styles.checkbox, styles.daycare)}
             type="checkbox"
             checked={!hideDaycare}
             onChange={handleDaycare}
           />
-          <label className="cursor-pointer" onClick={() => handleDaycare()}>
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleDaycare()}
+          >
             Daycare
           </label>
         </div>
 
         <div className="flex center gap-1">
           <input
-            className="cursor-pointer"
+            className={classNames(styles.checkbox, styles.grave)}
             type="checkbox"
             checked={!hideGrave}
             onChange={handleGrave}
           />
-          <label className="cursor-pointer" onClick={() => handleGrave()}>
+          <label
+            className="uppercase cursor-pointer"
+            onClick={() => handleGrave()}
+          >
             Grave
           </label>
         </div>

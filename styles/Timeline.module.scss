@@ -1,7 +1,8 @@
 .table {
   @apply mt-6;
 
-  width: 100%;
+  width: calc(100vw - 4rem);
+  max-width: 720px;
   border-collapse: separate;
   border-spacing: 0 0.4rem;
 
