@@ -1,15 +1,15 @@
-import cn from "classnames";
 import AddEvent from "components/AddEvent";
-import PokemonForm from "components/AddPokemon/Form";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
 import { Button } from "components/ui-library/Button";
 import { Modal } from "components/ui-library/Modal";
+import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import { useBackfillPokemon } from "hooks/useBackfillPokemon";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
-import React from "react";
-import { Edit } from "react-feather";
+import { RunContext } from "pages/run/[id]";
+import React, { useState } from "react";
+import { Check, X } from "react-feather";
 import styles from "styles/Pokemon.module.scss";
 import { cleanName } from "utils/utils";
 
@@ -28,7 +28,6 @@ function PokemonModal({
   showModal: boolean;
   onCancel: () => void;
 }) {
-  const [editPokemon, setEditPokemon] = React.useState<boolean>(false);
   const backfillPokemon = useBackfillPokemon(playerId, location);
 
   const tlLocations = useTimelineLocations();
@@ -47,53 +46,42 @@ function PokemonModal({
 
   const isAlive = pokemon.location !== PokemonLocation.grave;
 
-  const handleCancelEditing = () => {
-    setEditPokemon(false);
-  };
-
   const handleFinish = (pokemonName: string, nickname: string): void => {
     backfillPokemon(pokemonName, nickname);
-    if (editPokemon) setEditPokemon(false);
   };
 
   return (
-    <Modal visible={!!showModal} onCancel={onCancel}>
-      {!editPokemon && (
-        <div className={styles.modalHeader}>
-          <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
-          <div className="flex flex-col gap-1">
-            <div className="flex items-end gap-2">
-              <h3 className="capitalize">{cleanName(pokemon?.nickname)}</h3>
-              <h4 className="pb-2">({cleanName(pokemon?.name)})</h4>
-            </div>
-            <PLTag
-              className={styles.modalHeaderTag}
-              pokemonLocation={pokemon?.location}
-            />
-          </div>
+    <Modal
+      className={styles.modalBgd}
+      visible={!!showModal}
+      onCancel={onCancel}
+    >
+      <div className={styles.modalHeader}>
+        <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
 
-          <Button
-            className={cn("icon", styles.modalHeaderEdit)}
-            onClick={() => setEditPokemon(!editPokemon)}
-            icon={<Edit size="1.1em" />}
+        <div className="flex flex-col gap-1">
+          <PLTag
+            className={styles.modalHeaderTag}
+            pokemonLocation={pokemon?.location}
+          />
+          <EditableText
+            display={
+              <h3 className="capitalize">{cleanName(pokemon?.nickname)}</h3>
+            }
+            value={cleanName(pokemon?.nickname)}
+            onChange={(name: string) => handleFinish(pokemon.name, name)}
+          />
+          <EditablePokemon
+            display={<h4 className="pb-2">{cleanName(pokemon?.name)}</h4>}
+            value={cleanName(pokemon?.name)}
+            onChange={(name?: string) =>
+              name && handleFinish(name, pokemon?.nickname)
+            }
           />
         </div>
-      )}
+      </div>
 
-      {(!pokemon.name || editPokemon) && (
-        <PokemonForm
-          showCaughtCheckbox={false}
-          onCancel={editPokemon ? handleCancelEditing : undefined}
-          onFinish={handleFinish}
-          finishText={editPokemon ? "Save" : "Add"}
-          defaultValues={{
-            pokemon: pokemon?.name,
-            nickname: pokemon?.nickname,
-          }}
-        />
-      )}
-
-      <div className="m-4" style={{ maxWidth: 480 }}>
+      <div className="mx-4" style={{ maxWidth: 480 }}>
         {eventsArr?.map((event, i) => (
           <Event
             key={i}
@@ -112,3 +100,81 @@ function PokemonModal({
 }
 
 export default PokemonModal;
+
+function EditableText({
+  display,
+  value,
+  onChange,
+}: {
+  display: JSX.Element;
+  value?: string;
+  onChange: (text: string) => void;
+}) {
+  const [editValue, setEditValue] = useState<string>(value ?? "");
+  const [isEditing, setIsEditing] = useState(false);
+
+  if (!isEditing)
+    return <span onDoubleClick={() => setIsEditing(true)}>{display}</span>;
+  return (
+    <div className="flex gap-1">
+      <input
+        type="text"
+        value={editValue}
+        onChange={(evt) => setEditValue(evt.target.value)}
+      />
+      <Button
+        icon={<Check />}
+        className="text icon"
+        onClick={() => {
+          onChange?.(editValue);
+          setIsEditing(false);
+        }}
+      />
+    </div>
+  );
+}
+
+function EditablePokemon({
+  display,
+  value,
+  onChange,
+}: {
+  display: JSX.Element;
+  value?: string;
+  onChange: (val?: string) => void;
+}) {
+  const { allPokemon } = React.useContext(RunContext);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = React.useState<string | undefined>(value);
+  const handlePokemonChange = (value: string) => setEditValue(value);
+
+  if (!isEditing)
+    return <span onDoubleClick={() => setIsEditing(true)}>{display}</span>;
+  return (
+    <div className="flex gap-1">
+      <SearchableSelect
+        onChange={handlePokemonChange}
+        value={editValue}
+        placeholder="Select a Pokémon"
+        options={allPokemon.map((p) => ({ value: p.name, label: p.name }))}
+      />
+      <Button
+        icon={<X />}
+        className="text icon"
+        onClick={() => {
+          setEditValue(value);
+          setIsEditing(false);
+        }}
+      />
+      <Button
+        icon={<Check />}
+        className="text icon"
+        onClick={() => {
+          onChange?.(editValue);
+          setIsEditing(false);
+        }}
+      />
+    </div>
+  );
+}

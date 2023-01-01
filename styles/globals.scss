@@ -60,7 +60,8 @@
 
 * {
   box-sizing: border-box;
-  transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s,
+    opacity 0.2s;
 }
 
 html,
@@ -71,6 +72,9 @@ body {
   margin: 0;
   font-family: var(--font);
   font-size: 13px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 h1,
@@ -211,6 +215,14 @@ button {
 
       .button-icon {
         margin: 0;
+      }
+    }
+
+    &.subtle {
+      opacity: 0.6;
+      &:hover:not([aria-disabled="true"]),
+      &:active:not([aria-disabled="true"]) {
+        opacity: 1;
       }
     }
   }
@@ -396,4 +408,11 @@ textarea {
 
 .teko {
   font-family: "Teko";
+}
+
+@media only screen and (max-width: 632px) {
+  html,
+  body {
+    overflow-x: auto;
+  }
 }

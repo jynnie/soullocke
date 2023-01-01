@@ -22,7 +22,7 @@ export function Modal({ className, onCancel, visible, children }: ModalProps) {
           <div className="jnpr-modalBgd" onClick={onCancel} />
           <div className={classNames("jnpr-modalContent", className)}>
             <Button
-              className="jnpr-modal-cancel icon text"
+              className="jnpr-modal-cancel icon text subtle"
               icon={<X />}
               onClick={onCancel}
             />

@@ -42,18 +42,29 @@
 }
 
 .modal {
+  overflow: hidden;
+
+  &Bgd {
+    background: linear-gradient(
+      118deg,
+      var(--midnight-hover),
+      var(--midnight-hover) 82%,
+      #143d77 82%
+    );
+    box-shadow: 0 0 0 6px #1134645a;
+  }
+
   &Header {
     @apply gap-4;
 
     position: relative;
     display: flex;
-    align-items: center;
-    margin-bottom: 16px;
+    align-items: flex-start;
+    width: 80%;
 
     &Img {
       image-rendering: crisp-edges;
       image-rendering: pixelated;
-      margin-right: -16px;
     }
 
     h4,
@@ -68,18 +79,9 @@
     }
 
     &Tag {
+      @apply mb-1;
       font-size: 0.8rem;
       line-height: 1rem;
-    }
-
-    &Edit {
-      // position: absolute;
-      display: none;
-      // top: 24px;
-    }
-
-    &:hover &Edit {
-      display: block;
     }
   }
 }

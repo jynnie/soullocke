@@ -2,7 +2,7 @@ import { PlaceName } from "models";
 import React from "react";
 
 import Button from "./Button";
-import Modal from "./Modal";
+import Modal from "./NotesModal";
 
 function Notes({ locationKey }: { locationKey: PlaceName }) {
   const [showNotes, setShowNotes] = React.useState<boolean>(false);
