@@ -1,18 +1,16 @@
 import AddEvent from "components/AddEvent";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
-import { Button } from "components/ui-library/Button";
 import { Modal } from "components/ui-library/Modal";
-import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import { useBackfillPokemon } from "hooks/useBackfillPokemon";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
 import { IPokemon, PokemonLocation } from "models";
-import { RunContext } from "pages/run/[id]";
-import React, { useState } from "react";
-import { Check, X } from "react-feather";
+import React from "react";
 import styles from "styles/Pokemon.module.scss";
 import { cleanName } from "utils/utils";
 
+import { EditablePokemon } from "../ui-library/EditablePokemon";
+import { EditableText } from "../ui-library/EditableText";
 import Event from "./TimelineEvent";
 
 function PokemonModal({
@@ -100,89 +98,3 @@ function PokemonModal({
 }
 
 export default PokemonModal;
-
-function EditableText({
-  display,
-  value,
-  onChange,
-}: {
-  display: JSX.Element;
-  value?: string;
-  onChange: (text: string) => void;
-}) {
-  const [editValue, setEditValue] = useState<string | undefined>(value);
-  const [isEditing, setIsEditing] = useState(false);
-
-  if (!isEditing)
-    return <span onDoubleClick={() => setIsEditing(true)}>{display}</span>;
-  return (
-    <div className="flex gap-1">
-      <input
-        type="text"
-        value={editValue}
-        onChange={(evt) => setEditValue(evt.target.value)}
-      />
-      <Button
-        icon={<X />}
-        className="text icon subtle"
-        onClick={() => {
-          setEditValue(value);
-          setIsEditing(false);
-        }}
-      />
-      <Button
-        icon={<Check />}
-        className="text icon"
-        onClick={() => {
-          onChange?.(editValue ?? "");
-          setIsEditing(false);
-        }}
-      />
-    </div>
-  );
-}
-
-function EditablePokemon({
-  display,
-  value,
-  onChange,
-}: {
-  display: JSX.Element;
-  value?: string;
-  onChange: (val?: string) => void;
-}) {
-  const { allPokemon } = React.useContext(RunContext);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = React.useState<string | undefined>(value);
-  const handlePokemonChange = (value: string) => setEditValue(value);
-
-  if (!isEditing)
-    return <span onDoubleClick={() => setIsEditing(true)}>{display}</span>;
-  return (
-    <div className="flex gap-1">
-      <SearchableSelect
-        onChange={handlePokemonChange}
-        value={editValue}
-        placeholder="Select a Pokémon"
-        options={allPokemon.map((p) => ({ value: p.name, label: p.name }))}
-      />
-      <Button
-        icon={<X />}
-        className="text icon subtle"
-        onClick={() => {
-          setEditValue(value);
-          setIsEditing(false);
-        }}
-      />
-      <Button
-        icon={<Check />}
-        className="text icon"
-        onClick={() => {
-          onChange?.(editValue);
-          setIsEditing(false);
-        }}
-      />
-    </div>
-  );
-}

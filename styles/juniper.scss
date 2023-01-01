@@ -171,7 +171,7 @@
     height: 100vh;
     max-height: 100vh;
     z-index: 999;
-    background-color: #0000006b;
+    background-color: #00000080;
 
     overflow-y: auto;
     overflow-x: hidden;
@@ -205,6 +205,7 @@
 
     padding: 1.5rem 1rem;
     background-color: var(--midnight-primary);
+    box-shadow: 0 0 0 6px #1134645a;
   }
   &-cancel {
     position: absolute;

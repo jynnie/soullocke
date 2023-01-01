@@ -75,6 +75,10 @@
 .actions {
   opacity: 0;
   pointer-events: none;
+
+  button {
+    font-size: 0.9em;
+  }
 }
 .table tr:hover .actions {
   opacity: 1;

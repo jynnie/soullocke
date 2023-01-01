@@ -47,11 +47,10 @@
   &Bgd {
     background: linear-gradient(
       118deg,
-      var(--midnight-hover),
-      var(--midnight-hover) 82%,
-      #143d77 82%
+      var(--midnight-primary),
+      var(--midnight-primary) 82%,
+      var(--midnight-hover) 82%
     );
-    box-shadow: 0 0 0 6px #1134645a;
   }
 
   &Header {
