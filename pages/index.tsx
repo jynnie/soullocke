@@ -1,4 +1,5 @@
 import { Button } from "components/ui-library/Button";
+import mixpanel from "mixpanel-browser";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -63,11 +64,20 @@ function Home() {
             href="https://github.com/jynnie/soullocke/discussions"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => mixpanel.track("Github button")}
           >
             Github
           </a>
-          . This site is also open source, if you{"'"}re interested in
-          contributing.
+          . If you&apos;re feeling generous, you can{" "}
+          <a
+            href="https://ko-fi.com/jynnie"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => mixpanel.track("Coffee button")}
+          >
+            buy me a coffee
+          </a>
+          .
         </p>
       </section>
 
