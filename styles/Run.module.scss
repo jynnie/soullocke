@@ -1,10 +1,19 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: calc(100vw - 2rem);
-  max-width: 720px;
+
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 4rem 0;
+
+  background-image: linear-gradient(#071e3e7c, #071e3e 300px),
+    url("/Mossdeep.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 
   h2,
   h3 {
@@ -12,11 +21,40 @@
   }
 }
 
+.pokeball {
+  position: absolute;
+  left: -20px;
+  top: 18px;
+}
+
+.header {
+  width: 100vw;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.content {
+  max-width: 720px;
+}
+
 .tab {
   @apply cursor-pointer;
 
+  font-family: "Teko";
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f7f9fb;
+  opacity: 0.6;
+
+  border-bottom: 1px solid transparent;
+
+  transition: all 0.2s;
+
   &.selectedTab {
-    color: var(--yellow-primary);
+    opacity: 1;
+    border-color: white;
   }
 }
 
@@ -27,15 +65,6 @@
 .outerContainer {
   min-height: 100vh;
   padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.main {
-  padding: 5rem 0;
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;

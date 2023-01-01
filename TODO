@@ -4,9 +4,9 @@
 
 - [x] Switch off of Ant Design
 - [ ] New design!
-  - [x] New fonts
-  - [ ] Static background
-  - [ ] New page background & header
+- [x] New fonts
+  - [x] Static background
+  - [x] New page background & header
   - [ ] New format for timeline
 - [ ] Timeline: Inline editing
 - [ ] Cooler summary view styles

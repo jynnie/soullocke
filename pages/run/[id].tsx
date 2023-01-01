@@ -48,7 +48,7 @@ function RunPage() {
           <title>Soullocke | {id}</title>
         </Head>
 
-        <main className={styles.main}>
+        <main>
           <RunHome {...{ id, allBadges, allLocations }} />
 
           <Tippy
