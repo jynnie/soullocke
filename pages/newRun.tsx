@@ -3,6 +3,7 @@ import { Button } from "components/ui-library/Button";
 import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import runId from "lib/random";
 import REGIONS from "lib/regions";
+import mixpanel from "mixpanel-browser";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import React from "react";
@@ -54,6 +55,7 @@ function NewRunPage() {
       password: id,
       players: playersObj,
     });
+    mixpanel.track("New Run");
 
     router.push(`/run/${id}`);
   };
