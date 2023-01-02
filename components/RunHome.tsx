@@ -47,7 +47,7 @@ function RunHome({ region, allBadges, allLocations }: Props) {
           "mb-4 flex flex-col center gap-2",
         )}
       >
-        <div className="flex gap-4 mt-4 mb-8">
+        <div className="flex gap-6 mt-4 mb-8">
           {["Timeline", "Box", "Summary"].map((t, k) => (
             <label
               key={k}
