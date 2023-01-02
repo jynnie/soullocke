@@ -2,7 +2,7 @@
   @apply mt-6;
 
   width: calc(100vw - 4rem);
-  max-width: 720px;
+  max-width: var(--max-width);
   border-collapse: separate;
   border-spacing: 0 0.4rem;
 

@@ -17,6 +17,8 @@ import Tippy from "@tippyjs/react";
 export function BadgeBox({ allBadges }: { allBadges: string[] }) {
   const earnedBadges = useEarnedBadges();
 
+  if (allBadges.length === 0) return null;
+
   return (
     <div className={styles.badgeBox}>
       {allBadges.map((badge) => (

@@ -32,7 +32,7 @@
 }
 
 .content {
-  max-width: 720px;
+  max-width: var(--max-width);
 }
 
 .tab {

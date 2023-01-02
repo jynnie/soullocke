@@ -1,6 +1,8 @@
 @tailwind utilities;
 
 :root {
+  --max-width: 800px;
+
   --text-primary: #ffffff;
   --text-caption: #f8fafc9a;
   --text-disabled: #f8fafc4b;
