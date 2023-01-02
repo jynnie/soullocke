@@ -115,6 +115,18 @@ p {
   }
 }
 
+.p {
+  &-blue {
+    color: var(--blue-primary);
+  }
+  &-pink {
+    color: var(--pink-primary);
+  }
+  &-yellow {
+    color: var(--yellow-primary);
+  }
+}
+
 a {
   --primary: var(--purple-primary);
   --primary-text: var(--purple-primary-text);
