@@ -6,17 +6,19 @@
   - [ ] Locations
   - [ ] Origin names
   - [ ] Nicknames
-- [ ] New region!
 - [ ] Box View
   - [ ] Drag and drop between categories to move
   - [ ] Add new Pokemon
   - [ ] Styling
   - [ ] Set current location?
+- [ ] Shared type rule (either present suggested parties or a toggle to enforce rule)
 
 🌶🌶 Would improve most experiences or could be cool
 
 - [ ] Skeletons while loading
+- [ ] Mobile friendly
 - [ ] Cooler summary view styles
+- [ ] New region! (Waiting on pokeapi to update tbh)
 
 🌶 Should have, but low value add rn
 
