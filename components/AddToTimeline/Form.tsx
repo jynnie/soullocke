@@ -27,7 +27,7 @@ function AddToTimelineForm({
   };
 
   return (
-    <form className="flex gap-2 my-4 items-center">
+    <form className="flex gap-2 my-4 items-center" method="dialog">
       <SearchableSelect
         className="subtle"
         options={[

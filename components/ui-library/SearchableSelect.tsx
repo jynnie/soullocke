@@ -141,6 +141,7 @@ export function SearchableSelect({
             className="jnpr-searchableSelect-iconButton"
             disabled={disabled}
             tabIndex={-1}
+            onClick={handleFocus}
           >
             <ChevronDown
               className="jnpr-searchableSelect-chevronIcon"
