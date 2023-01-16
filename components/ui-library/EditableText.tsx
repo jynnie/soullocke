@@ -22,6 +22,7 @@ export function EditableText({
         type="text"
         value={editValue}
         onChange={(evt) => setEditValue(evt.target.value)}
+        autoFocus
       />
       <Button
         icon={<X />}
