@@ -8,12 +8,24 @@ import styles from "styles/Location.module.scss";
 
 import Tippy from "@tippyjs/react";
 
-export function DeleteLocation({ locationKey }: { locationKey: string }) {
+export function DeleteLocation({
+  locationKey,
+  setIsMiniMenuOpen,
+}: {
+  locationKey: string;
+  setIsMiniMenuOpen: (value: boolean) => void;
+}) {
   const [isShow, setShow] = useState(false);
   const deleteLocation = useDeleteLocation(locationKey);
 
-  const hide = () => setShow(false);
-  const show = () => setShow(true);
+  const hide = () => {
+    setShow(false);
+    setIsMiniMenuOpen(false);
+  };
+  const show = () => {
+    setShow(true);
+    setIsMiniMenuOpen(true);
+  };
 
   return (
     <Tippy

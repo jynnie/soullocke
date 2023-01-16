@@ -80,7 +80,8 @@
     font-size: 0.9em;
   }
 }
-.table tr:hover .actions {
+.table tr:hover .actions,
+.actions.miniMenuOpen {
   opacity: 1;
   pointer-events: all;
 }

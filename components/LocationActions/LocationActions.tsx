@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Notes from "components/Notes";
-import React from "react";
+import React, { useState } from "react";
 import styles from "styles/Timeline.module.scss";
 
 import Delete from "./Delete";
@@ -15,6 +15,8 @@ export function LocationActions({
   moveToTeam: (origin: string, location: string) => void;
   isBadge?: boolean;
 }) {
+  const [isMiniMenuOpen, setIsMiniMenuOpen] = useState(false);
+
   const handleMoveToTeam = (origin: string, location: string) => {
     moveToTeam(origin, location);
   };
@@ -25,11 +27,12 @@ export function LocationActions({
         className={classNames(
           styles.actions,
           "flex gap-2 items-center justify-end",
+          { [styles.miniMenuOpen]: isMiniMenuOpen },
         )}
       >
         <Notes {...{ locationKey }} />
         {!isBadge && <Move {...{ locationKey, handleMoveToTeam }} />}
-        <Delete {...{ locationKey }} />
+        <Delete {...{ locationKey, setIsMiniMenuOpen }} />
       </div>
     </td>
   );
