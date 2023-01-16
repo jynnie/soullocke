@@ -60,7 +60,7 @@ function NewRunPage() {
 
   return (
     <div className={styles.container}>
-      <main>
+      <main style={{ marginTop: -120 }}>
         <h2>New Run</h2>
 
         <form className="flex flex-col gap-8" method="dialog">
