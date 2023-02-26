@@ -13,11 +13,13 @@ export function useBackfillPokemon(playerId: string, originKey: string) {
   );
 
   async function backfillPokemon(pokemonName: string, nickname: string) {
+    if (!playerId || !originKey) return;
+
     await pokemon.update({
       playerId,
       origin: originKey,
-      name: pokemonName,
-      nickname,
+      name: pokemonName || "",
+      nickname: nickname || "",
     } as IPokemon);
 
     const isAlive = pokemon.value?.location !== PokemonLocation.grave;

@@ -61,6 +61,13 @@
     width: 80%;
 
     &Img {
+      @apply flex items-center justify-center;
+
+      width: 96px;
+      height: 96px;
+      color: var(--text-caption);
+      font-size: 1.5rem;
+
       image-rendering: crisp-edges;
       image-rendering: pixelated;
     }
