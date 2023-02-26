@@ -6,23 +6,23 @@ import { Check, ChevronDown, X } from "react-feather";
 import Tippy from "@tippyjs/react";
 
 interface Option {
-  value: string | number;
+  value: any;
   label: string;
 }
 
-interface SearchableSelectProps {
+interface SearchableSelectProps<T> {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
   options?: Option[];
-  value?: string | number;
-  onChange?: (value: string | number) => void;
+  value?: T;
+  onChange?: (value?: T) => void;
   isNotClearable?: boolean;
   required?: boolean;
   allowCustom?: boolean;
 }
 
-export function SearchableSelect({
+export function SearchableSelect<T>({
   className,
   placeholder,
   disabled,
@@ -32,7 +32,7 @@ export function SearchableSelect({
   isNotClearable,
   required,
   allowCustom,
-}: SearchableSelectProps) {
+}: SearchableSelectProps<T>) {
   const [isMounted, setIsMounted] = useState(false);
   const uuid = useUUID(4);
 
@@ -155,10 +155,10 @@ export function SearchableSelect({
   );
 }
 
-export function useSearchableSelect(
+export function useSearchableSelect<T>(
   rawOptions: Option[],
-  value: string | number,
-  onChange?: (value: string | number) => void,
+  value?: T,
+  onChange?: (value?: T) => void,
   allowCustom?: boolean,
 ) {
   const inputRef = useRef<HTMLInputElement | null>(null);

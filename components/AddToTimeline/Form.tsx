@@ -22,7 +22,7 @@ function AddToTimelineForm({
     setLocation(undefined);
   };
 
-  const handleChange = (value: string) => {
+  const handleChange = (value?: string) => {
     setLocation(value);
   };
 
