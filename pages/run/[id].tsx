@@ -29,7 +29,7 @@ function RunPage() {
   const allBadges = useAllBadges(region);
   const regionData = useRegionData(region);
   const allLocations = regionData?.locations || [];
-  const allPokemon = useAllPokemon();
+  const [allPokemon] = useAllPokemon();
 
   const isRunNonexistent = region === false || !id;
 

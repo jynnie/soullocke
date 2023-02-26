@@ -8,6 +8,7 @@ import React from "react";
 import styles from "styles/Run.module.scss";
 
 import { BoxView } from "./BoxView/BoxView";
+import { SettingsPage } from "./Settings/SettingsPage";
 import Summary from "./Summary";
 import Timeline from "./Timeline";
 
@@ -44,7 +45,7 @@ function RunHome({ region, allBadges, allLocations }: Props) {
 
       <div className={styles.content}>
         <div className={styles.tabContainer}>
-          {["Timeline", "Box", "Summary"].map((t, k) => (
+          {["Timeline", "Box", "Summary", "Settings"].map((t, k) => (
             <label
               key={k}
               className={classNames(styles.tab, {
@@ -65,6 +66,9 @@ function RunHome({ region, allBadges, allLocations }: Props) {
         </div>
         <div className={classNames({ hidden: viewingTab !== 2 })}>
           <Summary {...{ allBadges }} key="Summary" />
+        </div>
+        <div className={classNames({ hidden: viewingTab !== 3 })}>
+          <SettingsPage key="Settings" />
         </div>
       </div>
     </div>
