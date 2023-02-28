@@ -1,0 +1,55 @@
+.container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -360px;
+  width: 360px;
+  z-index: 99999;
+
+  overflow: auto;
+
+  background-color: var(--midnight-primary);
+  box-shadow: 0 0 10px 2px rgba(2, 20, 46, 0.5);
+
+  transition: right 0.3s ease-in-out;
+
+  @apply py-4 px-6;
+
+  &.visible {
+    right: 0px;
+  }
+
+  .x {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  h3 {
+    color: var(--text-caption);
+  }
+
+  h5 {
+    @apply m-0;
+    color: var(--text-caption);
+    font-family: Teko;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h4 {
+    @apply mt-0 mb-2;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    @apply gap-2;
+
+    padding-left: 2rem;
+  }
+}
