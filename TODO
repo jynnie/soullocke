@@ -2,17 +2,7 @@
 
 🌶🌶🌶 Super cool
 
-- [ ] Timeline: Inline editing
-  - [ ] Locations
-  - [ ] Origin names
-  - [ ] Nicknames
-- [x] Box View
-  - [x] Drag and drop between categories to move
-  - [x] Edit pokemon from view
-  - [x] Adding to team needs to make sure not full
-  - [x] Add new Pokemon
-  - [x] Styling
-  - [x] Show current location?
+- [ ] Mobile friendly
 - [ ] Shared type rule (either present suggested parties or a toggle to enforce rule)
 
 🌶🌶 Would improve most experiences or could be cool
@@ -21,13 +11,15 @@
 - [ ] Mobile friendly
 - [ ] Cooler summary view styles
 - [ ] New region! (Waiting on pokeapi to update tbh)
+- [ ] Timeline: Inline editing
+  - [ ] Locations
+  - [ ] Origin names
+  - [ ] Nicknames
 
 🌶 Should have, but low value add rn
 
 - [ ] Unit tests
-- [ ] Better help center
 
 🧊 Unseasoned thoughts
 
-- [ ] Roam Research style Legend for icons, or make indicators more obvious
 - [ ] Pokemon: Event Buttons instead of filling out form?
