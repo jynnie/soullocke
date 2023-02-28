@@ -79,7 +79,7 @@ export function MovePokemon({
             <span className="color-purple">*</span> At
           </label>
           <SearchableSelect
-            onChange={(value) => setLocation(value)}
+            onChange={(value) => setLocation(value || "")}
             value={location}
             placeholder="Select the location of this event"
             options={timelineLocations?.map((l) => ({

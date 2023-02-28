@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import mixpanel from "mixpanel-browser";
-import { Coffee, GitHub, HelpCircle, Instagram, Smile, X } from "react-feather";
+import { Coffee, GitHub, Instagram, X } from "react-feather";
 import styles from "styles/WhatsNew.module.scss";
 
 import { Button } from "./ui-library/Button";

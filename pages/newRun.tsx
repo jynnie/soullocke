@@ -86,7 +86,7 @@ function NewRunPage() {
             </label>
             <SearchableSelect
               placeholder="i.e. Hoenn"
-              onChange={(value: string) => setRegion(value)}
+              onChange={(value?: string) => setRegion(value || "")}
               options={REGIONS.map((r) => ({
                 value: r,
                 label: r[0].toUpperCase() + r.slice(1),
