@@ -19,6 +19,24 @@
 
     width: 260px;
   }
+
+  .pokemon {
+    @apply py-2 px-6 shadow-lg flex items-center relative;
+
+    border-radius: 48px;
+    height: 62px;
+    width: 260px;
+    background: linear-gradient(
+      118deg,
+      var(--midnight-primary),
+      var(--midnight-primary) 70%,
+      var(--midnight-hover) 70%
+    );
+
+    .images {
+      @apply flex items-center absolute right-4;
+    }
+  }
 }
 
 .nonTeamColumn {
