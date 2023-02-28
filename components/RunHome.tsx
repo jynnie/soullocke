@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import { useGameName } from "hooks/useGameName";
+import { useLocalStorage } from "hooks/useLocalStorage";
 import { usePlayersArray } from "hooks/usePlayersArray";
 import type { MapLocation } from "models";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import styles from "styles/Run.module.scss";
 
 import { BoxView } from "./BoxView/BoxView";
@@ -21,7 +22,7 @@ function RunHome({ region, allBadges, allLocations }: Props) {
   const playerArr = usePlayersArray();
   const game = useGameName();
 
-  const [viewingTab, setViewingTab] = useState(0);
+  const [viewingTab, setViewingTab] = useLocalStorage("runTab", 0);
 
   return (
     <div

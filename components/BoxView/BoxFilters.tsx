@@ -18,7 +18,7 @@ export function BoxFilters({
   latestLocation,
 }: {
   onChange: (val: any) => void;
-  latestLocation: { name: string; key: string };
+  latestLocation?: { name: string; key: string };
 }) {
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const handleOpenModal = () => setShowModal(true);
@@ -52,7 +52,7 @@ export function BoxFilters({
         </div>
 
         <div className={styles.location}>
-          {capitalize(cleanName(latestLocation.name))}
+          {capitalize(cleanName(latestLocation?.name || ""))}
         </div>
 
         <div className="flex items-center justify-end">
