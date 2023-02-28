@@ -12,6 +12,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
+import { toast } from "react-toastify";
 import styles from "styles/Box.module.scss";
 import { getLastItem } from "utils/getLastItem";
 
@@ -39,6 +40,13 @@ export function BoxView() {
     // Move pokemon from one place to another depending on the drop location
     const pokemon = result.draggableId; // Draggable id is the location key
     const to = result.destination.droppableId as PokemonLocation;
+
+    // Can't add to team if it's already full
+    if (team.length >= 6 && to === "team") {
+      toast.warn("You already have 6 Pokémon on your team!");
+      return;
+    }
+
     movePokemon(pokemon, latestLocation.key, to);
   }
 
