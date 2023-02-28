@@ -17,7 +17,7 @@ export function EditablePokemon({
 
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = React.useState<string | undefined>(value);
-  const handlePokemonChange = (value: string) => setEditValue(value);
+  const handlePokemonChange = (value?: string) => setEditValue(value);
 
   if (!isEditing)
     return <span onDoubleClick={() => setIsEditing(true)}>{display}</span>;

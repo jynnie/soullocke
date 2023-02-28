@@ -20,6 +20,8 @@ export function useAddNewLocation() {
         name: location,
       },
     });
+
+    return uuid;
   }
 
   return addNewLocation;

@@ -2,15 +2,25 @@
 
 🌶🌶🌶 Super cool
 
-- [ ] New region!
 - [ ] Timeline: Inline editing
-- [ ] Box view? TL location in the bottom
-- [ ] Box: Drag and drop between categories to move
+  - [ ] Locations
+  - [ ] Origin names
+  - [ ] Nicknames
+- [x] Box View
+  - [x] Drag and drop between categories to move
+  - [x] Edit pokemon from view
+  - [x] Adding to team needs to make sure not full
+  - [x] Add new Pokemon
+  - [x] Styling
+  - [x] Show current location?
+- [ ] Shared type rule (either present suggested parties or a toggle to enforce rule)
 
 🌶🌶 Would improve most experiences or could be cool
 
 - [ ] Skeletons while loading
+- [ ] Mobile friendly
 - [ ] Cooler summary view styles
+- [ ] New region! (Waiting on pokeapi to update tbh)
 
 🌶 Should have, but low value add rn
 

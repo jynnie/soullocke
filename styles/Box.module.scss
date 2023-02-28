@@ -1,0 +1,101 @@
+.filters {
+  @apply mb-4 gap-2;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+
+  .location {
+    @apply flex items-center justify-center capitalize;
+
+    color: var(--text-caption);
+    font-family: Teko;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+.page {
+  max-width: var(--max-width);
+  width: calc(100vw - 4rem);
+}
+
+.pokemonContainer {
+  @apply flex gap-10 mt-8;
+}
+
+.teamColumn {
+  @apply flex flex-col gap-2;
+
+  .header {
+    @apply uppercase text-xl;
+  }
+
+  .container {
+    @apply flex flex-col gap-4;
+
+    width: 260px;
+  }
+
+  .pokemon {
+    @apply py-2 px-6 shadow-lg flex items-center relative;
+
+    border-radius: 48px;
+    height: 62px;
+    width: 260px;
+    background: linear-gradient(
+      118deg,
+      var(--midnight-primary),
+      var(--midnight-primary) 70%,
+      var(--midnight-hover) 70%
+    );
+
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(1.4);
+    }
+
+    .name {
+      @apply text-lg capitalize font-bold truncate;
+
+      line-height: 1.1em;
+      max-width: 232px;
+    }
+
+    .images {
+      @apply flex items-center absolute right-4;
+    }
+  }
+}
+
+.nonTeamColumn {
+  @apply flex flex-col gap-10;
+
+  .section {
+    @apply flex flex-col gap-2;
+    min-height: 95.5px;
+  }
+
+  .container {
+    @apply flex flex-wrap gap-4;
+  }
+
+  .pokemon {
+    @apply rounded-lg flex justify-center items-center bg-contain;
+
+    width: 64px;
+    height: 64px;
+    background-image: url("/PokeballLight.svg");
+
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(1.4);
+    }
+
+    .images {
+      @apply flex items-center;
+    }
+  }
+}

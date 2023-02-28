@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import PokemonImage from "components/PokemonImage";
 import type { IPokemon } from "models";
 import React from "react";
@@ -10,12 +11,14 @@ import Tooltip from "@tippyjs/react";
 import { TooltipContent } from "./ui-library/TooltipContent";
 
 export function PokemonIcon({
+  className,
   pokemon,
   onClick,
-  width = 32,
-  height = 32,
+  width = 36,
+  height = 36,
   backgroundColor,
 }: {
+  className?: string;
   pokemon: IPokemon;
   onClick?: () => void;
   width?: number;
@@ -28,7 +31,7 @@ export function PokemonIcon({
   const { data } = usePalette(src || "");
   const avatarStyle = {
     backgroundColor:
-      backgroundColor || data?.vibrant || "var(--midnight-primary)",
+      backgroundColor || data?.vibrant + "36" || "var(--midnight-primary)",
   };
 
   return (
@@ -37,16 +40,21 @@ export function PokemonIcon({
       placement="top"
     >
       <div
-        className="flex justify-center m-auto relative w-max"
+        className={classNames(className, "flex justify-center relative w-max")}
         onClick={onClick}
       >
         <Box
           className={styles.iconAvatar}
-          width={width || 40}
-          height={height || 40}
+          width={width || 36}
+          height={height || 36}
           {...avatarStyle}
         >
-          <PokemonImage pokemon={pokemon} updateSrc={setSrc} />
+          <PokemonImage
+            pokemon={pokemon}
+            updateSrc={setSrc}
+            width={width + 12 || 46}
+            height={height + 12 || 46}
+          />
         </Box>
       </div>
     </Tooltip>

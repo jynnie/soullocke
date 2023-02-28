@@ -1,12 +1,15 @@
 import classNames from "classnames";
-import Summary from "components/Summary";
-import Timeline from "components/Timeline";
 import { useGameName } from "hooks/useGameName";
+import { useLocalStorage } from "hooks/useLocalStorage";
 import { usePlayersArray } from "hooks/usePlayersArray";
 import type { MapLocation } from "models";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import styles from "styles/Run.module.scss";
+
+import { BoxView } from "./BoxView/BoxView";
+import Summary from "./Summary";
+import Timeline from "./Timeline";
 
 interface Props {
   id: string;
@@ -19,7 +22,7 @@ function RunHome({ region, allBadges, allLocations }: Props) {
   const playerArr = usePlayersArray();
   const game = useGameName();
 
-  const [viewingTab, setViewingTab] = useState(0);
+  const [viewingTab, setViewingTab] = useLocalStorage("runTab", 0);
 
   return (
     <div
@@ -38,16 +41,10 @@ function RunHome({ region, allBadges, allLocations }: Props) {
         </h3>
         <h2 className="capitalize">{game} Soullocke</h2>
       </div>
-      {/* <div>codename: {id}</div> */}
 
-      <div
-        className={classNames(
-          styles.content,
-          "mb-4 flex flex-col center gap-2",
-        )}
-      >
-        <div className="flex gap-4 mt-4 mb-8">
-          {["Timeline", "Summary"].map((t, k) => (
+      <div className={styles.content}>
+        <div className={styles.tabContainer}>
+          {["Timeline", "Box", "Summary"].map((t, k) => (
             <label
               key={k}
               className={classNames(styles.tab, {
@@ -64,6 +61,9 @@ function RunHome({ region, allBadges, allLocations }: Props) {
           <Timeline {...{ allLocations, allBadges }} />
         </div>
         <div className={classNames({ hidden: viewingTab !== 1 })}>
+          <BoxView {...{ allBadges }} key="Box" />
+        </div>
+        <div className={classNames({ hidden: viewingTab !== 2 })}>
           <Summary {...{ allBadges }} key="Summary" />
         </div>
       </div>

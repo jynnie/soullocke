@@ -1,6 +1,8 @@
 @tailwind utilities;
 
 :root {
+  --max-width: 800px;
+
   --text-primary: #ffffff;
   --text-caption: #f8fafc9a;
   --text-disabled: #f8fafc4b;
@@ -71,7 +73,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: var(--font);
-  font-size: 13px;
+  font-size: 14px;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -112,6 +114,18 @@ p {
   }
   &.alignRight {
     text-align: right;
+  }
+}
+
+.p {
+  &-blue {
+    color: var(--blue-primary);
+  }
+  &-pink {
+    color: var(--pink-primary);
+  }
+  &-yellow {
+    color: var(--yellow-primary);
   }
 }
 
@@ -303,7 +317,7 @@ button {
 input,
 textarea {
   background: transparent;
-  padding: 4px 8px;
+  padding: 8px 12px;
   border: 1px solid var(--grey-hover);
   border-radius: 4px;
   font-size: 1rem;

@@ -55,7 +55,9 @@ function PokemonModal({
       onCancel={onCancel}
     >
       <div className={styles.modalHeader}>
-        <PokemonImage className={styles.modalHeaderImg} pokemon={pokemon} />
+        <div className={styles.modalHeaderImg}>
+          <PokemonImage pokemon={pokemon} />
+        </div>
 
         <div className="flex flex-col gap-1">
           <PLTag
@@ -64,13 +66,19 @@ function PokemonModal({
           />
           <EditableText
             display={
-              <h3 className="capitalize">{cleanName(pokemon?.nickname)}</h3>
+              <h3 className="capitalize">
+                {cleanName(pokemon?.nickname) || "Unspecified Nickname"}
+              </h3>
             }
             value={cleanName(pokemon?.nickname)}
             onChange={(name: string) => handleFinish(pokemon.name, name)}
           />
           <EditablePokemon
-            display={<h4 className="pb-2">{cleanName(pokemon?.name)}</h4>}
+            display={
+              <h4 className="pb-2">
+                {cleanName(pokemon?.name) || "Unspecified Pokémon"}
+              </h4>
+            }
             value={cleanName(pokemon?.name)}
             onChange={(name?: string) =>
               name && handleFinish(name, pokemon?.nickname)

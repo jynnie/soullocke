@@ -10,19 +10,19 @@ interface Option {
   label: string;
 }
 
-interface SearchableSelectProps {
+interface SearchableSelectProps<T> {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
   options?: Option[];
-  value?: any;
-  // eslint-disable-next-line no-unused-vars
-  onChange?: (value: any) => void;
+  value?: T;
+  onChange?: (value?: T) => void;
   isNotClearable?: boolean;
   required?: boolean;
+  allowCustom?: boolean;
 }
 
-export function SearchableSelect({
+export function SearchableSelect<T>({
   className,
   placeholder,
   disabled,
@@ -31,7 +31,8 @@ export function SearchableSelect({
   onChange,
   isNotClearable,
   required,
-}: SearchableSelectProps) {
+  allowCustom,
+}: SearchableSelectProps<T>) {
   const [isMounted, setIsMounted] = useState(false);
   const uuid = useUUID(4);
 
@@ -49,7 +50,7 @@ export function SearchableSelect({
     handleKeyDown,
     handleSelect,
     handleClear,
-  } = useSearchableSelect(options ?? [], value, onChange);
+  } = useSearchableSelect(options ?? [], value, onChange, allowCustom);
 
   useEffect(() => {
     setIsMounted(true);
@@ -154,23 +155,35 @@ export function SearchableSelect({
   );
 }
 
-export function useSearchableSelect(
-  options: Option[],
-  value: unknown,
-  // eslint-disable-next-line no-unused-vars
-  onChange?: (value: unknown) => void,
+export function useSearchableSelect<T>(
+  rawOptions: Option[],
+  value?: T,
+  onChange?: (value?: T) => void,
+  allowCustom?: boolean,
 ) {
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const selectedOptionIdx = useMemo(
-    () => (options || []).findIndex((o) => o.value === value),
-    [options, value],
-  );
-  const selectedOption: Option | undefined = options?.[selectedOptionIdx];
 
   const [searchValue, setSearchValue] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [focusedOptionIdx, setFocusedOptionIdx] = useState<number | null>(null);
+
+  const options = useMemo(
+    () => [
+      ...rawOptions,
+      ...(allowCustom && searchValue
+        ? ([{ value: searchValue, label: searchValue }] as Option[])
+        : []),
+    ],
+    [rawOptions, searchValue, allowCustom],
+  );
+  const selectedOptionIdx = useMemo(
+    () => (options || []).findIndex((o) => o.value === value),
+    [options, value],
+  );
+  let selectedOption: Option | undefined = options?.[selectedOptionIdx];
+  if (value && !selectedOption) {
+    selectedOption = { label: value.toString(), value: value };
+  }
 
   function isMatchingSearchValue(o: Option, search?: string | null): boolean {
     if (!search) return true;

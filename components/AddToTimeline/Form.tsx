@@ -4,7 +4,7 @@ import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import type { MapLocation } from "models";
 import React from "react";
 import { Plus } from "react-feather";
-import { cleanName } from "utils/utils";
+import { capitalize, cleanName } from "utils/utils";
 
 function AddToTimelineForm({
   allLocations,
@@ -22,7 +22,7 @@ function AddToTimelineForm({
     setLocation(undefined);
   };
 
-  const handleChange = (value: string) => {
+  const handleChange = (value?: string) => {
     setLocation(value);
   };
 
@@ -33,16 +33,17 @@ function AddToTimelineForm({
         options={[
           ...allLocations?.map((l) => ({
             value: l.name,
-            label: cleanName(l.name),
+            label: capitalize(cleanName(l.name)),
           })),
           ...allBadges?.map((b) => ({
             value: b,
-            label: cleanName(b),
+            label: capitalize(cleanName(b)),
           })),
         ]}
         value={location}
         onChange={handleChange}
         placeholder="Add Location or Badge"
+        allowCustom
       />
 
       <Button

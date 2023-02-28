@@ -30,7 +30,11 @@ export function TimelinePokemon({
         }}
       />
 
-      <PokemonIcon {...{ pokemon }} onClick={handleOpenModal} />
+      <PokemonIcon
+        className="m-auto"
+        {...{ pokemon }}
+        onClick={handleOpenModal}
+      />
     </>
   );
 }

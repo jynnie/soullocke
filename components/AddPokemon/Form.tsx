@@ -35,7 +35,7 @@ function AddPokemonForm({
     setCaught(true);
   };
 
-  const handlePokemonChange = (value: string) => setPokemon(value);
+  const handlePokemonChange = (value?: string) => setPokemon(value);
   const handleNicknameChange: React.ChangeEventHandler<HTMLInputElement> = (
     evt,
   ) => setNickname(evt.target.value);

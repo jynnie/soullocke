@@ -46,7 +46,7 @@ export function AddPokemon({
       interactiveBorder={10}
       onClickOutside={() => setShowForm(false)}
     >
-      <div>
+      <div className="flex center">
         <Tippy content={<TooltipContent content="Add Pokemon" />}>
           <div>
             <Button
