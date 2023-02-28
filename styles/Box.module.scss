@@ -3,12 +3,12 @@
   width: calc(100vw - 4rem);
 }
 
-.teamColumn {
+.pokemonContainer {
   @apply flex gap-10 mt-8;
+}
 
-  .section {
-    @apply flex flex-col gap-2;
-  }
+.teamColumn {
+  @apply flex flex-col gap-2;
 
   .header {
     @apply uppercase text-xl;
@@ -33,6 +33,19 @@
       var(--midnight-hover) 70%
     );
 
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(1.4);
+    }
+
+    .name {
+      @apply text-lg capitalize font-bold truncate;
+
+      line-height: 1.1em;
+      max-width: 232px;
+    }
+
     .images {
       @apply flex items-center absolute right-4;
     }
@@ -49,5 +62,23 @@
 
   .container {
     @apply flex flex-wrap gap-4;
+  }
+
+  .pokemon {
+    @apply rounded-lg flex justify-center items-center bg-contain;
+
+    width: 64px;
+    height: 64px;
+    background-image: url("/PokeballLight.svg");
+
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(1.4);
+    }
+
+    .images {
+      @apply flex items-center;
+    }
   }
 }

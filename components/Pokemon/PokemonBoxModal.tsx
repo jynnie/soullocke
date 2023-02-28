@@ -41,7 +41,7 @@ export function PokemonBoxModal({
     >
       <>
         <div className="flex gap-4 justify-center items-center mb-4">
-          {capitalize(cleanName(data.location.name || "?"))}
+          Caught in {capitalize(cleanName(data.location.name || "?"))}
           <PLTag
             className={styles.modalHeaderTag}
             pokemonLocation={pokemons[0]?.location}

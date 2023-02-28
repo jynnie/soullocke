@@ -24,10 +24,7 @@ export function TeamPokemon({ data }: { data: Data }) {
       <div className={styles.pokemon} onClick={handleOpenModal}>
         <div className="flex-grow">
           <div className="capitalize">{cleanName(data.location.name)}</div>
-          <div
-            className="text-lg capitalize font-bold truncate"
-            style={{ lineHeight: "1.1em", maxWidth: 232 }}
-          >
+          <div className={styles.name}>
             {cleanName(data.pokemon.map((p) => p.nickname || "?").join(" & "))}
           </div>
         </div>

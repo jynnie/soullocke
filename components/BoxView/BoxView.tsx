@@ -47,11 +47,11 @@ export function BoxView() {
       <BoxFilters onChange={onFilterChange} />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className={styles.teamColumn}>
+        <div className={styles.pokemonContainer}>
           <Droppable droppableId="team">
             {(p) => (
               <div
-                className={styles.section}
+                className={styles.teamColumn}
                 {...p.droppableProps}
                 ref={p.innerRef}
                 key={p.droppableProps["data-rbd-droppable-id"]}
