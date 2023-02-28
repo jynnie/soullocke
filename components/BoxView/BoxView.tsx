@@ -52,7 +52,7 @@ export function BoxView() {
 
   return (
     <div className={styles.page}>
-      <BoxFilters onChange={onFilterChange} />
+      <BoxFilters onChange={onFilterChange} latestLocation={latestLocation} />
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.pokemonContainer}>

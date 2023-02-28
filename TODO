@@ -6,13 +6,13 @@
   - [ ] Locations
   - [ ] Origin names
   - [ ] Nicknames
-- [ ] Box View
+- [x] Box View
   - [x] Drag and drop between categories to move
-  - [ ] Edit pokemon from view
-  - [ ] Adding to team needs to make sure not full
-  - [ ] Add new Pokemon
-  - [ ] Styling
-  - [ ] Set current location?
+  - [x] Edit pokemon from view
+  - [x] Adding to team needs to make sure not full
+  - [x] Add new Pokemon
+  - [x] Styling
+  - [x] Show current location?
 - [ ] Shared type rule (either present suggested parties or a toggle to enforce rule)
 
 🌶🌶 Would improve most experiences or could be cool

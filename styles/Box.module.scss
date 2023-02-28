@@ -1,3 +1,20 @@
+.filters {
+  @apply mb-4 gap-2;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+
+  .location {
+    @apply flex items-center justify-center capitalize;
+
+    color: var(--text-caption);
+    font-family: Teko;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
 .page {
   max-width: var(--max-width);
   width: calc(100vw - 4rem);

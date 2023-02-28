@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import PLTag from "components/LocationSummary/PLTag";
 import PokemonImage from "components/PokemonImage";
 import { Data } from "components/Timeline/Timeline";
