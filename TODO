@@ -7,7 +7,9 @@
   - [ ] Origin names
   - [ ] Nicknames
 - [ ] Box View
-  - [ ] Drag and drop between categories to move
+  - [x] Drag and drop between categories to move
+  - [ ] Edit pokemon from view
+  - [ ] Adding to team needs to make sure not full
   - [ ] Add new Pokemon
   - [ ] Styling
   - [ ] Set current location?

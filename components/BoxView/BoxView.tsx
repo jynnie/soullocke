@@ -43,21 +43,23 @@ export function BoxView() {
   }
 
   return (
-    <div style={{ maxWidth: "var(--max-width)", width: "calc(100vw - 4rem)" }}>
+    <div className={styles.page}>
       <BoxFilters onChange={onFilterChange} />
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex gap-10 mt-8">
+        <div className={styles.teamColumn}>
           <Droppable droppableId="team">
             {(p) => (
               <div
-                className="flex flex-col gap-2"
+                className={styles.section}
                 {...p.droppableProps}
                 ref={p.innerRef}
                 key={p.droppableProps["data-rbd-droppable-id"]}
               >
-                <div className="teko uppercase text-xl p-pink">Team</div>
-                <div className="flex flex-col gap-4" style={{ width: 260 }}>
+                <div className={classNames(styles.header, "teko p-pink")}>
+                  Team
+                </div>
+                <div className={styles.container}>
                   {team?.map((d, i) => (
                     <Draggable
                       key={d.location.key}
@@ -84,17 +86,17 @@ export function BoxView() {
             )}
           </Droppable>
 
-          <div className="flex flex-col gap-10">
+          <div className={styles.nonTeamColumn}>
             <Droppable droppableId="box" direction="horizontal">
               {(p) => (
                 <div
-                  className={classNames(styles.boxContainer, "p-blue")}
+                  className={classNames(styles.section, "p-blue")}
                   {...p.droppableProps}
                   ref={p.innerRef}
                   key={p.droppableProps["data-rbd-droppable-id"]}
                 >
                   <div className="teko uppercase text-xl">Box</div>
-                  <div className="flex flex-wrap gap-4">
+                  <div className={styles.container}>
                     {box?.map((d, i) => (
                       <Draggable
                         key={d.location.key}
@@ -124,13 +126,13 @@ export function BoxView() {
             <Droppable droppableId="daycare" direction="horizontal">
               {(p) => (
                 <div
-                  className={classNames(styles.boxContainer)}
+                  className={styles.section}
                   {...p.droppableProps}
                   ref={p.innerRef}
                   key={p.droppableProps["data-rbd-droppable-id"]}
                 >
                   <div className="teko uppercase text-xl p-yellow">Daycare</div>
-                  <div className="flex flex-wrap gap-4">
+                  <div className={styles.container}>
                     {daycare?.map((d, i) => (
                       <Draggable
                         key={d.location.key}
@@ -160,13 +162,13 @@ export function BoxView() {
             <Droppable droppableId="grave" direction="horizontal">
               {(p) => (
                 <div
-                  className={classNames(styles.boxContainer)}
+                  className={styles.section}
                   {...p.droppableProps}
                   ref={p.innerRef}
                   key={p.droppableProps["data-rbd-droppable-id"]}
                 >
                   <div className="teko uppercase text-xl">Grave</div>
-                  <div className="flex flex-wrap gap-4">
+                  <div className={styles.container}>
                     {grave?.map((d, i) => (
                       <Draggable
                         key={d.location.key}

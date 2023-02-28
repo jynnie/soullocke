@@ -1,5 +1,35 @@
-// FIXME: What is going on with this?
-.boxContainer {
-  @apply flex flex-col gap-2;
-  min-height: 95.5px;
+.page {
+  max-width: var(--max-width);
+  width: calc(100vw - 4rem);
+}
+
+.teamColumn {
+  @apply flex gap-10 mt-8;
+
+  .section {
+    @apply flex flex-col gap-2;
+  }
+
+  .header {
+    @apply uppercase text-xl;
+  }
+
+  .container {
+    @apply flex flex-col gap-4;
+
+    width: 260px;
+  }
+}
+
+.nonTeamColumn {
+  @apply flex flex-col gap-10;
+
+  .section {
+    @apply flex flex-col gap-2;
+    min-height: 95.5px;
+  }
+
+  .container {
+    @apply flex flex-wrap gap-4;
+  }
 }

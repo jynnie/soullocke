@@ -41,13 +41,8 @@ function RunHome({ region, allBadges, allLocations }: Props) {
         <h2 className="capitalize">{game} Soullocke</h2>
       </div>
 
-      <div
-        className={classNames(
-          styles.content,
-          "mb-4 flex flex-col center gap-2",
-        )}
-      >
-        <div className="flex gap-6 mt-4 mb-8">
+      <div className={styles.content}>
+        <div className={styles.tabContainer}>
           {["Timeline", "Box", "Summary"].map((t, k) => (
             <label
               key={k}

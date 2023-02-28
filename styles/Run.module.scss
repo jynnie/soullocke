@@ -32,7 +32,13 @@
 }
 
 .content {
+  @apply mb-4 flex flex-col items-center justify-center gap-2;
+
   max-width: var(--max-width);
+}
+
+.tabContainer {
+  @apply flex gap-6 mt-4 mb-8;
 }
 
 .tab {
