@@ -17,6 +17,11 @@ let db: firebase.database.Database;
 try {
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
+
+  // Point to the RTDB emulator running on localhost.
+  if (window.location.hostname === "localhost") {
+    db.useEmulator("localhost", 9000);
+  }
 } catch (error: any) {
   /*
    * We skip the "already exists" message which is

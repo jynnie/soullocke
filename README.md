@@ -14,12 +14,12 @@ Overview of main features. Currently used as a checklist while the project is in
 
 Future features include password lock. Please leave feature requests as an [issue](https://github.com/jynnie/soullocke/issues).
 
-### Open Questions
+### FAQ
 
-- Should we save changes automatically or require a manual button press?
-  - Automatically for now
+- Are changes saved automatically?
+  - Yes! Changes are saved in real time, so you don't have to worry about losing your progress. Everyone at the link will see the same changes and can edit in real-time.
 - Does this track Pokémon levels and moves?
-  - No, decided against adding fine-grain tracking of these details for now
+  - No, decided against adding fine-grain tracking of these details. We're designed for simplicity. If you want that level of detail, we reccommend using a different tracker.
 
 ## 🔨 Development
 
@@ -29,9 +29,14 @@ Soullocke is a [Next.js](https://nextjs.org/) project bootstrapped with [`create
 $ yarn install
 ```
 
+Run locally:
+
 ```
 $ yarn dev
+$ yarn emulate
 ```
+
+Dummy data is populated at [http://localhost:3000/run/nitrous-gerbil-65](http://localhost:3000/run/nitrous-gerbil-65).
 
 ## 📄 License
 
