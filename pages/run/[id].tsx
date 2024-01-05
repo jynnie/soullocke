@@ -9,6 +9,7 @@ import { PokemonListApiData as ListPokemon } from "models";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Error from "pages/_error";
+import posthog from "posthog-js";
 import React from "react";
 import { HelpCircle } from "react-feather";
 import { ToastContainer } from "react-toastify";
@@ -36,6 +37,7 @@ function RunPage() {
   const [showWhatsNew, setShowWhatsNew] = React.useState(false);
   function help() {
     mixpanel.track("Smile button");
+    posthog.capture("Open What's New");
     setShowWhatsNew(true);
   }
 
