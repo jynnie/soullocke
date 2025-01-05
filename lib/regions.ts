@@ -8,6 +8,7 @@ export const regions = [
   "kalos",
   "alola",
   "galar",
+  "paldea",
 ];
 
 export default regions;

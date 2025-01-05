@@ -85,6 +85,27 @@ const galar: string[] = [
   "Dragon_Badge",
 ];
 
+const paldea: string[] = [
+  "Cortondo_Gym_Badge",
+  "Artazon_Gym_Badge",
+  "Levincia_Gym_Badge",
+  "Cascarrafa_Gym_Badge",
+  "Medali_Gym_Badge",
+  "Montenevera_Gym_Badge",
+  "Alfornada_Gym_Badge",
+  "Glaseado_Gym_Badge",
+  "Segin_Squad_Badge",
+  "Schedar_Squad_Badge",
+  "Navi_Squad_Badge",
+  "Ruchbah_Squad_Badge",
+  "Caph_Squad_Badge",
+  "South_Province_Titan_Badge",
+  "West_Province_Titan_Badge",
+  "East_Province_Titan_Badge",
+  "Asado_Desert_Titan_Badge",
+  "Casseroya_Lake_Titan_Badge",
+];
+
 const images: { [name: string]: string } = {
   Boulder_Badge:
     "https://cdn2.bulbagarden.net/upload/thumb/d/dd/Boulder_Badge.png/50px-Boulder_Badge.png",
@@ -206,6 +227,42 @@ const images: { [name: string]: string } = {
     "https://cdn2.bulbagarden.net/upload/thumb/4/4d/Dark_Badge.png/50px-Dark_Badge.png",
   Dragon_Badge:
     "https://cdn2.bulbagarden.net/upload/thumb/2/27/Dragon_Badge.png/50px-Dragon_Badge.png",
+  Cortondo_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/9/95/SVbadge_VictoryRoad_Bug.png",
+  Artazon_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/a/ac/SVbadge_VictoryRoad_Grass.png",
+  Levincia_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/f/ff/SVbadge_VictoryRoad_Electric.png",
+  Cascarrafa_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/4/4f/SVbadge_VictoryRoad_Water.png",
+  Medali_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/d/d6/SVbadge_VictoryRoad_Normal.png",
+  Montenevera_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/4/4c/SVbadge_VictoryRoad_Ghost.png",
+  Alfornada_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/2/2d/SVbadge_VictoryRoad_Psychic.png",
+  Glaseado_Gym_Badge:
+    "https://archives.bulbagarden.net/media/upload/4/46/SVbadge_VictoryRoad_Ice.png",
+  Segin_Squad_Badge:
+    "https://archives.bulbagarden.net/media/upload/1/1a/SVbadge_StarfallStreet_Dark.png",
+  Schedar_Squad_Badge:
+    "https://archives.bulbagarden.net/media/upload/4/46/SVbadge_StarfallStreet_Fire.png",
+  Navi_Squad_Badge:
+    "https://archives.bulbagarden.net/media/upload/4/4b/SVbadge_StarfallStreet_Poison.png",
+  Ruchbah_Squad_Badge:
+    "https://archives.bulbagarden.net/media/upload/f/f0/SVbadge_StarfallStreet_Fairy.png",
+  Caph_Squad_Badge:
+    "https://archives.bulbagarden.net/media/upload/0/03/SVbadge_StarfallStreet_Fighting.png",
+  South_Province_Titan_Badge:
+    "https://archives.bulbagarden.net/media/upload/3/3d/SVbadge_PathOfLegends_Rock.png",
+  West_Province_Titan_Badge:
+    "https://archives.bulbagarden.net/media/upload/3/37/SVbadge_PathOfLegends_Flying.png",
+  East_Province_Titan_Badge:
+    "https://archives.bulbagarden.net/media/upload/1/11/SVbadge_PathOfLegends_Steel.png",
+  Asado_Desert_Titan_Badge:
+    "https://archives.bulbagarden.net/media/upload/1/11/SVbadge_PathOfLegends_Ground.png",
+  Casseroya_Lake_Titan_Badge:
+    "https://archives.bulbagarden.net/media/upload/d/dc/SVbadge_PathOfLegends_Dragon.png",
 };
 
 export {
@@ -218,6 +275,7 @@ export {
   unova,
   kalos,
   galar,
+  paldea,
 };
 
 export const BADGES = {
@@ -229,5 +287,6 @@ export const BADGES = {
   unova,
   kalos,
   galar,
+  paldea,
 };
 export default BADGES;
