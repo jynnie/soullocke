@@ -4,12 +4,11 @@ import { useAddNewLocation } from "hooks/useAddNewLocation";
 import { useDeleteLocation } from "hooks/useDeleteLocation";
 import useEarnedBadges from "hooks/useEarnedBadges";
 import { useTimelineLocations } from "hooks/useTimelineLocations";
+import { badgeImages } from "lib/badges";
 import React from "react";
 import styles from "styles/Summary.module.scss";
 
 import Tippy from "@tippyjs/react";
-
-// import { badgeImages } from "lib/badges";
 
 /**
  * Badge Progress Box
@@ -39,6 +38,12 @@ function SingleBadge({
   badge: string;
   isEarned: boolean;
 }) {
+  const [image, setImage] = React.useState<string>(
+    `https://nuzlocke-generator.herokuapp.com/img/checkpoints/${badge
+      .replaceAll("_", "-")
+      .toLowerCase()}.png`,
+  );
+
   const addNewLocation = useAddNewLocation();
   const badgeKey = useBadgeLocationKey(badge);
   const deleteLocation = useDeleteLocation(badgeKey ?? "");
@@ -52,15 +57,18 @@ function SingleBadge({
 
   return (
     <Tippy
-      content={<TooltipContent>Double click to toggle badge</TooltipContent>}
+      content={
+        <TooltipContent>
+          Double click to toggle {badge.replaceAll("_", " ")}
+        </TooltipContent>
+      }
       delay={[500, 0]}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={cn({ [styles.earned]: isEarned }, "pointer")}
-        src={`https://nuzlocke-generator.herokuapp.com/img/checkpoints/${badge
-          .replaceAll("_", "-")
-          .toLowerCase()}.png`}
+        src={image}
+        onError={() => setImage(badgeImages[badge])}
         alt={badge}
         onDoubleClick={addBadge(badge)}
       />
