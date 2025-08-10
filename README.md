@@ -4,6 +4,10 @@
 
 ![preview](/public/Preview.png)
 
+## ⚠️ Notice
+
+soullocke is now regularly hitting the max simultaneous connection limit. I will be looking into ways to deal with this issue, but if you want to support the project in the meantime, you can do so via [ko-fi](https://ko-fi.com/jynnie).
+
 ## ✨ Features
 
 Overview of main features. Currently used as a checklist while the project is in development.
