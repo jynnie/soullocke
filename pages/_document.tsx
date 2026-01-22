@@ -30,6 +30,8 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&family=Teko&display=swap"
             rel="stylesheet"
           />
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3217433846470620"
+            crossOrigin="anonymous"></script>
         </Head>
         <body>
           <Main />
