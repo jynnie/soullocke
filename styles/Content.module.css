@@ -1,0 +1,146 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-image:
+    linear-gradient(#071e3e7c, #071e3e 300px), url("/sootopolis.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 1000px) {
+  .container {
+    background-size: 100% auto;
+  }
+}
+
+.nav {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: var(--code-font);
+}
+
+.navLink {
+  color: var(--text-caption);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navLink:hover {
+  color: var(--purple-primary);
+}
+
+.main,
+.section {
+  max-width: 600px;
+  width: 100%;
+}
+
+.main {
+  padding: 12rem 1rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.section {
+  padding: 1rem 0;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-family: "Teko";
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.body {
+  line-height: 1.65;
+  font-size: 1.2rem;
+  color: var(--text-caption);
+  margin-bottom: 1rem;
+}
+
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  margin: 0.5rem 0 1rem 1.25rem;
+  padding: 0;
+  color: var(--text-caption);
+  line-height: 1.65;
+  font-size: 1.2rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+.guideList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guideItem {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.guideLink {
+  font-size: 1.2rem;
+}
+
+.guideExcerpt {
+  color: var(--text-caption);
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 1.5rem;
+  background: var(--midnight-disabled);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-caption);
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--purple-primary);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.adSlot {
+  margin: 2rem 0;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -26,9 +26,8 @@ function Home() {
         </p>
 
         <div className="flex center">
-          {/* <Button children="View" /> */}
           <Link href="/newRun">
-            <Button>Start</Button>
+            <Button className={styles.startButton}>Start Your Run</Button>
           </Link>
         </div>
       </main>
@@ -36,8 +35,7 @@ function Home() {
       <section className={styles.section}>
         <h3 id="whatsASoullocke">🔗 What{"'"}s a Soullocke?</h3>
         <p className={styles.description}>
-          A Soullocke follows roughly the same rules as a Nuzlocke; but instead
-          of playing alone, two or more trainers play together.
+          A Soullocke is a special variant of a Nuzlocke where two (or more) trainers play Pokémon simultaneously and their encounters are &quot;soul-linked&quot; together.
         </p>
         <p className={styles.description}>
           Pokémon caught in the same area/route are {`"`}linked{`"`}. They go to
@@ -45,13 +43,28 @@ function Home() {
           one trainer misses a Pokémon on a route, the other trainers too can
           {"'"}t catch.
         </p>
+        <p className={styles.description}>
+          The perfect way to take your challenge run to the next level and play Pokémon with friends.
+        </p>
+        <p className={styles.description}>
+          Read a <Link href="/rules">full rules guide here</Link> for more information.
+        </p>
+        <p className={styles.description}>
+          Tracking which Pokémon are soul-linked together and their state can be tedious, but this tracker makes it easy. Just add Pokémon based on the encounter location and easily manage your teams and grave. Press start to begin your run.
+        </p>
+        <p className={styles.description}>
+          Confused about how to use the tracker? Check out our <Link href="/guides">getting started guide</Link>.
+        </p>
       </section>
 
       <section className={styles.section}>
         <h3>🤝 Can I Share my Run?</h3>
         <p className={styles.description}>
-          Yes! Every run has a unique URL. You can share it with anyone you want
-          to collaborate with. Anyone with the URL can edit.
+          Yes! Every run has a unique URL you can copy and share. Share it with anyone you want
+          to collaborate with. Anyone with the URL can edit the run.
+        </p>
+        <p className={styles.description}>
+          Your run information will be live-updated for all players. So you can manage your teams in real-time.
         </p>
       </section>
 
@@ -59,7 +72,10 @@ function Home() {
         <h3>💬 Feedback?</h3>
         <p className={styles.description}>
           This is my passion project and I{"'"}d love to hear any feedback you
-          have. You can post suggestions here on{" "}
+          have. I am an avid soullocke player and can no longer play Pokémon any other way. Managing my runs with my friend was a pain, so I built this tracker to make it easier. I wanted it to be real-time, easy to use, minimalist, and free. Hope it can help you too!
+        </p>
+        <p className={styles.description}>
+          You can post suggestions here on{" "}
           <a
             href="https://github.com/jynnie/soullocke/discussions"
             target="_blank"
@@ -78,6 +94,47 @@ function Home() {
             buy me a coffee
           </a>
           .
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h3>🗞️ State of the Project</h3>
+        <p className={styles.description}>
+          The tracker is feature complete for now. I will be adding more features in the future, but for now, it is ready to use. Below are features slated for future development.
+        </p>
+        <ul className={styles.list}>
+          <li>Mobile support</li>
+          <li>Shiny tracking</li>
+          <li>Option for shared type rule guidance</li>
+          <li>Password lock for editing</li>
+        </ul>
+        <p className={styles.description}>
+          You can follow the project on{" "}
+          <a
+            href="https://github.com/jynnie/soullocke/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => mixpanel.track("Github button")}
+          >
+            Github
+          </a>
+          .
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h3>📖 Rules & Guides</h3>
+        <p className={styles.description}>
+          Read the full rules and guides for more information about the Soullocke variant of the Nuzlocke challenge.
+        </p>
+        <p className={styles.description}>
+          <Link href="/rules">Rules</Link>
+          {" · "}
+          <Link href="/about">About</Link>
+          {" · "}
+          <Link href="/guides/getting-started">Getting Started</Link>
+          {" · "}
+          <Link href="/guides">Guides</Link>
         </p>
       </section>
 

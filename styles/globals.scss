@@ -54,15 +54,21 @@
   --purple-disabled: #ede1fe4d;
   --purple-disabled-text: var(--text-primary);
 
-  --font: "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  --font:
+    "Roboto", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  --code-font: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+  --code-font:
+    Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
 * {
   box-sizing: border-box;
-  transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s,
+  transition:
+    background 0.2s,
+    border 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
     opacity 0.2s;
 }
 
@@ -396,6 +402,8 @@ textarea {
 //* ----------------------------------#07cf7f
 
 .flex {
+  display: flex;
+
   &.center {
     justify-content: center;
     align-items: center;
