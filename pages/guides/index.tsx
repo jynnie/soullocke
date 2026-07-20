@@ -17,6 +17,12 @@ const guides = [
     excerpt:
       "Planning a soul-linked run: what you need, how to agree on rules, and tips for a smooth co-op experience.",
   },
+  {
+    slug: "hoenn",
+    title: "Hoenn Soullocke Guide",
+    excerpt:
+      "Encounter highlights, gift and static Pokémon rulings, and the fights that end runs in Ruby, Sapphire, and Emerald.",
+  },
 ];
 
 export default function GuidesIndex() {
