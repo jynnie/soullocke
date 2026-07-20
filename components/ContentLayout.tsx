@@ -52,6 +52,14 @@ export function ContentLayout({
         >
           jynnie
         </a>
+        <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
+        <Link href="/about">About</Link>
+        <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
+        <Link href="/rules">Rules</Link>
+        <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
+        <Link href="/guides">Guides</Link>
+        <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
+        <Link href="/privacy">Privacy</Link>
       </footer>
     </div>
   );
