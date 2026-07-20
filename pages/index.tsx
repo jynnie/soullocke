@@ -11,7 +11,11 @@ function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Soullocke</title>
+        <title>Soullocke – Soul-linked Pokémon Nuzlocke Tracker</title>
+        <meta
+          name="description"
+          content="Free real-time tracker for soul-linked Pokémon Nuzlocke runs. Track encounters, linked Pokémon, teams, and deaths across two or more trainers—no account needed."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -135,6 +139,8 @@ function Home() {
           <Link href="/guides/getting-started">Getting Started</Link>
           {" · "}
           <Link href="/guides">Guides</Link>
+          {" · "}
+          <Link href="/privacy">Privacy</Link>
         </p>
       </section>
 
@@ -156,6 +162,8 @@ function Home() {
       <footer className={styles.footer}>
         <span style={{ marginRight: "5px" }}>Made with {"<3"} by </span>
         <a href="https://github.com/jynnie/soullocke">jynnie</a>
+        <span style={{ margin: "0 8px", opacity: 0.5 }}>·</span>
+        <Link href="/privacy">Privacy</Link>
       </footer>
     </div>
   );
