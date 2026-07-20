@@ -4,6 +4,7 @@ import { SearchableSelect } from "components/ui-library/SearchableSelect";
 import runId from "lib/random";
 import REGIONS from "lib/regions";
 import mixpanel from "mixpanel-browser";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "pages/_app";
 import React from "react";
@@ -62,6 +63,13 @@ function NewRunPage() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>New Run | Soullocke – Soul-linked Nuzlocke Tracker</title>
+        <meta
+          name="description"
+          content="Start a new soul-linked Nuzlocke run. Pick your game and region, add your trainers, and get a shareable link to track your run in real time."
+        />
+      </Head>
       <main style={{ marginTop: -120 }}>
         <h2>New Run</h2>
 
