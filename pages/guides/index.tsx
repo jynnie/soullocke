@@ -30,6 +30,12 @@ const guides = [
       "Hardcore rules, popular clauses and how they interact with links, and crossover variants like randomized soul links.",
   },
   {
+    slug: "videos",
+    title: "Cool Nuzlocke & Soullocke Videos to Watch",
+    excerpt:
+      "The soul link runs that made the format famous — Jaiden Animations and Alpharad's randomized soul link, and more.",
+  },
+  {
     slug: "hoenn",
     title: "Hoenn Soullocke Guide",
     excerpt:
