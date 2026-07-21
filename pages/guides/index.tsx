@@ -41,6 +41,30 @@ const guides = [
     excerpt:
       "Encounter highlights, gift and static Pokémon rulings, and the fights that end runs in Ruby, Sapphire, and Emerald.",
   },
+  {
+    slug: "timeline",
+    title: "Timeline View Explainer",
+    excerpt:
+      "Logging encounters and missed catches, adding badges, reordering rows, and what happens automatically for linked Pokémon.",
+  },
+  {
+    slug: "box-view",
+    title: "Box View Explainer",
+    excerpt:
+      "Drag-and-drop management of your team, box, daycare, and grave — and when to use Box vs Timeline.",
+  },
+  {
+    slug: "summary",
+    title: "Summary View Explainer",
+    excerpt:
+      "Tracking gym badges with a double-click, teams side by side, and honoring the graveyard.",
+  },
+  {
+    slug: "tracker-tips",
+    title: "Tracker Tips & Tricks",
+    excerpt:
+      "Hidden features: double-click editing, marking evolutions, custom locations, and what auto-propagates to linked Pokémon.",
+  },
 ];
 
 export default function GuidesIndex() {
