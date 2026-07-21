@@ -18,6 +18,18 @@ const guides = [
       "Planning a soul-linked run: what you need, how to agree on rules, and tips for a smooth co-op experience.",
   },
   {
+    slug: "soullocke-tips",
+    title: "Soullocke Best Practices: Tips & Tricks",
+    excerpt:
+      "Planning your pairs, pacing with your partner, battle safety, and the mistakes that end runs early.",
+  },
+  {
+    slug: "rules-variants",
+    title: "Soullocke Variants & Optional Rules",
+    excerpt:
+      "Hardcore rules, popular clauses and how they interact with links, and crossover variants like randomized soul links.",
+  },
+  {
     slug: "hoenn",
     title: "Hoenn Soullocke Guide",
     excerpt:
