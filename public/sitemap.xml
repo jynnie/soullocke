@@ -61,6 +61,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://soullocke.vercel.app/guides/timeline</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://soullocke.vercel.app/guides/box-view</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://soullocke.vercel.app/guides/summary</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://soullocke.vercel.app/guides/tracker-tips</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://soullocke.vercel.app/privacy</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>yearly</changefreq>
