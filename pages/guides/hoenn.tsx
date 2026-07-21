@@ -164,6 +164,49 @@ export default function HoennGuide() {
         </section>
 
         <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Further reading</h2>
+          <p className={styles.body}>
+            For full route-by-route encounter tables and boss teams, these
+            community resources go deeper than this overview:
+          </p>
+          <ul className={styles.list}>
+            <li>
+              <a
+                href="https://nuzlockeuniversity.ca/game-specific-guides/emerald/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Nuzlocke University&apos;s Emerald guide
+              </a>{" "}
+              — strategy-focused: repel tricks for targeting encounters in
+              Granite Cave, Gabby &amp; Ty rematches for safe EXP, boss
+              preparation.
+            </li>
+            <li>
+              <a
+                href="https://nuzlocketracker.org/guides/emerald"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Nuzlocke Tracker&apos;s Emerald guide
+              </a>{" "}
+              — full encounter tables (70 locations, 149 obtainable species),
+              level caps, and gym teams.
+            </li>
+            <li>
+              <a
+                href="https://www.tcgstacked.com/pokemon/nuzlocke/emerald"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TCG Stacked&apos;s route-by-route encounter guide
+              </a>{" "}
+              — every route with encounter methods and level ranges.
+            </li>
+          </ul>
+        </section>
+
+        <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Tracking your Hoenn run</h2>
           <p className={styles.body}>
             When you <Link href="/newRun">create a run</Link> and pick Hoenn,
