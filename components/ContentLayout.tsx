@@ -59,6 +59,8 @@ export function ContentLayout({
         <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
         <Link href="/guides">Guides</Link>
         <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
+        <Link href="/faq">FAQ</Link>
+        <span style={{ margin: "0 0.5rem", opacity: 0.5 }}>·</span>
         <Link href="/privacy">Privacy</Link>
       </footer>
     </div>

@@ -85,6 +85,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://soullocke.vercel.app/faq</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://soullocke.vercel.app/privacy</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>yearly</changefreq>

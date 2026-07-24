@@ -140,6 +140,8 @@ function Home() {
           {" · "}
           <Link href="/guides">Guides</Link>
           {" · "}
+          <Link href="/faq">FAQ</Link>
+          {" · "}
           <Link href="/privacy">Privacy</Link>
         </p>
       </section>
