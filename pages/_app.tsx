@@ -57,6 +57,13 @@ function MyApp({ Component, pageProps }: AppProps | any) {
   }, []);
 
   const router = useRouter();
+  // Every public page is available without a trailing slash, and query
+  // parameters do not change the content of our documentation pages. Emit a
+  // single canonical URL so search engines do not treat those URL variants as
+  // separate pages.
+  const canonicalPath =
+    router.asPath.split(/[?#]/u)[0].replace(/\/+$/u, "") || "/";
+  const canonicalUrl = `https://soullocke.vercel.app${canonicalPath}`;
   React.useEffect(() => {
     // Send this page view
     posthog.capture("$pageview");
@@ -75,6 +82,8 @@ function MyApp({ Component, pageProps }: AppProps | any) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} key="og:url" />
       </Head>
       <PostHogProvider client={posthog}>
         <FirebaseContext.Provider value={{ db }}>
